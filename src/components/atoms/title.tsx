@@ -1,5 +1,5 @@
 import React from "react";
-import {Text} from "./text";
+import {Text, type TextVariantProps} from "./text";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
@@ -55,11 +55,10 @@ export interface TitleProps
     TitleVariantProps,
     Omit<textVariantProps, "className"> {
   title: string;
-  as? : string | "h1";
+  textProps?: TextVariantProps<React.ElementType>;
   className?: string;
   strokeClassName?: string;
   textClassName?: string;
-  weight?: "bold" | "light" | "normal" | "semiBold";
   stroke?: boolean;
   strokeSize?: textVariantProps["strokeSize"];
   strokeColor?: textVariantProps["strokeColor"];
@@ -67,18 +66,17 @@ export interface TitleProps
 const Title = React.forwardRef<HTMLDivElement, TitleProps>(
   (
     {
-      as = "h1",
       title,
       className,
       strokeClassName,
       textClassName,
-      weight,
       variant,
       strokeColor,
       stroke,
       strokeSize,
       text,
-      width
+      width,
+      textProps,
     },
     ref
   ) => {
@@ -86,8 +84,7 @@ const Title = React.forwardRef<HTMLDivElement, TitleProps>(
       <div ref={ref} className={cn(titleVariants({ width }), className)}>
         {stroke && (
           <Text
-            as={as}
-            weight={weight}
+            {...textProps}
             className={cn(
               "absolute inset-0",
               textVariants({ strokeSize, strokeColor, variant }),
@@ -98,8 +95,7 @@ const Title = React.forwardRef<HTMLDivElement, TitleProps>(
           </Text>
         )}
         <Text
-          as={as}
-          weight={weight}
+          {...textProps}
           className={cn("relative", textVariants({ text, variant }), textClassName)}
         >
           {title}

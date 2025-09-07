@@ -23,6 +23,8 @@ const textVariants = cva("", {
     textColor: {
       primary: "text-primary",
       secondary: "text-secondary",
+      light: "text-light-cokelat",
+      broken: "text-broken",
     }
   },
 
