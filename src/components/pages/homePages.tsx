@@ -16,21 +16,11 @@ export default function HomePages() {
         <About />
         <TransitionPage variant="primary" />
       </SectionPage>
-      {/* <SectionPage variant="default" backgroundColor="dark">
-        <About />
-        <TransitionPage variant="broken" />
-      </SectionPage> */}
-      {/* <div className="relative bg-light-cokelat py-8 sm:py-15">
-        <TransitionTop />
-        <SectionPage className="py-10 md:py-0">
-          <About />
-        </SectionPage>
-        <TransitionBottom />
-      </div>
-      <SectionPage className="pb-8">
+      <SectionPage variant="default" backgroundColor="dark">
         <BestProduct />
+         <TransitionPage variant="broken" />
       </SectionPage>
-      <div className="relative bg-light-cokelat py-8 sm:py-15">
+      {/* <div className="relative bg-light-cokelat py-8 sm:py-15">
         <TransitionTop />
         <SectionPage>
           <Special />
@@ -39,7 +29,7 @@ export default function HomePages() {
       </div>
       <SectionPage className="pt-8">
         <Lokasi />
-      </SectionPage> */}
+      </SectionPage>  */}
     </div>
   );
 }
