@@ -3,7 +3,7 @@ import { data } from "@/const/constHeader";
 import TitleDescription from "@/components/molecules/titleDescription";
 import ButtonText from "@/components/molecules/buttonText";
 import { title } from "@/const/constHeader";
-import Pages from "@/components/atoms/page";
+import {Pages} from "@/components/atoms/page";
 import { Stat } from "@/components/molecules/stat";
 export default function Header() {
   return (
@@ -42,7 +42,9 @@ export default function Header() {
       <ButtonText
         text="“Setiap cangkir kopi menyimpan jeda ruang kecil untuk merenung,
         bercengkerama, atau sekadar bernapas dalam hidup yang serba cepat.”"
+        children={"Filosofi"}
         className="flex-col-reverse gap-4 lg:gap-5 xl:gap-6"
+        button={true}
         textProps={{
           as: "p",
           variant: "caption",
@@ -56,7 +58,6 @@ export default function Header() {
         buttonProps={{
           text: "default",
           variant: "default",
-          children: "Filosofi",
           className:
             "hover:bg-primary mx-4 xl:mx-[clamp(1rem,5.9vw,5.25rem)] 2xl:mx-20 h-auto w-fit rounded-[0.2rem] text-[clamp(0.3rem,1.4vw,0.5rem)] md:text-[clamp(0.7rem,1.6vw,1rem)] xl:text-sm 2xl:text-[1rem] py-1 px-2 2xl:py-2 2xl:px-[1.13rem]",
           asChild: false,

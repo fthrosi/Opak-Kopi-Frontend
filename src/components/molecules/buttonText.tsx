@@ -18,13 +18,15 @@ export interface ButtonTextProps extends VariantProps<typeof buttonTextVariants>
     className?: string;
     text: string;
     textProps?: TextVariantProps <React.ElementType>;
-    buttonProps?: ButtonProps;
+    buttonProps?: Omit<ButtonProps, "children">;
+    button?: boolean;
+    children?: React.ReactNode;
 }
-export default function ButtonText({ text,textProps, position , className, buttonProps }: ButtonTextProps) {
+export default function ButtonText({ text,textProps, position , className, buttonProps, button, children }: ButtonTextProps) {
   return (
     <div className={cn(buttonTextVariants({ position }), className)}>
         <Text {...textProps}>{text}</Text>
-        <Button {...buttonProps}></Button>
+        {button && <Button {...buttonProps}>{children}</Button>}
     </div>
   );
 }

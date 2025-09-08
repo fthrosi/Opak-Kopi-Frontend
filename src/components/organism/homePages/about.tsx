@@ -1,11 +1,11 @@
-import Pages from "@/components/atoms/page";
+import {Pages} from "@/components/atoms/page";
 import { Title } from "@/components/atoms/title";
 import { Description } from "@/components/atoms/description";
 import { about } from "@/const/constAbout";
 import Img from "@/components/atoms/img";
 export default function About() {
   return (
-    <Pages className="md:flex-row gap-10 py-10 xs:py-20 lg:mb-10 xl:mb-0">
+    <Pages variant="bestProduct" className="md:flex-row">
       <div className="self-center">
         <Title
           title="TENTANG KAFE OPAK KOPI"

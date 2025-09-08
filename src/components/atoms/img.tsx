@@ -5,13 +5,14 @@ import { type VariantProps, cva } from "class-variance-authority";
 const imgVariants = cva("object-cover", {
     variants: {
         variant: {
+            lg: "rounded-lg",
             xl: "rounded-xl",
             "2xl": "rounded-2xl",
             full: "rounded-full",
             default: "rounded-md",
         },
         size: {
-            small: "w-8 h-8",
+            default: "w-full h-full",
             medium: "w-16 h-16",
             large: "w-32 h-32",
             full: "w-full h-auto",
