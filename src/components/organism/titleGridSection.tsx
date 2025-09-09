@@ -8,13 +8,20 @@ import TitleDescription, {
 
 
 const titleGridSectionVariants = cva(
-  "flex flex-col items-center justify-center",
+  "flex flex-col",
   {
     variants: {
       layout: {
+        default: "",
         bestProduct:
-          "grid grid-cols-1 gap-10 xs:gap-15 sm:gap-20 md:grid-cols-3 md:gap-5 lg:gap-7.5 xl:gap-10 2xl:gap-12.5",
+          "grid grid-cols-1 md:grid-cols-3 ",
+        special: "items-center md:flex-row md:justify-between",
       },
+      gap:{
+        default: "",
+        bestProduct: "gap-10 xs:gap-15 sm:gap-20 md:gap-5 lg:gap-7.5 xl:gap-10 2xl:gap-12.5",
+        special:"gap-15 md:gap-0",
+      }
     },
     defaultVariants: {
       layout: "bestProduct",
@@ -38,7 +45,8 @@ const TitleGridSection = React.forwardRef<
       layout,
       pagesProps,
       titleDescriptionProps,
-      children
+      children,
+      gap 
     },
     ref
   ) => {
@@ -47,7 +55,7 @@ const TitleGridSection = React.forwardRef<
         <TitleDescription
           {...titleDescriptionProps}
         />
-        <div className={cn(titleGridSectionVariants({ layout }), className)}>
+        <div className={cn(titleGridSectionVariants({ layout,gap }), className)}>
           {children}
         </div>
       </Pages>

@@ -23,7 +23,7 @@ const textVariants = cva("", {
       hero: 
         "text-[clamp(1rem,5vw,1.8rem)] xs:text-[clamp(1.8rem,5.8vw,2.3rem)] sm:text-[clamp(2.3rem,5.5vw,2.5rem)] md:text-[clamp(2rem,4vw,2.5rem)] lg:text-[clamp(2.5rem,4vw,3.5rem)]",
       special:
-        "text-[clamp(1.25rem,6vw,2rem)] md:text-[clamp(1.8rem,3.7vw,2.3rem)] lg:text-[clamp(2.3rem,3.6vw,3rem)] xl:text-[3rem] 2xl:text-[4rem]",
+        "text-[clamp(1.25rem,6vw,2rem)] md:text-[clamp(1.8rem,3.7vw,2.3rem)] lg:text-[clamp(2.3rem,3.6vw,3rem)] xl:text-[3rem]",
       about:
         "text-[clamp(0.8rem,4vw,1.3rem)] md:text-[clamp(0.9rem,2.4vw,1.5rem)] xl:text-[clamp(1.8rem,2.3vw,2.3rem)] 2xl:text-[2.25rem]",
     },

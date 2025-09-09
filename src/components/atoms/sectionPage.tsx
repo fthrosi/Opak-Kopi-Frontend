@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 const sectionVariants = cva("relative", {
     variants: {
         variant: {
-            default: "py-10 sm:py-15 xl:py-0",
+            default: "",
             top: "pt-11 xs:pt-12 md:pt-16 2xl:pt-[5.65rem] pb-10 xl:pb-0",
         },
         backgroundColor: {

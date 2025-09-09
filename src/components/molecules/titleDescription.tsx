@@ -3,11 +3,16 @@ import { Description, type DescriptionProps } from "../atoms/description";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
-const titleDescriptionVariants = cva("flex flex-col", {
+const titleDescriptionVariants = cva("flex", {
   variants: {
     position: {
       default: "",
+      start: "items-start",
       center: "items-center",
+    },
+    direction:{
+      default: "flex-col",
+      row: "flex-row",
     },
     gap: {
       default: "",
@@ -15,6 +20,7 @@ const titleDescriptionVariants = cva("flex flex-col", {
     },
   },
   defaultVariants: {
+    direction: "default",
     position: "default",
     gap: "default",
   },
@@ -60,6 +66,7 @@ export default function TitleDescription({
   className,
   position,
   gap,
+  direction,
   titleVariant,
   titleWidth,
   titleColor,
@@ -71,7 +78,7 @@ export default function TitleDescription({
   descriptionClassName,
 }: TitleDescriptionProps) {
   return (
-    <div className={cn(titleDescriptionVariants({ position, gap }), className)}>
+    <div className={cn(titleDescriptionVariants({ position, gap, direction }), className)}>
       <Title
         title={title ? title : ""}
         variant={titleVariant}

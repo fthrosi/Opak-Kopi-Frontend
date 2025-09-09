@@ -10,14 +10,16 @@ const cardFeaturedVariants = cva("flex flex-col", {
       default: "",
       bestProduct:
         "w-[clamp(15rem,53.5vw,18rem)] xs:w-[clamp(18rem,52.7vw,21rem)] md:w-[clamp(14.5rem,31vw,19.8rem)] lg:w-[clamp(18.16rem,28.9vw,23.063rem)] xl:w-[clamp(21rem,27.1vw,24.288rem)] 2xl:w-[25rem]",
-      small:
-        "p-3 w-[clamp(12rem,40vw,14rem)] xs:w-[clamp(14rem,38vw,16rem)] md:w-[clamp(12rem,25vw,15rem)] lg:w-[clamp(15rem,24vw,18rem)] xl:w-[clamp(17rem,22vw,19.5rem)] 2xl:w-[20rem] gap-3 xs:gap-5",
+      special:
+        "w-[clamp(12rem,53.6vw,18rem)] md:w-[clamp(13.7rem,29.6vw,18.9rem)] lg:w-[clamp(18.9rem,27.8vw,22.225rem)] xl:w-[clamp(22.225rem,27.8vw,24.938rem)] 2xl:w-105",
     },
     aspect: {
       bestProduct: "aspect-[100/129]",
+      special: "aspect-[21/13]",
     },
     background: {
       light: "bg-light-cokelat",
+      broken: "bg-[#F9E8D3]"
     },
     rounded: {
       lg: "rounded-lg",

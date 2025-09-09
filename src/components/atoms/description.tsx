@@ -9,12 +9,14 @@ const descriptionVariants = cva("", {
       hero: "text-[clamp(0.5rem,2vw,0.7rem)] xs:text-[clamp(0.7rem,2.3vw,0.9rem)] sm:text-[clamp(0.9rem,2.6vw,1.2rem)] md:text-[clamp(0.8rem,1.6vw,1rem)]",
       about:"text-[clamp(0.55rem,2.6vw,0.85rem)] sm:text-[clamp(0.85rem,2.1vw,1rem)] md:text-[clamp(0.65rem,1.4vw,0.9rem)] lg:text-[clamp(0.8rem,1.15vw,0.9rem)] xl:text-[clamp(0.9rem,1.1vw,1.125rem)] 2xl:text-[1.125rem]",
       bestProduct:"text-[clamp(0.55rem,2.55vw,0.85rem)] lg:text-[clamp(0.85rem,1.57vw,1.25rem)]",
+      special:"text-[clamp(0.55rem,2.55vw,0.85rem)] md:text-[clamp(0.85rem,1.7vw,1rem)]"
     },
     width: {
       default: "w-full",
       hero: "w-[clamp(12.5rem,49.3vw,16.5rem)] xs:w-[clamp(16.5rem,56.5vw,22rem)] sm:w-[clamp(22rem,64vw,29rem)] md:w-[clamp(20rem,40vw,25rem)]",
       about:"md:w-[clamp(22rem,44.3vw,28.3rem)] lg:w-[clamp(26rem,40.3vw,32.2rem)] xl:w-[clamp(28rem,38vw,38rem)] 2xl:w-[38rem]",
       bestProduct:"w-[clamp(17rem,82vw,27rem)] lg:w-[clamp(27rem,49vw,39rem)]",
+      special:"w-[clamp(14rem,66vw,22rem)] md:w-[clamp(20.9rem,42.3vw,27rem)]"
     },
   },
   defaultVariants: {
