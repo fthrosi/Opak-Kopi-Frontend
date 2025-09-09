@@ -7,7 +7,7 @@ const titleVariants = cva("relative", {
   variants: {
     width: {
       default: "w-full",
-      hero: "w-[clamp(15rem,77vw,25rem)] xs:w-[clamp(25rem,88vw,35rem)] sm:w-[clamp(35rem,90vw,38rem)] md:w-[clamp(30rem,61vw,37rem)] lg:w-[clamp(37rem,66.5vw,53rem)]",
+      hero: "w-[clamp(15rem,77vw,25.5rem)] xs:w-[clamp(25rem,88vw,35rem)] sm:w-[clamp(35rem,89vw,38rem)] md:w-[clamp(30rem,63vw,38rem)] lg:w-[clamp(38rem,63vw,53rem)]",
       special: "w-[clamp(12.5rem,59.9vw,20rem)] md:w-[clamp(20rem,37.6vw,24rem)] lg:w-[clamp(23rem,36.3vw,29rem)] xl:w-[30rem]",
     }
   },
@@ -21,7 +21,7 @@ const textVariants = cva("", {
       default:
         "text-[clamp(1.25rem,6vw,2rem)] md:text-[clamp(2rem,4.2vw,2.5rem)] lg:text-[clamp(3rem,5.5vw,3.5rem)] xl:text-[clamp(3.5rem,4.5vw,4rem)]",
       hero: 
-        "text-[clamp(1rem,5vw,1.8rem)] xs:text-[clamp(1.8rem,6vw,2.3rem)] sm:text-[clamp(2.3rem,6vw,2.5rem)] md:text-[clamp(2rem,4vw,2.5rem)] lg:text-[clamp(2.5rem,4.5vw,3.5rem)]",
+        "text-[clamp(1rem,5vw,1.8rem)] xs:text-[clamp(1.8rem,5.8vw,2.3rem)] sm:text-[clamp(2.3rem,5.5vw,2.5rem)] md:text-[clamp(2rem,4vw,2.5rem)] lg:text-[clamp(2.5rem,4vw,3.5rem)]",
       special:
         "text-[clamp(1.25rem,6vw,2rem)] md:text-[clamp(1.8rem,3.7vw,2.3rem)] lg:text-[clamp(2.3rem,3.6vw,3rem)] xl:text-[3rem] 2xl:text-[4rem]",
       about:
