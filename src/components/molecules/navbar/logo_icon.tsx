@@ -12,10 +12,10 @@ export default function LogoIcon() {
       <Text
         as="a"
         href="/"
-        variant="heading"
         family="lily"
         weight="normal"
-        className="text-xl xs:text-2xl 2xl:text-[2rem] text-primary"
+        textColor="primary"
+        className="text-xl xs:text-2xl 2xl:text-[2rem]"
       >
         Opak Kopi
       </Text>

@@ -10,6 +10,7 @@ const imgVariants = cva("object-cover", {
             "2xl": "rounded-2xl",
             full: "rounded-full",
             default: "rounded-md",
+            custom: "",
         },
         size: {
             default: "w-full h-full",

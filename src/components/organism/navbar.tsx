@@ -3,6 +3,7 @@ import Navigation from "../molecules/navigation";
 import NavigationAuth from "../molecules/navbar/navigationAuth";
 import LogoIcon from "../molecules/navbar/logo_icon";
 import { useUIStore } from "../store/useUIStore";
+import { navigationData } from "@/const/constNavbar";
 
 export default function Navbar() {
   const isOpen = useUIStore((state) => state.activeStates.sidebar);
@@ -39,7 +40,7 @@ export default function Navbar() {
     >
       <div className="block md:flex items-center justify-between md:p-4 lg:px-14 xl:px-24 2xl:px-[4.375rem] 2xl:py-0 xl:max-w-[1440px] mx-auto 2xl:h-full">
         <div
-          className={`px-2 py-2 xs:px-3 md:p-0 transition-all duration-200 ${
+          className={`px-2 py-2 xs:px-5 md:p-0 transition-all duration-200 ${
             isScrolling ? "bg-broken md:bg-transparent" : "bg-transparent"
           }`}
         >
@@ -51,7 +52,7 @@ export default function Navbar() {
           }`}
         >
           <div className="flex flex-col md:contents items-start justify-center md:justify-between">
-            <Navigation />
+            <Navigation data={navigationData} layout="navbar" gap="navbar" textfamily="lily" textColor="secondary" textClassName="xs:text-2xl block md:inline w-fit text-xl md:text-lg 2xl:text-2xl" />
             <NavigationAuth />
           </div>
         </div>
