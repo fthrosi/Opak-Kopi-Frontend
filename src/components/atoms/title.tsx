@@ -7,7 +7,7 @@ const titleVariants = cva("relative", {
   variants: {
     width: {
       default: "w-full",
-      hero: "w-[clamp(15rem,77vw,25.5rem)] xs:w-[clamp(25rem,88vw,35rem)] sm:w-[clamp(35rem,89vw,38rem)] md:w-[clamp(30rem,63vw,38rem)] lg:w-[clamp(38rem,63vw,53rem)]",
+      hero: "w-[clamp(15rem,72vw,24rem)] xs:w-[clamp(24rem,69vw,27rem)] sm:w-[clamp(27rem,62.5vw,30rem)] md:w-[clamp(30rem,50vw,32rem)] lg:w-[clamp(32rem,49vw,38rem)] xl:w-[clamp(38rem,53.5vw,48rem)]",
       special: "w-[clamp(12.5rem,59.9vw,20rem)] md:w-[clamp(20rem,37.6vw,24rem)] lg:w-[clamp(23rem,36.3vw,29rem)] xl:w-[30rem]",
     }
   },
@@ -17,23 +17,6 @@ const titleVariants = cva("relative", {
 });
 const textVariants = cva("", {
   variants: {
-    variant: {
-      default:
-        "text-[clamp(1.25rem,6vw,2rem)] md:text-[clamp(2rem,4.2vw,2.5rem)] lg:text-[clamp(3rem,5.5vw,3.5rem)] xl:text-[clamp(3.5rem,4.5vw,4rem)]",
-      hero: 
-        "text-[clamp(1rem,5vw,1.8rem)] xs:text-[clamp(1.8rem,5.8vw,2.3rem)] sm:text-[clamp(2.3rem,5.5vw,2.5rem)] md:text-[clamp(2rem,4vw,2.5rem)] lg:text-[clamp(2.5rem,4vw,3.5rem)]",
-      special:
-        "text-[clamp(1.25rem,6vw,2rem)] md:text-[clamp(1.8rem,3.7vw,2.3rem)] lg:text-[clamp(2.3rem,3.6vw,3rem)] xl:text-[3rem]",
-      about:
-        "text-[clamp(0.8rem,4vw,1.3rem)] md:text-[clamp(0.9rem,2.4vw,1.5rem)] xl:text-[clamp(1.8rem,2.3vw,2.3rem)] 2xl:text-[2.25rem]",
-      custom: "",
-    },
-    text: {
-      default: "text-primary",
-      broken: "text-broken",
-      light: "text-light-cokelat",
-      secondary: "text-secondary",
-    },
     strokeSize: {
       default:
         "text-stroke-2 xs:text-stroke-3 sm:text-stroke-4 md:text-stroke-5",
@@ -45,19 +28,21 @@ const textVariants = cva("", {
       special: "stroke-color-secondary",
     },
   },
-  defaultVariants: {
-    variant: "default",
-    text: "default",
-  },
 });
 type TitleVariantProps = VariantProps<typeof titleVariants>;
 type textVariantProps = VariantProps<typeof textVariants>;
 export interface TitleProps
   extends React.HTMLAttributes<HTMLDivElement>,
     TitleVariantProps,
-    Omit<textVariantProps, "className"> {
+    textVariantProps {
   title: string;
-  textProps?: TextVariantProps<React.ElementType>;
+  textAs?: TextVariantProps<React.ElementType>["as"];
+  textSize?: TextVariantProps<React.ElementType>["size"];
+  textWeight?: TextVariantProps<React.ElementType>["weight"];
+  textFamily?: TextVariantProps<React.ElementType>["family"];
+  textPosition?: TextVariantProps<React.ElementType>["position"];
+  textColor?: TextVariantProps<React.ElementType>["textColor"];
+  textProps?: Omit<TextVariantProps<React.ElementType>, "className" | "as" | "children" | "size" | "weight" | "family" | "position" | "textColor">;
   className?: string;
   strokeClassName?: string;
   textClassName?: string;
@@ -69,14 +54,18 @@ const Title = React.forwardRef<HTMLDivElement, TitleProps>(
   (
     {
       title,
+      textAs,
+      textSize,
+      textWeight,
+      textFamily,
+      textPosition,
+      textColor,
       className,
       strokeClassName,
       textClassName,
-      variant,
       strokeColor,
       stroke,
       strokeSize,
-      text,
       width,
       textProps,
     },
@@ -86,10 +75,16 @@ const Title = React.forwardRef<HTMLDivElement, TitleProps>(
       <div ref={ref} className={cn(titleVariants({ width }), className)}>
         {stroke && (
           <Text
+            as={textAs}
+            size={textSize}
+            weight={textWeight}
+            family={textFamily}
+            position={textPosition}
+            textColor={textColor}
             {...textProps}
             className={cn(
               "absolute inset-0",
-              textVariants({ strokeSize, strokeColor, variant }),
+              textVariants({ strokeSize, strokeColor }),
               strokeClassName
             )}
           >
@@ -97,8 +92,14 @@ const Title = React.forwardRef<HTMLDivElement, TitleProps>(
           </Text>
         )}
         <Text
+          as={textAs}
+          size={textSize}
+          weight={textWeight}
+          family={textFamily}
+          position={textPosition}
+          textColor={textColor}
           {...textProps}
-          className={cn("relative", textVariants({ text, variant }), textClassName)}
+          className={cn("relative", textClassName)}
         >
           {title}
         </Text>

@@ -1,28 +1,21 @@
 import { cn } from "@/lib/utils";
-import {Text, type TextVariantProps} from "./text";
+import { Text, type TextVariantProps } from "./text";
 import React from "react";
 import { type VariantProps, cva } from "class-variance-authority";
 
 const descriptionVariants = cva("", {
   variants: {
-    variant: {
-      hero: "text-[clamp(0.5rem,2vw,0.7rem)] xs:text-[clamp(0.7rem,2.3vw,0.9rem)] sm:text-[clamp(0.9rem,2.6vw,1.2rem)] md:text-[clamp(0.8rem,1.6vw,1rem)]",
-      about:"text-[clamp(0.55rem,2.6vw,0.85rem)] sm:text-[clamp(0.85rem,2.1vw,1rem)] md:text-[clamp(0.65rem,1.4vw,0.9rem)] lg:text-[clamp(0.8rem,1.15vw,0.9rem)] xl:text-[clamp(0.9rem,1.1vw,1.125rem)] 2xl:text-[1.125rem]",
-      bestProduct:"text-[clamp(0.55rem,2.55vw,0.85rem)] lg:text-[clamp(0.85rem,1.57vw,1.25rem)]",
-      special:"text-[clamp(0.55rem,2.55vw,0.85rem)] md:text-[clamp(0.85rem,1.7vw,1rem)]",
-      custom: "",
-    },
     width: {
       default: "w-full",
-      hero: "w-[clamp(12.5rem,49.3vw,16.5rem)] xs:w-[clamp(16.5rem,56.5vw,22rem)] sm:w-[clamp(22rem,64vw,29rem)] md:w-[clamp(20rem,40vw,25rem)]",
-      about:"md:w-[clamp(22rem,44.3vw,28.3rem)] lg:w-[clamp(26rem,40.3vw,32.2rem)] xl:w-[clamp(28rem,38vw,38rem)] 2xl:w-[38rem]",
-      bestProduct:"w-[clamp(17rem,82vw,27rem)] lg:w-[clamp(27rem,49vw,39rem)]",
-      special:"w-[clamp(14rem,66vw,22rem)] md:w-[clamp(20.9rem,42.3vw,27rem)]",
+      hero: "w-[clamp(12.5rem,72vw,23.7rem)] xs:w-[23.7rem] md:w-[clamp(23.7rem,39vw,24.938rem)] lg:w-[clamp(24.93rem,34vw,25.6rem)] xl:w-[clamp(25.6rem,32vw,27.2rem)]",
+      about:
+        "md:w-[clamp(22rem,44.3vw,28.3rem)] lg:w-[clamp(26rem,40.3vw,32.2rem)] xl:w-[clamp(28rem,38vw,38rem)] 2xl:w-[38rem]",
+      bestProduct: "w-[clamp(17rem,82vw,27rem)] lg:w-[clamp(27rem,49vw,39rem)]",
+      special: "w-[clamp(14rem,66vw,22rem)] md:w-[clamp(20.9rem,42.3vw,27rem)]",
       custom: "",
     },
   },
   defaultVariants: {
-    variant: "hero",
     width: "default",
   },
 });
@@ -30,29 +23,29 @@ type DescriptionVariantProps = VariantProps<typeof descriptionVariants>;
 export interface DescriptionProps
   extends React.HTMLAttributes<HTMLParagraphElement>,
     DescriptionVariantProps {
-      description: string;
-      className?: string;
-      textProps?: TextVariantProps<React.ElementType>;
+  description: string;
+  className?: string;
+  textAs?: TextVariantProps<React.ElementType>["as"];
+  textSize?: TextVariantProps<React.ElementType>["size"];
+  textWeight?: TextVariantProps<React.ElementType>["weight"];
+  textFamily?: TextVariantProps<React.ElementType>["family"];
+  textPosition?: TextVariantProps<React.ElementType>["position"];
+  textColor?: TextVariantProps<React.ElementType>["textColor"];
+  textProps?: Omit<TextVariantProps<React.ElementType>, "as" | "size" | "weight" | "family" | "position" | "textColor" | "className" | "children">;
 }
 const Description = React.forwardRef<HTMLParagraphElement, DescriptionProps>(
-  (
-    {
-      description,
-      className,
-      textProps,
-      variant,
-      width,
-    },
-    ref
-  ) => {
+  ({ description, className, textProps, width, textAs, textSize, textWeight, textFamily, textPosition, textColor }, ref) => {
     return (
       <Text
         ref={ref}
+        as={textAs}
+        size={textSize}
+        weight={textWeight}
+        family={textFamily}
+        position={textPosition}
+        textColor={textColor}
         {...textProps}
-        className={cn(
-          descriptionVariants({ variant, width }),
-          className
-        )}
+        className={cn(descriptionVariants({ width }), className)}
       >
         {description}
       </Text>
@@ -60,4 +53,4 @@ const Description = React.forwardRef<HTMLParagraphElement, DescriptionProps>(
   }
 );
 Description.displayName = "Description";
-export {Description, descriptionVariants };
+export { Description, descriptionVariants };

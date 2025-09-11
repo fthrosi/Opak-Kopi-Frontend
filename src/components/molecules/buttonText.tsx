@@ -20,12 +20,13 @@ export interface ButtonTextProps extends VariantProps<typeof buttonTextVariants>
 
     //text props
     textAs?:TextVariantProps<React.ElementType>["as"];
+    textSize?:TextVariantProps<React.ElementType>["size"];
     textFamily?:TextVariantProps<React.ElementType>["family"];
     textWeight?:TextVariantProps<React.ElementType>["weight"];
     textPosition?:TextVariantProps<React.ElementType>["position"];
     textColor?:TextVariantProps<React.ElementType>["textColor"];
     textClassName?:TextVariantProps<React.ElementType>["className"];
-    textProps?: Omit<TextVariantProps<React.ElementType>, "className" | "as" | "family" | "weight" | "position" | "textColor">;
+    textProps?: Omit<TextVariantProps<React.ElementType>, "className" | "as" | "family" | "weight" | "position" | "textColor" | "size" | "children">;
 
     //button props
     buttonText? : ButtonProps["text"];
@@ -36,10 +37,10 @@ export interface ButtonTextProps extends VariantProps<typeof buttonTextVariants>
     button?: boolean;
     children?: React.ReactNode;
 }
-export default function ButtonText({ text,textProps, position , className, buttonProps, button, children,textAs,textFamily,textWeight,textPosition,textColor,textClassName, buttonText,buttonAsChild,buttonClassName,buttonVariant }: ButtonTextProps) {
+export default function ButtonText({ text,textProps,textSize, position , className, buttonProps, button, children,textAs,textFamily,textWeight,textPosition,textColor,textClassName, buttonText,buttonAsChild,buttonClassName,buttonVariant }: ButtonTextProps) {
   return (
     <div className={cn(buttonTextVariants({ position }), className)}>
-        <Text {...textProps} as={textAs} family={textFamily} weight={textWeight} position={textPosition} textColor={textColor} className={textClassName}>{text}</Text>
+        <Text {...textProps} as={textAs} size={textSize} family={textFamily} weight={textWeight} position={textPosition} textColor={textColor} className={textClassName}>{text}</Text>
         {button && <Button {...buttonProps} text={buttonText} variant={buttonVariant} className={buttonClassName} asChild={buttonAsChild}>{children}</Button>}
     </div>
   );

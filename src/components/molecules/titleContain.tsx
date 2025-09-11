@@ -20,21 +20,35 @@ export interface TitleContainProps
     VariantProps<typeof titleContainVariants> {
   className?: string;
   title: string;
-  titleVariant?: TitleProps["variant"];
+ titleAs?: TitleProps["textAs"];
+  titleSize?: TitleProps["textSize"];
+  titleWeight?: TitleProps["textWeight"];
+  titleFamily?: TitleProps["textFamily"];
+  titlePosition?: TitleProps["textPosition"];
+  titleColor?: TitleProps["textColor"];
   titleWidth?: TitleProps["width"];
-  titleColor?: TitleProps["text"];
   titleStrokeSize?: TitleProps["strokeSize"];
   titleStroke?: boolean;
   titleStrokeColor?: TitleProps["strokeColor"];
+  titleClassName?: TitleProps["className"];
+  titleTextClassName?: TitleProps["textClassName"];
+  titleStrokeClassName?: TitleProps["strokeClassName"];
   titleProps?: Omit<
     TitleProps,
     | "title"
-    | "variant"
+    | "textAs"
+    | "textSize"
+    | "textWeight"
+    | "textFamily"
+    | "textPosition"
+    | "textColor"
     | "width"
-    | "text"
     | "strokeSize"
     | "stroke"
     | "strokeColor"
+    | "className"
+    | "textClassName"
+    | "strokeClassName"
   >;
   children?: React.ReactNode;
 }
@@ -42,9 +56,16 @@ export default function TitleContain({
   position,
   className,
   title,
-  titleVariant,
-  titleWidth,
+  titleAs,
+  titleSize,
+  titleWeight,
+  titleFamily,
+  titlePosition,
   titleColor,
+  titleStrokeClassName,
+  titleTextClassName,
+  titleClassName,
+  titleWidth,
   titleStrokeSize,
   titleStroke,
   titleStrokeColor,
@@ -54,13 +75,20 @@ export default function TitleContain({
   return (
     <div className={cn(titleContainVariants({ position }), className)}>
       <Title
+        textAs={titleAs}
+        textSize={titleSize}
+        textWeight={titleWeight}
+        textFamily={titleFamily}
+        textPosition={titlePosition}
+        textColor={titleColor}
         title={title}
-        variant={titleVariant}
         width={titleWidth}
-        text={titleColor}
         strokeSize={titleStrokeSize}
         stroke={titleStroke}
         strokeColor={titleStrokeColor}
+        className={titleClassName}
+        textClassName={titleTextClassName}
+        strokeClassName={titleStrokeClassName}
         {...titleProps}
       />
       {children}

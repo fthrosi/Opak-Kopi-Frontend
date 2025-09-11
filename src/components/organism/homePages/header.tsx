@@ -1,9 +1,8 @@
-
 import { data } from "@/const/constHeader";
 import TitleDescription from "@/components/molecules/titleDescription";
 import ButtonText from "@/components/molecules/buttonText";
 import { title } from "@/const/constHeader";
-import {Pages} from "@/components/atoms/page";
+import { Pages } from "@/components/atoms/page";
 import { Stat } from "@/components/molecules/stat";
 export default function Header() {
   return (
@@ -12,20 +11,22 @@ export default function Header() {
         <TitleDescription
           className="flex flex-col gap-3"
           title={title.title}
-          titleVariant="hero"
-          titleWidth="hero"
+          titleAs="h1"
+          titleSize="heading1"
+          titleWeight="bold"
+          titlePosition="left"
           titleColor="broken"
+          titleWidth="hero"
           titleStroke={false}
-          titleProps={{
-            textProps: { as: "h1", weight: "bold" },
-          }}
           description={title.description}
+          descriptionAs="p"
+          descriptionSize="body"
+          descriptionWeight="normal"
+          descriptionPosition="left"
+          descriptionColor="broken"
           descriptionWidth="hero"
-          descriptionProps={{
-            textProps: { weight: "normal", textColor: "broken" },
-          }}
         />
-        <div className="flex justify-start">
+        <div className="flex justify-start gap-2 xs:gap-5 sm:gap-7 lg:gap-10">
           {data.map((item) => (
             <Stat
               key={item.id}
@@ -47,14 +48,15 @@ export default function Header() {
         button={true}
         textAs={"p"}
         textFamily={"lexend"}
+        textSize="heading2"
         textWeight={"normal"}
         textPosition={"center"}
         textColor={"secondary"}
-        textClassName="z-2 self-center text-[clamp(0.55rem,2.6vw,0.85rem)] xs:text-[clamp(1.1rem,3.25vw,1.3rem)] sm:text-[clamp(1.3rem,3.4vw,1.6rem)] md:text-[clamp(1.6rem,3.3vw,2rem)] lg:text-[clamp(2rem,2.9vw,2.3rem)] xl:text-[clamp(2rem,2.5vw,2.5rem)] 2xl:text-[2.5rem] w-[clamp(15rem,72vw,24rem)] xs:w-[clamp(28rem,90vw,36rem)] sm:w-[clamp(36rem,92vw,44rem)] md:w-[clamp(44rem,85vw,54rem)] lg:w-[clamp(54rem,79vw,63rem)] xl:w-[clamp(55rem,69vw,68rem)] 2xl:w-[68rem]"
+        textClassName="z-2 text-left xs:text-center self-center w-[clamp(17rem,83.2vw,28rem)] xs:w-[clamp(28rem,90vw,36rem)] sm:w-[clamp(36.625rem,87.7vw,42rem)] md:w-[clamp(42rem,72vw,46rem)] lg:w-[clamp(46rem,61.3vw,49rem)] xl:w-[clamp(49rem,58vw,52rem)] 2xl:w-[54rem]"
         buttonVariant="default"
         buttonAsChild={false}
         buttonText="default"
-        buttonClassName="hover:bg-primary mx-4 xl:mx-[clamp(1rem,5.9vw,5.25rem)] 2xl:mx-20 h-auto w-fit rounded-[0.2rem] text-[clamp(0.3rem,1.4vw,0.5rem)] md:text-[clamp(0.7rem,1.6vw,1rem)] xl:text-sm 2xl:text-[1rem] py-1 px-2 2xl:py-2 2xl:px-[1.13rem]"
+        buttonClassName="hover:bg-primary mx-4 md:mx-[clamp(1.25rem,4vw,6.75rem)] lg:mx-20 xl:mx-35 2xl:mx-40 h-auto w-fit rounded-[0.2rem] text-[0.75rem] sm:text-[clamp(0.75rem,1.3vw,0.813rem)] lg:text-[clamp(0.813rem,1vw,0.875rem)] py-1 px-2 2xl:py-2 2xl:px-[1.13rem]"
       />
     </Pages>
   );

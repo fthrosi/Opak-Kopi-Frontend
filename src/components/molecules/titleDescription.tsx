@@ -32,48 +32,76 @@ export interface TitleDescriptionProps
   className?: string;
 
   // Title Props
-  titleVariant?: TitleProps["variant"];
+  titleAs?: TitleProps["textAs"];
+  titleSize?: TitleProps["textSize"];
+  titleWeight?: TitleProps["textWeight"];
+  titleFamily?: TitleProps["textFamily"];
+  titlePosition?: TitleProps["textPosition"];
+  titleColor?: TitleProps["textColor"];
   titleWidth?: TitleProps["width"];
-  titleColor?: TitleProps["text"];
   titleStrokeSize?: TitleProps["strokeSize"];
   titleStroke?: boolean;
   titleStrokeColor?: TitleProps["strokeColor"];
+  titleClassName?: TitleProps["className"];
+  titleTextClassName?: TitleProps["textClassName"];
+  titleStrokeClassName?: TitleProps["strokeClassName"];
   titleProps?: Omit<
     TitleProps,
     | "title"
-    | "variant"
+    | "textAs"
+    | "textSize"
+    | "textWeight"
+    | "textFamily"
+    | "textPosition"
+    | "textColor"
     | "width"
-    | "text"
     | "strokeSize"
     | "stroke"
     | "strokeColor"
+    | "className"
+    | "textClassName"
+    | "strokeClassName"
   >;
 
   // Description Props
-  descriptionVariant?: DescriptionProps["variant"];
+  descriptionAs?: DescriptionProps["textAs"];
+  descriptionSize?: DescriptionProps["textSize"];
+  descriptionWeight?: DescriptionProps["textWeight"];
+  descriptionFamily?: DescriptionProps["textFamily"];
+  descriptionPosition?: DescriptionProps["textPosition"];
+  descriptionColor?: DescriptionProps["textColor"];
   descriptionWidth?: DescriptionProps["width"];
   descriptionClassName?: DescriptionProps["className"];
   descriptionProps?: Omit<
     DescriptionProps,
-    "description" | "variant" | "width" | "className"
+    "description" | "width" | "className" | "textAs" | "textSize" | "textWeight" | "textFamily" | "textPosition" | "textColor"
   >;
 }
 export default function TitleDescription({
   title,
+  titleAs,
+  titleSize,
+  titleWeight,
+  titleFamily,
+  titlePosition,
+  titleColor,
   description,
+  descriptionAs,
+  descriptionSize,
+  descriptionWeight,
+  descriptionFamily,
+  descriptionPosition,
+  descriptionColor,
   titleProps,
   descriptionProps,
   className,
   position,
   gap,
   direction,
-  titleVariant,
   titleWidth,
-  titleColor,
   titleStrokeSize,
   titleStroke,
   titleStrokeColor,
-  descriptionVariant,
   descriptionWidth,
   descriptionClassName,
 }: TitleDescriptionProps) {
@@ -81,17 +109,26 @@ export default function TitleDescription({
     <div className={cn(titleDescriptionVariants({ position, gap, direction }), className)}>
       <Title
         title={title ? title : ""}
-        variant={titleVariant}
+        textAs={titleAs}
+        textSize={titleSize}
+        textWeight={titleWeight}
+        textFamily={titleFamily}
+        textPosition={titlePosition}
+        textColor={titleColor}
         width={titleWidth}
-        text={titleColor}
         strokeSize={titleStrokeSize}
         stroke={titleStroke}
         strokeColor={titleStrokeColor}
         {...titleProps}
       />
       <Description
+        textAs={descriptionAs}
+        textSize={descriptionSize}
+        textWeight={descriptionWeight}
+        textFamily={descriptionFamily}
+        textPosition={descriptionPosition}
+        textColor={descriptionColor}
         description={description ? description : ""}
-        variant={descriptionVariant}
         width={descriptionWidth}
         className={descriptionClassName}
         {...descriptionProps}
