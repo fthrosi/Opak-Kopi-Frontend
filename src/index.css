@@ -15,6 +15,7 @@
 }
 
 @theme {
+  --color-bone: oklch(0.9851 0.000 0);
   --color-broken: oklch(0.9729 0.0076 61.45);
   --color-light-cokelat: oklch(0.9649 0.0186 75.32);
   --color-primary: oklch(0.7281 0.142 71.35);
