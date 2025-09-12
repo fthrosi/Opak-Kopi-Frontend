@@ -34,6 +34,7 @@ export interface TextImageProps extends VariantProps<typeof textImageVariants> {
 
     // Text Props
     text: TextVariantProps<React.ElementType>["children"];
+    textSize?: TextVariantProps<React.ElementType>["size"];
     textWeight?: TextVariantProps<React.ElementType>["weight"];
     textFamily?: TextVariantProps<React.ElementType>["family"];
     textPosition?: TextVariantProps<React.ElementType>["position"];
@@ -42,6 +43,7 @@ export interface TextImageProps extends VariantProps<typeof textImageVariants> {
     textClassName?: TextVariantProps<React.ElementType>["className"];
     textProps?: Omit<TextVariantProps<React.ElementType>,
         | "children"
+        | "size"
         | "weight"
         | "family"
         | "position"
@@ -71,6 +73,7 @@ export default function TextImage({
     gap,
     align,
     text,
+    textSize,
     textWeight,
     textFamily,
     textPosition,
@@ -102,6 +105,7 @@ export default function TextImage({
                 position={textPosition}
                 textColor={textColor}
                 as={textAs}
+                size={textSize}
                 {...textProps}
             >
                 {text}

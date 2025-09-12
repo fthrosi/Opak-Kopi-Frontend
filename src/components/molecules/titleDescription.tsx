@@ -102,6 +102,8 @@ export default function TitleDescription({
   titleStrokeSize,
   titleStroke,
   titleStrokeColor,
+  titleTextClassName,
+  titleStrokeClassName,
   descriptionWidth,
   descriptionClassName,
 }: TitleDescriptionProps) {
@@ -119,6 +121,8 @@ export default function TitleDescription({
         strokeSize={titleStrokeSize}
         stroke={titleStroke}
         strokeColor={titleStrokeColor}
+        textClassName={titleTextClassName}
+        strokeClassName={titleStrokeClassName}
         {...titleProps}
       />
       <Description

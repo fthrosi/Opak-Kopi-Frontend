@@ -10,8 +10,8 @@ const descriptionVariants = cva("", {
       hero: "w-[clamp(12.5rem,72vw,23.7rem)] xs:w-[23.7rem] md:w-[clamp(23.7rem,39vw,24.938rem)] lg:w-[clamp(24.93rem,34vw,25.6rem)] xl:w-[clamp(25.6rem,32vw,27.2rem)]",
       about:
         "md:w-[clamp(22rem,44.3vw,28.3rem)] lg:w-[clamp(26rem,40.3vw,32.2rem)] xl:w-[clamp(28rem,38vw,38rem)] 2xl:w-[38rem]",
-      bestProduct: "w-[clamp(17rem,82vw,27rem)] lg:w-[clamp(27rem,49vw,39rem)]",
-      special: "w-[clamp(14rem,66vw,22rem)] md:w-[clamp(20.9rem,42.3vw,27rem)]",
+      bestProduct: "w-[clamp(17rem,56.4vw,19rem)] xs:w-[clamp(19rem,62vw,21rem)] md:w-[clamp(21rem,36vw,22.5rem)] lg:w-[clamp(25.625rem,40vw,27rem)] xl:w-[clamp(27rem,33vw,29rem)]",
+      special: "w-[clamp(14rem,69vw,23rem)] md:w-[clamp(20.9rem,42.3vw,27rem)]",
       custom: "",
     },
   },

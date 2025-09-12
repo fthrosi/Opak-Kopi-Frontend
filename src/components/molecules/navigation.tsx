@@ -29,7 +29,19 @@ export interface NavigationVariantProps
   className?: string;
   textfamily?: TextVariantProps<React.ElementType>["family"];
   textColor?: TextVariantProps<React.ElementType>["textColor"];
+  textSize?: TextVariantProps<React.ElementType>["size"];
   textClassName?: TextVariantProps<React.ElementType>["className"];
+  textprops?: Omit<
+    TextVariantProps<React.ElementType>,
+    | "className"
+    | "family"
+    | "textColor"
+    | "size"
+    | "children"
+    | "as"
+    | "weight"
+    | "position"
+  >;
   data?: navigation[];
 }
 export default function Navigation({
@@ -38,8 +50,10 @@ export default function Navigation({
   gap,
   data,
   textfamily,
+  textSize,
   textColor,
   textClassName,
+  textprops,
 }: NavigationVariantProps) {
   return (
     <nav className={cn(navigationVariants({ layout, gap }), className)}>
@@ -50,7 +64,9 @@ export default function Navigation({
           href={item.path}
           family={textfamily}
           textColor={textColor}
+          size={textSize}
           className={cn(textClassName)}
+          {...textprops}
         >
           {item.title}
         </Text>

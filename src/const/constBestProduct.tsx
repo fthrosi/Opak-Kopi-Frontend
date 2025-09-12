@@ -6,7 +6,7 @@ export const dataBestProduct = [
     },
     {
         id: 2,
-        name: "Nasi Goreng Cumi Hitam",
+        name: "Nasi Goreng Cumi",
         image: "/image/Header.png",
     },
     {

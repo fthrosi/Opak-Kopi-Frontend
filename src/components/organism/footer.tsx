@@ -3,72 +3,63 @@ import TitleContain from "../molecules/titleContain";
 import TitleDescription from "../molecules/titleDescription";
 import { Kontak, data } from "@/const/constfooter";
 import TextImage from "../molecules/textImage";
+import { Text } from "../atoms/text";
 
 export default function Footer() {
   return (
-    <footer className="bg-light-cokelat">
-      <div className="flex flex-col md:flex-row gap-5 md:gap-10 xl:gap-[6.688rem] px-2 xs:px-5 md:px-4 lg:px-14 xl:px-24 2xl:px-[4.375rem] xl:max-w-[1440px] mx-auto py-5 md:py-15 xl:py-[9.5rem]">
+    <footer className="relative bg-light-cokelat">
+      <div className="flex flex-col md:flex-row md:justify-between gap-5 md:gap-10 xl:gap-[6.688rem] px-2 xs:px-5 md:px-4 lg:px-14 xl:px-24 2xl:px-[4.375rem] xl:max-w-[1440px] mx-auto pt-5 pb-10 md:py-15 xl:py-[9.5rem]">
         <TitleDescription
           className="gap-2 md:gap-4 lg:gap-6 xl:gap-10 2xl:gap-7"
           position="start"
           direction="default"
           title="Opak Kopi"
-          titleVariant="custom"
-          titleColor="default"
+          titleSize="heading2"
+          titleAs="h2"
+          titleWeight="normal"
+          titleFamily="lily"
           titleStroke={false}
-          titleProps={{
-            textClassName: "text-2xl 2xl:text-[2.5rem]",
-            textProps: {
-              family: "lily",
-              weight: "normal",
-            },
-          }}
           description="Temukan lebih dari 90 makanan dan 50 minuman dalam satu tempat yang nyaman dan strategis."
-          descriptionVariant="custom"
+          descriptionSize="body"
+          descriptionColor="secondary"
           descriptionWidth="custom"
-          descriptionProps={{
-            textProps: {
-              textColor: "secondary",
-            },
-          }}
-          descriptionClassName="text-[clamp(0.55rem,2.55vw,0.85rem)] lg:text-[clamp(0.85rem,1.57vw,1.25rem)]"
         />
         <div className="flex gap-10 xs:gap-20 md:gap-10 xl:gap-[6.688rem]">
           {data.map((item) => (
             <TitleContain
               title={item.Title}
               className="gap-2 md:gap-4 lg:gap-6 xl:gap-10 2xl:gap-12"
-              titleVariant="custom"
               titleColor="secondary"
               titleStroke={false}
-              titleProps={{
-                textClassName: "text-lg lg:text-xl 2xl:text-2xl",
-              }}
+              titleAs="h3"
+              titleSize="body"
+              key={item.id}
+              titleWeight="semiBold"
             >
               <Navigation
                 className="gap-1"
                 data={item.navigation}
                 textColor="secondary"
-                textClassName="text-[clamp(0.55rem,2.55vw,0.85rem)] lg:text-[clamp(0.85rem,1.57vw,1.25rem)]"
+                textSize="body"
               />
             </TitleContain>
           ))}
         </div>
         <TitleContain
           title="Kontak"
+          position="end"
           className="gap-2 md:gap-4 lg:gap-6 xl:gap-10 2xl:gap-12"
-          titleVariant="custom"
           titleColor="secondary"
           titleStroke={false}
-          titleProps={{
-            textClassName: "text-lg lg:text-xl 2xl:text-2xl",
-          }}
+          titleAs="h3"
+          titleSize="body"
+          titleWeight="semiBold"
         >
           <div className="flex flex-col gap-2">
             {Kontak.map((item) => (
               <TextImage
                 key={item.id}
-                className="gap-2 2xl:gap-4"
+                className="gap-2 2xl:gap-4 w-fit"
                 gap="custom"
                 imgSrc={item.icon}
                 imgAlt={item.name}
@@ -77,11 +68,15 @@ export default function Footer() {
                 imgClassName="size-4 xl:size-5 mt-1 xl:mt-1.5"
                 text={item.name}
                 textColor="secondary"
-                textClassName="text-[clamp(0.55rem,2.55vw,0.85rem)] lg:text-[clamp(0.85rem,1.57vw,1.25rem)]"
+                textSize="body"
+                textClassName="w-fit"
               />
             ))}
           </div>
         </TitleContain>
+      </div>
+      <div className="absolute bottom-0 w-full p-1 lg:p-3 bg-broken">
+        <Text children="Copyright © 2025 Fathur Rosi" size="caption" weight="normal" position="center"/>
       </div>
     </footer>
   );

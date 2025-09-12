@@ -10,8 +10,10 @@ export default function About() {
         <Title
           title="TENTANG KAFE OPAK KOPI"
           stroke={false}
-          textProps={{ as: "h1", weight: "bold" }}
-          variant="about"
+          textAs="h2"
+          textColor="primary"
+          textSize="heading2"
+          textWeight="bold"
           className="mb-2"
         />
         <div className="flex flex-col gap-2 tracking-widest md:tracking-normal lg:tracking-wider">
@@ -19,16 +21,11 @@ export default function About() {
             <Description
               key={item.id}
               description={item.text}
-              variant="about"
               width="about"
-              textProps={{
-                as: "p",
-                variant: "body",
-                family: "lexend",
-                weight: "normal",
-                textColor: "secondary",
-                position: "justify",
-              }}
+              textAs="p"
+              textColor="secondary"
+              textSize="body"
+              textPosition="justify"
             />
           ))}
         </div>

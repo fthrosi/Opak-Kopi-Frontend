@@ -59,6 +59,7 @@ export interface CardFeaturedProps
     | "buttonProps"
     | "button"
     | "children"
+    | "size"
   >;
   //img props
   src?: ImgVariantProps["src"];
@@ -73,6 +74,7 @@ export interface CardFeaturedProps
   textButtonPosition?: ButtonTextProps["position"];
   //text props
   textAs?: ButtonTextProps["textAs"];
+  textSize?: ButtonTextProps["textSize"];
   textFamily?: ButtonTextProps["textFamily"];
   textWeight?: ButtonTextProps["textWeight"];
   textPosition?: ButtonTextProps["textPosition"];
@@ -108,6 +110,7 @@ const CardFeature = React.forwardRef<HTMLDivElement, CardFeaturedProps>(
       textButtonClassName,
       textButtonPosition,
       textAs,
+      textSize,
       textFamily,
       textWeight,
       textPosition,
@@ -145,6 +148,7 @@ const CardFeature = React.forwardRef<HTMLDivElement, CardFeaturedProps>(
           className={textButtonClassName}
           position={textButtonPosition}
           textAs={textAs}
+          textSize={textSize}
           textFamily={textFamily}
           textWeight={textWeight}
           textPosition={textPosition}
