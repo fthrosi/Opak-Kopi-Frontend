@@ -6,6 +6,8 @@ interface UIState {
   open: (key: UIKey) => void;
   close: (key: UIKey) => void;
   toggle: (key: UIKey) => void;
+  scrollY: number
+  setScrollY: (y: number) => void;
 }
 
 export const useUIStore = create<UIState>((set) => ({
@@ -32,4 +34,6 @@ export const useUIStore = create<UIState>((set) => ({
       [key]: !state.activeStates[key],
       },
   })),
+  scrollY: 0,
+  setScrollY: (y: number) => set(() => ({ scrollY: y })),
 }))

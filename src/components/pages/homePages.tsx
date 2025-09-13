@@ -9,7 +9,16 @@ import { CardSpecial } from "@/const/constCardSpecial";
 export default function HomePages() {
   return (
     <div className=" bg-broken min-h-screen">
-      <SectionPage variant="top" backgroundColor="dark">
+      <SectionPage
+        variant="top"
+        backgroundColor="dark"
+        // className=""
+      >
+        {/* <div className="absolute z-0 right-0  rounded-full xl:size-70 bg-secondary/50 blur-2xl ring-150 ring-primary/40" />
+        <div className="absolute z-0 left-50 rounded-full xl:size-70 bg-secondary/50 blur-2xl ring-150 ring-primary/40" />
+        <div className="absolute z-0 left-0 bottom-0 rounded-full size-5 xl:size-70 bg-secondary/50 blur-2xl ring-150 ring-primary/40" />
+        <div className="absolute z-0 right-0 bottom-0 rounded-full xl:size-70 bg-secondary/50 blur-2xl ring-150 ring-primary/40" />
+        <div className="absolute z-0 right-120 bottom-50 rounded-full size-20 xl:size-70 bg-secondary blur-2xl ring-10 ring-primary/40" /> */}
         <Header />
         <TransitionPage variant="broken" />
       </SectionPage>
@@ -28,19 +37,19 @@ export default function HomePages() {
             title: "Produk Penjualan Terbaik",
             description:
               "Dipilih langsung oleh pelanggan setia kami, inilah tiga menu favorit yang wajib kamu coba saat pertama kali datang ke kafe kami.",
-            titleSize:"heading1",
-            titleWeight:"semiBold",
+            titleSize: "heading1",
+            titleWeight: "semiBold",
             titleStroke: true,
             titleStrokeSize: "special",
             titleStrokeColor: "default",
             titleColor: "broken",
-            titleAs:"h2",
-            titlePosition:"center",
-            descriptionSize:"body",
-            descriptionAs:"p",
+            titleAs: "h2",
+            titlePosition: "center",
+            descriptionSize: "body",
+            descriptionAs: "p",
             descriptionWidth: "bestProduct",
-            descriptionPosition:"center",
-            descriptionWeight:"semiBold",
+            descriptionPosition: "center",
+            descriptionWeight: "semiBold",
           }}
         >
           {dataBestProduct.map((item) => (
@@ -85,10 +94,10 @@ export default function HomePages() {
             title: "Apa yang membuat kami Spesial?",
             description:
               "Kami bukan sekedar kafe biasa. Dari variasi menu hingga lokasi yang strategis,semuanya kami rancang untuk bikin kamu betah.",
-            titleSize:"heading1",
-            titleAs:"h2",
-            titleWeight:"semiBold",
-            titlePosition:"center",
+            titleSize: "heading1",
+            titleAs: "h2",
+            titleWeight: "semiBold",
+            titlePosition: "center",
             titleStroke: true,
             titleStrokeSize: "special",
             titleStrokeColor: "special",
@@ -97,12 +106,12 @@ export default function HomePages() {
             titleStrokeClassName: "md:text-left",
             titleTextClassName: "md:text-left",
 
-            descriptionSize:"body",
-            descriptionAs:"p",
-            descriptionWeight:"normal",
-            descriptionPosition:"center", 
+            descriptionSize: "body",
+            descriptionAs: "p",
+            descriptionWeight: "normal",
+            descriptionPosition: "center",
             descriptionWidth: "special",
-            descriptionColor:"secondary",
+            descriptionColor: "secondary",
             descriptionClassName: "md:text-left md:text-justify",
           }}
         >
@@ -114,7 +123,7 @@ export default function HomePages() {
               variant="special"
               background={"broken"}
               aspect={"special"}
-              className="py-4 px-2 xs:px-6 md:px-[clamp(1rem,3vw,3rem)] lg:px-[clamp(2rem,4vw,3.2rem)] xl:px-[clamp(3.2rem,4.5vw,4rem)] flex flex-col items-center shadow-xs shadow-primary"
+              className="py-4 px-2 xs:px-6 md:px-[clamp(1rem,2.1vw,3rem)] lg:px-[clamp(1.5rem,2.4vw,3.2rem)] xl:px-[clamp(3.2rem,4.5vw,4rem)] flex flex-col items-center shadow-xs shadow-primary"
               imgvariant="lg"
               imgClassName="size-[clamp(3.75rem,18vw,6rem)] lg:size-[clamp(6rem,8.8vw,7rem)] 2xl:size-34 rounded-lg mb-2"
               text={item.title}
@@ -143,21 +152,21 @@ export default function HomePages() {
             title: "Temukan Kami di Sini",
             description:
               "Kami berada di lokasi strategis yang mudah diakses dari mana saja. Ayo mampir dan nikmati suasana kafe yang nyaman!",
-            titleAs:"h2",
-            titleSize:"heading1",
-            titleWeight:"semiBold",
-            titlePosition:"center",
+            titleAs: "h2",
+            titleSize: "heading1",
+            titleWeight: "semiBold",
+            titlePosition: "center",
             titleStroke: true,
             titleStrokeSize: "special",
             titleStrokeColor: "default",
             titleColor: "broken",
-            descriptionAs:"p",
-            descriptionSize:"body",
-            descriptionPosition:"center",
-            descriptionWeight:"semiBold",
-            descriptionColor:"primary",
+            descriptionAs: "p",
+            descriptionSize: "body",
+            descriptionPosition: "center",
+            descriptionWeight: "semiBold",
+            descriptionColor: "primary",
             descriptionWidth: "bestProduct",
-            descriptionClassName: "lg:w-[24rem] xl:w-[clamp(25rem,31vw,27rem)]"
+            descriptionClassName: "lg:w-[24rem] xl:w-[clamp(25rem,31vw,27rem)]",
           }}
         >
           <div className="rounded-lg w-full shadow-md h-[clamp(13rem,47.7vw,16rem)] md:h-auto xs:aspect-[143/60] ">

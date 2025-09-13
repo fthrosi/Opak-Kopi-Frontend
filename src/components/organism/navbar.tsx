@@ -1,13 +1,21 @@
-import { useEffect, useState } from "react";
-import Navigation from "../molecules/navigation";
-import NavigationAuth from "../molecules/navbar/navigationAuth";
-import LogoIcon from "../molecules/navbar/logo_icon";
+import React, { useEffect } from "react";
 import { useUIStore } from "../store/useUIStore";
-import { navigationData } from "@/const/constNavbar";
-
-export default function Navbar() {
+import { useStickyNavbar } from "@/hooks/useStickyNavbar";
+import { useSidebarAnimation } from "@/hooks/useSidebarAnimation";
+type NavbarProps = {
+  logoIcon?: React.ReactNode;
+  navigation?: React.ReactNode;
+  navigationButton?: React.ReactNode;
+};
+export default function Navbar({
+  logoIcon,
+  navigation,
+  navigationButton,
+}: NavbarProps) {
+  const isScroll = useUIStore((state) => state.scrollY);
   const isOpen = useUIStore((state) => state.activeStates.sidebar);
-  const [isScrolling, setIsScrolling] = useState(false);
+  const isSticky = useStickyNavbar(300);
+  const isFullyClosed = useSidebarAnimation(isOpen, 500);
   useEffect(() => {
     const body = document.body;
     if (isOpen) {
@@ -19,44 +27,68 @@ export default function Navbar() {
       body.style.overflow = "auto";
     };
   }, [isOpen]);
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolling(true);
-      } else {
-        setIsScrolling(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
   return (
-    <header
-      className={`fixed z-10 w-full 2xl:h-[5.75rem] top-0 transition-all duration-100 ${
-        isScrolling ? "md:bg-broken bg-transparent" : "bg-transparent"
-      }`}
-    >
-      <div className="block md:flex items-center justify-between md:p-4 lg:px-14 xl:px-24 2xl:px-[4.375rem] 2xl:py-0 xl:max-w-[1440px] mx-auto 2xl:h-full">
-        <div
-          className={`px-2 py-2 xs:px-5 md:p-0 transition-all duration-200 ${
-            isScrolling ? "bg-broken md:bg-transparent" : "bg-transparent"
-          }`}
+    <>
+      {isScroll <= 0 && (
+        <header
+          className={`fixed top-0 z-20 w-full 2xl:h-[5.75rem]  transition-transform duration-300 ease-in-out bg-transparent`}
         >
-          <LogoIcon />
-        </div>
-        <div
-          className={`bg-broken h-screen md:h-fit px-4 flex justify-center md:contents transition-transform duration-400 md:translate-0 ${
-            isOpen ? "translate-x-0 " : "-translate-x-200 hidden"
-          }`}
-        >
-          <div className="flex flex-col md:contents items-start justify-center md:justify-between">
-            <Navigation data={navigationData} layout="navbar" gap="navbar" textfamily="lily" textColor="secondary" textClassName="xs:text-2xl block md:inline w-fit text-xl md:text-lg 2xl:text-2xl" />
-            <NavigationAuth />
+          <div className="block md:flex items-center justify-between md:p-4 lg:px-14 xl:px-24 2xl:px-[4.375rem] 2xl:py-0 xl:max-w-[1440px] mx-auto 2xl:h-full">
+            <div
+              className={`px-2 py-2 xs:px-5 md:p-0 transition-all duration-300 bg-transparent`}
+            >
+              {logoIcon}
+            </div>
+            <div
+              className={` md:h-fit bg-broken px-4 flex justify-center md:contents transition-transform duration-400 md:translate-0 ${
+                isFullyClosed ? "h-0 overflow-hidden" : "h-dvh"
+              } ${
+                isOpen
+                  ? "translate-x-0 "
+                  : "-translate-x-200 "
+              }`}
+            >
+              <div className="flex flex-col md:contents items-start justify-center md:justify-between">
+                {navigation}
+                {navigationButton}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </header>
+        </header>
+      )}
+      {isScroll > 0 && (
+        <header
+          className={`fixed top-0 z-20 w-full 2xl:h-[5.75rem]  transition-transform duration-300 ease-in-out ${
+            isSticky
+              ? "md:bg-broken bg-transparent  translate-y-0"
+              : "bg-transparent -translate-y-full"
+          }`}
+        >
+          <div className="block md:flex items-center justify-between md:p-4 lg:px-14 xl:px-24 2xl:px-[4.375rem] 2xl:py-0 xl:max-w-[1440px] mx-auto 2xl:h-full">
+            <div
+              className={`px-2 py-2 xs:px-5 md:p-0 transition-all duration-300 ${
+                isSticky ? "bg-broken md:bg-transparent" : "bg-transparent"
+              }`}
+            >
+              {logoIcon}
+            </div>
+            <div
+              className={` md:h-fit bg-broken px-4 flex justify-center md:contents transition-transform duration-400 md:translate-0 ${
+                isFullyClosed ? "h-0 overflow-hidden" : "h-dvh"
+              } ${
+                isOpen
+                  ? "translate-x-0 "
+                  : "-translate-x-200 "
+              }`}
+            >
+              <div className="flex flex-col md:contents items-start justify-center md:justify-between">
+                {navigation}
+                {navigationButton}
+              </div>
+            </div>
+          </div>
+        </header>
+      )}
+    </>
   );
 }

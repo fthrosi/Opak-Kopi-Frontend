@@ -8,6 +8,7 @@ const pagesVariants = cva(
     variants: {
       variant: {
         default: "",
+        small: "pb-30 pt-15",
         bestProduct: "py-30 flex flex-col items-center gap-15 justify-center",
       },
     },

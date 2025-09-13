@@ -27,17 +27,12 @@ type navigation = {
 export interface NavigationVariantProps
   extends VariantProps<typeof navigationVariants> {
   className?: string;
-  textfamily?: TextVariantProps<React.ElementType>["family"];
-  textColor?: TextVariantProps<React.ElementType>["textColor"];
-  textSize?: TextVariantProps<React.ElementType>["size"];
-  textClassName?: TextVariantProps<React.ElementType>["className"];
-  textprops?: Omit<
+  textprops?: Pick<
     TextVariantProps<React.ElementType>,
     | "className"
     | "family"
     | "textColor"
     | "size"
-    | "children"
     | "as"
     | "weight"
     | "position"
@@ -49,10 +44,6 @@ export default function Navigation({
   layout,
   gap,
   data,
-  textfamily,
-  textSize,
-  textColor,
-  textClassName,
   textprops,
 }: NavigationVariantProps) {
   return (
@@ -62,10 +53,6 @@ export default function Navigation({
           key={item.id}
           as="a"
           href={item.path}
-          family={textfamily}
-          textColor={textColor}
-          size={textSize}
-          className={cn(textClassName)}
           {...textprops}
         >
           {item.title}

@@ -1,23 +1,25 @@
-import {Text} from "../../atoms/text";
+import {Text, type TextVariantProps} from "../../atoms/text";
 import BurgerMenu from "../../atoms/icons/burgerMenu";
 import CloseIcon from "../../atoms/icons/close";
 import { useUIStore } from "../../store/useUIStore";
+import { cn } from "@/lib/utils";
+type LogoIconProps = {
+  className?: string;
+  textprops: Pick<TextVariantProps<React.ElementType>, "className" | "as" | "family" | "textColor" | "size" | "weight">;
+  href? : string;
+  children?: React.ReactNode;
+}
 
-export default function LogoIcon() {
+export default function LogoIcon( { className, textprops, href, children }: LogoIconProps) {
   const isOpen = useUIStore((state) => state.activeStates.sidebar);
   const toggleSidebar = useUIStore((state) => state.toggle);
-
   return (
-    <div className="flex items-center justify-between">
+    <div className={cn("flex items-center justify-between", className)}>
       <Text
-        as="a"
-        href="/"
-        family="lily"
-        weight="normal"
-        textColor="primary"
-        className="text-xl xs:text-2xl 2xl:text-[2rem]"
+        href= {textprops.as === "a" ? href : undefined}
+        {...textprops}
       >
-        Opak Kopi
+        {children}
       </Text>
       <div className="md:hidden">
         {isOpen ? (

@@ -20,7 +20,7 @@ const titleGridSectionVariants = cva(
       gap:{
         default: "",
         bestProduct: "gap-10 xs:gap-15 sm:gap-20 md:gap-5 lg:gap-7.5 xl:gap-10 2xl:gap-12.5",
-        special:"gap-15 md:gap-0",
+        special:"gap-15 md:gap-0 lg:gap-5 xl:gap-0",
       }
     },
     defaultVariants: {
