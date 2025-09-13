@@ -39,8 +39,10 @@ export default function Footer() {
               <Navigation
                 className="gap-1"
                 data={item.navigation}
-                textColor="secondary"
-                textSize="body"
+                textprops={{
+                  textColor: "secondary",
+                  size: "body",
+                }}
               />
             </TitleContain>
           ))}
