@@ -51,7 +51,7 @@ const TitleGridSection = React.forwardRef<
     ref
   ) => {
     return (
-      <Pages {...pagesProps} ref={ref}>
+      <Pages {...pagesProps} ref={ref} className="h-dvh">
         <TitleDescription
           {...titleDescriptionProps}
         />

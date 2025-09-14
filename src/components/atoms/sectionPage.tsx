@@ -6,7 +6,7 @@ const sectionVariants = cva("relative", {
     variants: {
         variant: {
             default: "",
-            top: "pt-11.5 xs:pt-12.5 sm:pt-13 md:pt-18 lg:pt-19 xl:pt-20 2xl:pt-[5.9rem] pb-10 xl:pb-0",
+            top: "pt-11.5 xs:pt-12.5 sm:pt-13 md:pt-18 lg:pt-19 xl:pt-20 2xl:pt-[5.9rem] pb-10 xl:pb-0 xl:min-h-dvh",
         },
         backgroundColor: {
             light: "bg-light-cokelat",

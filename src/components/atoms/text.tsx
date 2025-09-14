@@ -10,6 +10,7 @@ const textVariants = cva("", {
       heading3:"text-[clamp(1rem,3vw,1.125rem)] sm:text-[clamp(1.125rem,2vw,1.25rem)] lg:text-[clamp(1.25rem,1.75vw,1.375rem)] xl:text-[clamp(1.375rem,1.7vw,1.5rem)] 2xl:text-[1.5rem]",
       body:"text-[clamp(0.875rem,2.8vw,0.938rem)] sm:text-[clamp(0.938rem,1.6vw,1rem)] lg:text-[clamp(1rem,1.4vw,1.063rem)] xl:text-[clamp(1.063rem,1.3vw,1.125rem)] 2xl:text-[1.125rem]",
       caption:"text-[0.75rem] sm:text-[clamp(0.75rem,1.3vw,0.813rem)] lg:text-[clamp(0.813rem,1vw,0.875rem)]",
+      custom:"",
     },
     weight: {
       light: "font-light",

@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const pagesVariants = cva(
-  "px-2 xs:px-5 md:px-4 lg:px-14 xl:px-24 2xl:px-[4.375rem] xl:max-w-[1440px] xl:min-h-dvh mx-auto relative flex flex-col",
+  "px-2 xs:px-5 md:px-4 lg:px-14 xl:px-24 2xl:px-[4.375rem] xl:max-w-[1440px] mx-auto relative flex flex-col",
   {
     variants: {
       variant: {
