@@ -5,7 +5,7 @@ import { about } from "@/const/constAbout";
 import Img from "@/components/atoms/img";
 export default function About() {
   return (
-    <Pages variant="small" className="gap-10 md:gap-0 md:flex-row h-dvh">
+    <Pages variant="small" className="gap-10 md:gap-0 md:flex-row xl:min-h-dvh">
       <div className="self-center">
         <Title
           title="TENTANG KAFE OPAK KOPI"

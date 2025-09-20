@@ -12,13 +12,7 @@ export default function HomePages() {
       <SectionPage
         variant="top"
         backgroundColor="dark"
-        // className=""
       >
-        {/* <div className="absolute z-0 right-0  rounded-full xl:size-70 bg-secondary/50 blur-2xl ring-150 ring-primary/40" />
-        <div className="absolute z-0 left-50 rounded-full xl:size-70 bg-secondary/50 blur-2xl ring-150 ring-primary/40" />
-        <div className="absolute z-0 left-0 bottom-0 rounded-full size-5 xl:size-70 bg-secondary/50 blur-2xl ring-150 ring-primary/40" />
-        <div className="absolute z-0 right-0 bottom-0 rounded-full xl:size-70 bg-secondary/50 blur-2xl ring-150 ring-primary/40" />
-        <div className="absolute z-0 right-120 bottom-50 rounded-full size-20 xl:size-70 bg-secondary blur-2xl ring-10 ring-primary/40" /> */}
         <Header />
         <TransitionPage variant="broken" />
       </SectionPage>

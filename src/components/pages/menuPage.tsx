@@ -3,7 +3,7 @@ import MenuCatalog from "../organism/menuCatalog";
 
 export default function MenuPage() {
   return (
-    <SectionPage variant="top" backgroundColor="dark" className="xl:h-dvh">
+    <SectionPage variant="menu" backgroundColor="dark" className="h-dvh">
       <MenuCatalog />
     </SectionPage>
   );

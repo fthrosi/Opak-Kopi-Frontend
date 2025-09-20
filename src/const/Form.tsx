@@ -29,7 +29,7 @@ export const registerForm: FormItem[] = [
     {
         id: 1,
         children: "Nama",
-        inputId: "fullName",
+        inputId: "name",
         placeHolder:"exp:your-full-name",
         variant:"text"
     },

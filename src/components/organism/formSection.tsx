@@ -42,6 +42,7 @@ export interface FormSectionProps
   button?: boolean;
   login?: boolean;
   register?: boolean;
+  onSubmit?: React.FormEventHandler<HTMLFormElement>;
 }
 export default function FormSection({
   className,
@@ -55,6 +56,7 @@ export default function FormSection({
   buttonProps,
   buttonText,
   button = true,
+  onSubmit,
 }: FormSectionProps) {
   return (
     <div className={cn(formSectionVariants({ gap }), className)}>
@@ -78,11 +80,15 @@ export default function FormSection({
         />
       )}
 
-      <div className={cn(formSectionVariants({ layout, gapForm }))}>
-        {children}
-      </div>
-      {login && <Text {...textProps} />}
-      {button && <Button {...buttonProps}>{buttonText}</Button>}
+      <form onSubmit={onSubmit}>
+        <div className={cn(formSectionVariants({ layout, gapForm }))}>
+          {children}
+        </div>
+        <div className="flex flex-col gap-5 mt-5">
+          {login && <Text {...textProps} />}
+        {button && <Button {...buttonProps}>{buttonText}</Button>}
+        </div>
+      </form>
       {(register || login) && (
         <Text
           {...textProps}

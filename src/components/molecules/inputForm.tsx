@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import React from "react";
 
-const inputVariants = cva("grid w-full items-center gap-3", {
+const inputVariants = cva("flex flex-col w-full items-start gap-3", {
   variants: {
     labelSize: {
       default:
@@ -26,6 +26,7 @@ export interface InputFormProps
   className?: string;
   children?: React.ReactNode;
   inputVariant?: InputProps["variant"];
+  inputFormSize?: InputProps["formSize"];
   inputId?: InputProps["id"];
   inputBgColor?: InputProps["bgColor"];
   inputTextColor?: InputProps["textColor"];
@@ -42,6 +43,7 @@ export interface InputFormProps
     | "textColor"
     | "borderColor"
     | "focus"
+    | "formSize"
   >;
 }
 export default function InputForm({
@@ -50,6 +52,7 @@ export default function InputForm({
   labelSize,
   labelColor,
   inputVariant,
+  inputFormSize,
   inputId,
   inputBgColor,
   inputTextColor,
@@ -72,6 +75,7 @@ export default function InputForm({
       </label>
       <Input
         id={inputId}
+        formSize={inputFormSize}
         variant={inputVariant}
         bgColor={inputBgColor}
         textColor={inputTextColor}

@@ -9,7 +9,7 @@ const cardProdukVariants = cva(
   {
     variants: {
       layout: {
-        default: "w-[16.25rem]",
+        default: "w-[15rem] md:w-[16rem] xl:w-[16.25rem] 2xl:w-[18rem]",
         sm: "w-36 sm:w-40 md:w-44 lg:w-48 xl:w-52 2xl:w-56",
         lg: "w-48 sm:w-52 md:w-56 lg:w-60 xl:w-64 2xl:w-72",
         xl: "w-56 sm:w-60 md:w-64 lg:w-72 xl:w-80 2xl:w-96",
@@ -98,8 +98,9 @@ export default function CardProduk({
 }: CardProdukProps) {
   return (
     <div className={cn(cardProdukVariants({ layout }), className)}>
-      <div
-        className={`h-3/5 w-full bg-[url(${imageSrc})] bg-cover bg-center`}
+      <img
+        className={`h-3/5 w-full`}
+        src={imageSrc}
       />
       <div className={cn("px-4 py-3 z-10 h-2/5", contentClassName)}>
         <TitleContain
@@ -111,7 +112,7 @@ export default function CardProduk({
           {...buttonProps}
           {...buttonTextProps}
           text={textProps?.text || "Button"}
-          buttonProps={{ onClick: onButtonClick }}
+          buttonProps={{ onClick: onButtonClick, size: "custom", }}
         />
       </div>
     </div>

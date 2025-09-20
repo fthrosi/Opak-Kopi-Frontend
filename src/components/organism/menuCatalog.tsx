@@ -5,21 +5,59 @@ import Star from "../icons/star";
 import { formatRupiah } from "@/const/idrCurrency";
 import { Pages } from "../atoms/page";
 import InputForm from "../molecules/inputForm";
-import { Button } from "../atoms/button";
+import SelectLabel from "../molecules/selectLabel";
+import { kategoriMenu } from "@/const/kategoriMenu";
+import { useState } from "react";
+
 export default function MenuCatalog() {
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredMenu = menuMakanan.filter((item) => {
+    const matchesCategory =
+      selectedCategory === "" || item.kategori === selectedCategory;
+    const matchesSearch =
+      item.nama.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+  console.log("Filtered Menu:", filteredMenu);
+
   return (
     <Pages className="flex flex-row justify-between bg-broken h-full">
-      <div className="flex flex-col gap-6">
-        <div className="p-3 bg-white rounded-lg flex gap-3">
-          <InputForm children="Kategori" className="w-5/11" />
-          <div className="flex w-6/11 items-end gap-3">
-            <InputForm children="Cari" className="w-full" />
-            <Button children="Cari" />
+      <div className="flex flex-col gap-6 w-full md:mr-3">
+        <div className="p-3 bg-white rounded-lg flex flex-col xs:flex-row gap-3">
+          <SelectLabel
+            children="Kategori"
+            className="xs:w-1/2"
+            selectFormProps={{
+              placeholder: "Semua",
+              id: "kategori",
+              options: kategoriMenu,
+              formSize: "sm",
+              className: "text-[0.68rem]"
+            }}
+            selectProps={{
+              value: selectedCategory,
+              onChange: (e) => setSelectedCategory(e.target.value),
+            }}
+          />
+          <div className="flex xs:w-1/2 items-end gap-3">
+            <InputForm
+              inputId="cari"
+              children="Cari"
+              className="w-full"
+              labelSize="default"
+              inputFormSize="sm"
+              inputProps={{
+                placeholder: "Cari Menu",
+                onChange: (e) => setSearchTerm(e.target.value),
+                value: searchTerm,
+              }}
+            />
           </div>
         </div>
-        <div className="h-full overflow-y-auto scrollbar-hide">
-          <div className="grid lg:grid-cols-3 gap-[1.5rem]">
-            {menuMakanan.map((item) => (
+        <div className="h-full mx-auto md:m-0 overflow-y-auto scrollbar-hide">
+          <div className="grid grid-cols-1 xs:grid-cols-2 gap-[1.5rem]">
+            {filteredMenu.map((item) => (
               <CardProduk
                 key={item.id}
                 imageSrc={item.imageSrc}
@@ -28,7 +66,7 @@ export default function MenuCatalog() {
                   className: "flex-row justify-between items-center",
                   title: item.nama,
                   titleClassName:
-                    "md:text-[0.938rem] xl:text-[1rem] w-[10.188rem] text-wrap",
+                    "text-[clamp(0.938rem,1.6vw,1rem)] md:text-[0.938rem] xl:text-[1rem] w-[10.188rem] text-wrap",
                   titleStroke: false,
                   titleSize: "custom",
                   titleWidth: "custom",
@@ -45,11 +83,13 @@ export default function MenuCatalog() {
                   buttonVariant: "default",
                   button: true,
                   children: "Masukan Keranjang",
+                  buttonClassName: "py-2 text-xs 2xl:text-sm",
                 }}
                 textProps={{
                   text: formatRupiah({ value: item.harga }),
                   textAs: "p",
                   textColor: "secondary",
+                  textSize: "body",
                 }}
                 buttonTextProps={{
                   className: "gap-2",
@@ -59,10 +99,16 @@ export default function MenuCatalog() {
           </div>
         </div>
       </div>
-      <div className="w-[28.3rem] h-full border-l-2 border-l-primary pl-6">
-        <Text size="heading2" className="w-full text-center">Keranjang Belanja</Text>
+      <div className="hidden lg:block w-[28.3rem] h-full border-l-2 border-l-primary pl-6">
+        <Text size="heading2" className="w-full text-center">
+          Keranjang Belanja
+        </Text>
         <div className="w-[5rem] mt-10">
-            <InputForm children="No.Meja" labelSize="body" inputProps={{placeholder:"Masukkan No.Meja"}}/>
+          <InputForm
+            children="No.Meja"
+            labelSize="body"
+            inputProps={{ placeholder: "Masukkan No.Meja" }}
+          />
         </div>
       </div>
     </Pages>

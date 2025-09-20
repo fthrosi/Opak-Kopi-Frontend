@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const inputVariants = cva(
-  "flex h-9 w-full min-w-0 rounded-md border px-3 py-1 shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 text-[0.75rem] sm:text-[clamp(0.75rem,1.3vw,0.813rem)] lg:text-[clamp(0.813rem,1vw,0.875rem)] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "flex w-full px-3 py-1 min-w-0 rounded-md border shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
@@ -25,6 +25,10 @@ const inputVariants = cva(
         radio: "radio",
         range: "range",
         hidden: "hidden",
+      },
+      formSize: {
+        default: "h-9 text-[0.75rem] sm:text-[clamp(0.75rem,1.3vw,0.813rem)] lg:text-[clamp(0.813rem,1vw,0.875rem)]",
+        sm: "h-7",
       },
       bgColor: {
         default: "bg-input file:bg-input selection:bg-input",
@@ -48,6 +52,7 @@ const inputVariants = cva(
     },
     defaultVariants: {
       variant: "text",
+      formSize: "default",
       bgColor: "default",
       textColor: "default",
       placeholderColor: "default",
@@ -70,6 +75,7 @@ function Input({
   autoComplete,
   variant,
   bgColor,
+  formSize,
   placeholderColor,
   textColor,
   borderColor,
@@ -84,6 +90,7 @@ function Input({
       autoComplete={id}
       className={cn(
         inputVariants({
+          formSize,
           variant,
           bgColor,
           placeholderColor,
