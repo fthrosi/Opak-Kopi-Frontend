@@ -6,7 +6,6 @@ export type CartItem = {
     harga: number;
     qty: number;
     imageSrc: string;
-    // properti lain sesuai kebutuhan
 };
 
 type CartState = {
@@ -20,7 +19,8 @@ export const useCartStore = create<CartState>()(
   persist(
     (set) => ({
       cart: [],
-      addToCart: (item) =>
+      addToCart: (item) =>{
+        console.log("addToCart called with:", item);
         set((state) => {
           const exist = state.cart.find((i) => i.id === item.id);
           if (exist) {
@@ -31,7 +31,8 @@ export const useCartStore = create<CartState>()(
             };
           }
           return { cart: [...state.cart, { ...item, qty: 1 }] };
-        }),
+        });
+      },
       removeFromCart: (id) =>
         set((state) => {
           const exist = state.cart.find((i) => i.id === id);

@@ -30,6 +30,8 @@ export default function MenuFilterBar({onFilter}: MenuFilterBarProps) {
                     placeholder: "Semua",
                     id: "kategori",
                     options: kategoriMenu,
+                    formSize: "sm",
+                    className: "2xl:h-9",
                 }}
                 selectProps={{
                     value: selectedCategory,

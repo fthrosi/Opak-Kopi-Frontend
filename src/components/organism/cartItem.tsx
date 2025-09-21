@@ -31,6 +31,7 @@ export default function CartItemComponent({ item, addToCart, removeFromCart }: P
       <div className="flex items-center gap-2">
         <button
           onClick={() => removeFromCart(item.id)}
+          type="button"
           className="bg-primary p-1 rounded-full hover:cursor-pointer"
         >
           <MinusIcon className="size-2 text-broken" />
@@ -38,6 +39,7 @@ export default function CartItemComponent({ item, addToCart, removeFromCart }: P
         <Text>{item.qty}</Text>
         <button
           onClick={() => addToCart(item)}
+          type="button"
           className="bg-primary p-1 rounded-full hover:cursor-pointer"
         >
           <PlusIcon className="size-2 text-broken" />

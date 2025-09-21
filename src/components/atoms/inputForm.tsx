@@ -2,6 +2,26 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
+const typeMap = {
+  text: "text",
+  number: "number",
+  file: "file",
+  password: "password",
+  email: "email",
+  search: "search",
+  tel: "tel",
+  url: "url",
+  date: "date",
+  time: "time",
+  datetimeLocal: "datetime-local",
+  month: "month",
+  week: "week",
+  color: "color",
+  checkbox: "checkbox",
+  radio: "radio",
+  range: "range",
+  hidden: "hidden",
+};
 const inputVariants = cva(
   "flex w-full px-3 py-1 min-w-0 rounded-md border shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
@@ -93,7 +113,7 @@ function Input({
 }: InputProps) {
   return (
     <input
-      type={variant || "text"}
+      type={typeMap[variant ?? "text"]}
       data-slot="input"
       id={id}
       autoComplete={id}

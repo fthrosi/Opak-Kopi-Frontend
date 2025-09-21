@@ -83,7 +83,7 @@ export default function Cart({
   const [namaPelanggan, setNamaPelanggan] = useState<string>("");
   const [catatan, setCatatan] = useState<string>("");
   return (
-    <div className="hidden lg:flex w-[28.3rem] h-full border-l-2 border-l-primary flex-col items-center pl-3">
+    <div className="flex h-full lg:border-l-2 border-l-primary flex-col items-center lg:pl-3">
       <Text size="heading3" className="w-full text-center">
         Keranjang Belanja
       </Text>

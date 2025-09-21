@@ -13,6 +13,9 @@ const inputVariants = cva("flex flex-col w-full items-start gap-3", {
     },
     labelColor: {
       default: "text-primary",
+      secondary: "text-secondary",
+      light: "text-light-cokelat",
+      broken: "text-broken",
     },
   },
   defaultVariants: {

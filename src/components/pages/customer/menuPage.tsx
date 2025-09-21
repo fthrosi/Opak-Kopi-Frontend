@@ -1,5 +1,5 @@
-import SectionPage from "../atoms/sectionPage";
-import MenuCatalog from "../organism/menuCatalog";
+import SectionPage from "../../atoms/sectionPage";
+import MenuCatalog from "../../organism/menuCatalog";
 
 export default function MenuPage() {
   return (

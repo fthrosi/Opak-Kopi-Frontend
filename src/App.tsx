@@ -4,9 +4,12 @@ import HomePages from "./components/pages/homePages";
 import LoginPage from "./components/pages/loginPage";
 import RegisterPage from "./components/pages/registerPage";
 import CustomerView from "./components/templates/customerView";
-import MenuPage from "./components/pages/menuPage";
+import MenuPage from "./components/pages/customer/menuPage";
 import ProtectedRoute from "./components/routes/protectedRoutes";
 import useAuthStore from "./components/store/useAuthStore";
+import CustomerLoginView from "./components/templates/customerLoginView";
+import Reservasi from "./components/pages/customer/reservasi";
+
 export default function App() {
   useAuthStore.getState().restore();
   return (
@@ -21,8 +24,9 @@ export default function App() {
           <Route path="/menu" element={<MenuPage />} />
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route element={<CustomerView />}>
+          <Route element={<CustomerLoginView />}>
             <Route path="/menulogin" element={<MenuPage />} />
+            <Route path="/reservasi" element={<Reservasi />} />
           </Route>
         </Route>
       </Routes>
