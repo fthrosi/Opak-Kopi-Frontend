@@ -36,6 +36,8 @@ export interface SelectLabelProps
     | "focus"
     | "id"
     | "options"
+    | "disabled"
+    | "hidden"
   >;
   selectProps?: Omit<
     SelectProps,
@@ -48,6 +50,8 @@ export interface SelectLabelProps
     | "focus"
     | "id"
     | "options"
+    | "disabled"
+    | "hidden"
   >;
 }
 export default function SelectLabel({

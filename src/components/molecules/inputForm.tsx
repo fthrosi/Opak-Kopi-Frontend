@@ -9,6 +9,7 @@ const inputVariants = cva("flex flex-col w-full items-start gap-3", {
       default:
         "text-[0.75rem] sm:text-[clamp(0.75rem,1.3vw,0.813rem)] lg:text-[clamp(0.813rem,1vw,0.875rem)]",
       body: "text-[clamp(0.875rem,2.8vw,0.938rem)] sm:text-[clamp(0.938rem,1.6vw,1rem)] lg:text-[clamp(1rem,1.4vw,1.063rem)] xl:text-[clamp(1.063rem,1.3vw,1.125rem)] 2xl:text-[1.125rem]",
+      custom:"",
     },
     labelColor: {
       default: "text-primary",
@@ -24,6 +25,7 @@ export interface InputFormProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof inputVariants> {
   className?: string;
+  labelClassName?: string;
   children?: React.ReactNode;
   inputVariant?: InputProps["variant"];
   inputFormSize?: InputProps["formSize"];
@@ -61,14 +63,15 @@ export default function InputForm({
   inputFocus,
   inputClassName,
   inputProps,
+  labelClassName
 }: InputFormProps) {
   return (
-    <div className={cn(inputVariants(), className)}>
+    <div className={cn(inputVariants({ labelSize, labelColor }), className)}>
       <label
         htmlFor={inputId}
         className={cn(
           "font-semibold",
-          inputVariants({ labelSize, labelColor })
+          labelClassName
         )}
       >
         {children}

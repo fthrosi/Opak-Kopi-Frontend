@@ -14,19 +14,26 @@ const selectVariants = cva(
       },
       bgColor: {
         default: "bg-input file:bg-input selection:bg-input",
+        white: "bg-white file:bg-white selection:bg-white",
         transparent:
           "bg-transparent file:bg-transparent selection:bg-transparent",
       },
       textColor: {
         default:
           "text-primary file:text-primary/70 selection:text-primary",
+        gray: "text-gray file:text-gray/70 selection:text-gray",
       },
       borderColor: {
         default: "border-primary",
+        white: "border-white",
       },
       focus: {
         default:
           "focus-visible:border-primary focus-visible:ring-primary/50 focus-visible:ring-[3px]",
+        white:
+          "focus-visible:border-white focus-visible:ring-white/50 focus-visible:ring-[3px]",
+        gray:
+          "focus-visible:border-gray focus-visible:ring-gray/50 focus-visible:ring-[3px]",
       },
     },
     defaultVariants: {
@@ -44,6 +51,8 @@ export interface SelectProps
   className?: string;
   placeholder?: string;
     id?: string;
+    disabled?: boolean;
+    hidden?: boolean;
     options?: optionDATA[];
 }
 export default function Select({
@@ -55,12 +64,14 @@ export default function Select({
     borderColor,
     focus,
   id,
+  disabled,
+  hidden,
   options,
   ...props
 }: SelectProps) {
   return (
     <select name={id} id={id} className={cn(selectVariants({ formSize, bgColor, textColor, borderColor, focus }), className)} {...props}>
-      <option value="">{placeholder}</option>
+      <option disabled={disabled} hidden={hidden} value="">{placeholder}</option>
       {options?.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}

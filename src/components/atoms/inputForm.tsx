@@ -32,22 +32,31 @@ const inputVariants = cva(
       },
       bgColor: {
         default: "bg-input file:bg-input selection:bg-input",
+        white: "bg-white file:bg-white selection:bg-white",
         transparent:
           "bg-transparent file:bg-transparent selection:bg-transparent",
       },
       textColor: {
         default:
           "text-primary file:text-primary/70 placeholder:text-primary/50 selection:text-primary",
+        gray: "text-gray file:text-gray/70 placeholder:text-gray/50 selection:text-gray",
       },
       placeholderColor: {
         default: "placeholder:text-primary/50",
+        gray: "placeholder:text-gray/50",
       },
       borderColor: {
         default: "border-primary",
+        white: "border-white",
+        gray: "border-gray",
       },
       focus: {
         default:
           "focus-visible:border-primary focus-visible:ring-primary/50 focus-visible:ring-[3px]",
+        white:
+          "focus-visible:border-white focus-visible:ring-white/50 focus-visible:ring-[3px]",
+        gray:
+          "focus-visible:border-gray focus-visible:ring-gray/50 focus-visible:ring-[3px]",
       },
     },
     defaultVariants: {

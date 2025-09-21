@@ -1,14 +1,6 @@
 import { create } from "zustand";
+import type { User } from "@/types/user";
 
-type User = {
-  userId: string;
-  email: string;
-  name: string;
-  phone: string;
-  img: string;
-  poin: number;
-  role: string;
-};
 
 type AuthState = {
   isLoggedIn: boolean;
