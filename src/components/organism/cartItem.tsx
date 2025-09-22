@@ -14,17 +14,17 @@ export default function CartItemComponent({ item, addToCart, removeFromCart }: P
   return (
     <div className="flex justify-between items-center bg-white p-3 rounded-lg">
       <div className="flex items-center gap-3">
-        <img src={item.imageSrc} alt="produk" className="size-13 rounded-lg" />
+        <img src={item.image_url} alt="produk" className="size-13 rounded-lg" />
         <div className="flex flex-col">
           <Text
             size="caption"
             weight="semiBold"
             className="text-secondary lg:text-[0.7rem]"
           >
-            {item.nama}
+            {item.name}
           </Text>
           <Text size="caption" className="text-secondary lg:text-[0.7rem]">
-            {formatRupiah({ value: item.harga })}
+            {formatRupiah({ value: item.current_price })}
           </Text>
         </div>
       </div>

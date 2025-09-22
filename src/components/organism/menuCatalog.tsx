@@ -1,6 +1,8 @@
-import { menuMakanan } from "@/const/menu";
+// import { menuMakanan } from "@/const/menu";
+
+import type { MenuProps } from "@/types/menu";
 import { Pages } from "../atoms/page";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useCartStore } from "../store/cart";
 import MenuFilterBar from "./menuFilterBar";
 import GridMenu from "./gridMenu";
@@ -8,22 +10,34 @@ import Cart from "./cart";
 import CartIcon from "../icons/cart";
 import { useUIStore } from "../store/useUIStore";
 import CloseIcon from "@/components/atoms/icons/close";
+import { fetchMenu } from "@/api/menu";
 
 export default function MenuCatalog() {
-  const [filteredMenu, setFilteredMenu] = useState<typeof menuMakanan>([]);
+  const [listMenu, setListMenu] = useState<MenuProps[]>([]);
+  const [filteredMenu, setFilteredMenu] = useState<MenuProps[]>([]);
   const cart = useCartStore((state) => state.cart);
   const addToCart = useCartStore((state) => state.addToCart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const clearCart = useCartStore((state) => state.clearCart);
   const isModalOpen = useUIStore((state) => state.activeStates.modal);
   const toggleModal = useUIStore((state) => state.toggle);
+
+  const fetchData = async () => {
+      const data = await fetchMenu();
+      setListMenu(data.data);
+    };
+  
+    useEffect(() => {
+      fetchData();
+    }, []);
+    console.log(listMenu);
   return (
     <Pages className="relativeflex flex-row justify-between bg-broken h-full">
       <div className="relative flex flex-col gap-6 w-full lg:mr-3">
-        <MenuFilterBar onFilter={setFilteredMenu} />
+        <MenuFilterBar onFilter={setFilteredMenu} menuList={listMenu} />
         <div className="h-full mx-auto md:m-0 overflow-y-auto scrollbar-hide">
           <GridMenu
-            filteredMenu={filteredMenu.length ? filteredMenu : menuMakanan}
+            filteredMenu={filteredMenu.length ? filteredMenu : listMenu}
             addToCart={addToCart}
           />
         </div>

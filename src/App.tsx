@@ -9,19 +9,23 @@ import ProtectedRoute from "./components/routes/protectedRoutes";
 import useAuthStore from "./components/store/useAuthStore";
 import CustomerLoginView from "./components/templates/customerLoginView";
 import Reservasi from "./components/pages/customer/reservasi";
-
+import { Toaster } from "sonner";
+import PublicRoute from "./components/routes/publicRoutes";
 export default function App() {
   useAuthStore.getState().restore();
   return (
     <BrowserRouter>
+      <Toaster position="top-center" richColors />
       <Routes>
-        <Route element={<CompanyProfileLayout />}>
-          <Route path="/" element={<HomePages />} />
-        </Route>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route element={<CustomerView />}>
-          <Route path="/menu" element={<MenuPage />} />
+        <Route element={<PublicRoute />}>
+          <Route element={<CompanyProfileLayout />}>
+            <Route path="/" element={<HomePages />} />
+          </Route>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route element={<CustomerView />}>
+            <Route path="/menu" element={<MenuPage />} />
+          </Route>
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route element={<CustomerLoginView />}>

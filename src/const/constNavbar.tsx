@@ -20,7 +20,7 @@ export const navigationPelangganLogin =[
     {
         id: 1,
         title: "Menu",
-        path: "/menu"
+        path: "/menulogin"
     },
     {
         id: 2,

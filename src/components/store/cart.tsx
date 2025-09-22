@@ -2,10 +2,10 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 export type CartItem = {
     id: number;
-    nama: string;
-    harga: number;
+    name: string;
+    current_price: number;
     qty: number;
-    imageSrc: string;
+    image_url: string;
 };
 
 type CartState = {

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Text } from "@/components/atoms/text";
 import SelectLabel from "@/components/molecules/selectLabel";
 import InputForm from "@/components/molecules/inputForm";
-import { meja } from "@/const/meja";
+// import { meja } from "@/const/meja";
 import { formatRupiah } from "@/const/idrCurrency";
 import { Button } from "../atoms/button";
 import type { CartItem } from "@/components/store/cart";
@@ -11,6 +11,8 @@ import DetailHarga from "./detailHarga";
 import { useCheckoutStore } from "../store/checkoutStore";
 import useAuthStore from "../store/useAuthStore";
 import { type User } from "@/types/user";
+import { toast } from "sonner";
+import { fetchtables } from "@/api/tables";
 
 type CartProps = {
   cart: CartItem[];
@@ -59,6 +61,7 @@ const handleSubmit = (
   clearCart();
   setOnReset(true);
   console.log("Order payload:", payload);
+  toast.success("Pesanan berhasil dikirim!");
   //   try {
   //
   //   } catch (error) {
@@ -76,12 +79,27 @@ export default function Cart({
   const user = useAuthStore.getState().user;
   const finalTotal = useCheckoutStore((state) => state.finalTotal);
   const promoId = useCheckoutStore((state) => state.id_promo);
-    const pointUse = useCheckoutStore((state) => state.point_use);
+  const pointUse = useCheckoutStore((state) => state.point_use);
   const [onReset, setOnReset] = useState(false);
-  const subTotal = cart.reduce((sum, item) => sum + item.harga * item.qty, 0);
+  const subTotal = cart.reduce((sum, item) => sum + item.current_price * item.qty, 0);
   const [selectedMeja, setSelectedMeja] = useState<string>("");
   const [namaPelanggan, setNamaPelanggan] = useState<string>("");
   const [catatan, setCatatan] = useState<string>("");
+  const [Meja, setMeja] = useState<{ id: number; number: number; status: string }[]>([]);
+
+  const fetchTable = async () => {
+    try {
+      const tables = await fetchtables();
+      setMeja(tables.data);
+    } catch (error) {
+      toast.error("Gagal mengambil data meja");
+    }
+  };
+
+  useEffect(() => {
+    fetchTable();
+  }, []);
+  console.log("meja", Meja);
   return (
     <div className="flex h-full lg:border-l-2 border-l-primary flex-col items-center lg:pl-3">
       <Text size="heading3" className="w-full text-center">
@@ -116,11 +134,13 @@ export default function Cart({
               name: "meja",
               value: selectedMeja,
               onChange: (e) => setSelectedMeja(e.target.value),
+              getValue: (option) => option.id,
+              getLabel: (option) => `Meja - ${option.number}`,
             }}
             selectFormProps={{
               placeholder: "Exp : 01",
               id: "meja",
-              options: meja,
+              options: Meja,
               disabled: true,
               hidden: true,
               textColor: "gray",

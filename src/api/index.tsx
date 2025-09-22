@@ -11,7 +11,6 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    // Jika error 401, coba refresh token
     const originalRequest = error.config;
     if (
       error.response &&
@@ -20,11 +19,11 @@ api.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        await api.post("/auth/refresh");
-        // Ulangi request setelah refresh
+        await api.post("/auth/refresh-token");
         return api(originalRequest);
       } catch (err) {
         // Jika gagal refresh, bisa logout user di sini
+        localStorage.removeItem("auth");
         return Promise.reject(err);
       }
     }
