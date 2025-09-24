@@ -11,6 +11,8 @@ import CustomerLoginView from "./components/templates/customerLoginView";
 import Reservasi from "./components/pages/customer/reservasi";
 import { Toaster } from "sonner";
 import PublicRoute from "./components/routes/publicRoutes";
+import PromoPage from "./components/pages/customer/promo";
+import FavoriteMenuPage from "./components/pages/customer/favoriteMenu";
 export default function App() {
   useAuthStore.getState().restore();
   return (
@@ -31,6 +33,8 @@ export default function App() {
           <Route element={<CustomerLoginView />}>
             <Route path="/menulogin" element={<MenuPage />} />
             <Route path="/reservasi" element={<Reservasi />} />
+            <Route path="/promo" element={<PromoPage />} />
+            <Route path="/favorit" element={<FavoriteMenuPage />} />
           </Route>
         </Route>
       </Routes>

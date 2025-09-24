@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Text } from "@/components/atoms/text";
 import SelectLabel from "@/components/molecules/selectLabel";
 import InputForm from "@/components/molecules/inputForm";
-// import { meja } from "@/const/meja";
 import { formatRupiah } from "@/const/idrCurrency";
 import { Button } from "../atoms/button";
 import type { CartItem } from "@/components/store/cart";
@@ -10,63 +9,18 @@ import CartItemComponent from "./cartItem";
 import DetailHarga from "./detailHarga";
 import { useCheckoutStore } from "../store/checkoutStore";
 import useAuthStore from "../store/useAuthStore";
-import { type User } from "@/types/user";
 import { toast } from "sonner";
 import { fetchtables } from "@/api/tables";
+import { addOrder } from "@/api/orders";
+import { orderSchemaLogin } from "@/validateSchema/pesanan";
+import { cn } from "@/lib/utils";
 
 type CartProps = {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
-};
-const handleSubmit = (
-  e: React.FormEvent,
-  clearCart: () => void,
-  setOnReset: (value: boolean) => void,
-  cart: CartItem[],
-  selectedMeja: number,
-  namaPelanggan: string,
-  catatan: string,
-  promoId?: number,
-  pointUse?: number,
-  isLoggedIn?: boolean,
-  user?: User | null
-) => {
-  e.preventDefault();
-
-  const order_items = cart.map((item) => ({
-    menu_id: item.id,
-    quantity: item.qty,
-  }));
-  let payload;
-  if (isLoggedIn) {
-    payload = {
-      userId: user?.userId,
-      table_id: selectedMeja,
-      point_use: pointUse || 0,
-      promo_id: promoId || null,
-      note: catatan,
-      order_items,
-    };
-  } else {
-    payload = {
-      table_id: selectedMeja,
-      customer_name: namaPelanggan,
-      note: catatan,
-      order_items,
-    };
-  }
-
-  clearCart();
-  setOnReset(true);
-  console.log("Order payload:", payload);
-  toast.success("Pesanan berhasil dikirim!");
-  //   try {
-  //
-  //   } catch (error) {
-  //
-  //   }
+  classname?: string;
 };
 
 export default function Cart({
@@ -74,19 +28,28 @@ export default function Cart({
   addToCart,
   removeFromCart,
   clearCart,
+  classname,
 }: CartProps) {
+  const setValidPromo = useCheckoutStore((state) => state.setValidPromo);
+  const setValidPoin = useCheckoutStore((state) => state.setValidPoin);
   const isLoggedIn = useAuthStore.getState().isLoggedIn;
   const user = useAuthStore.getState().user;
   const finalTotal = useCheckoutStore((state) => state.finalTotal);
   const promoId = useCheckoutStore((state) => state.id_promo);
   const pointUse = useCheckoutStore((state) => state.point_use);
   const [onReset, setOnReset] = useState(false);
-  const subTotal = cart.reduce((sum, item) => sum + item.current_price * item.qty, 0);
+  const subTotal = cart.reduce(
+    (sum, item) => sum + item.current_price * item.qty,
+    0
+  );
   const [selectedMeja, setSelectedMeja] = useState<string>("");
   const [namaPelanggan, setNamaPelanggan] = useState<string>("");
   const [catatan, setCatatan] = useState<string>("");
-  const [Meja, setMeja] = useState<{ id: number; number: number; status: string }[]>([]);
-
+  const validPoin = useCheckoutStore((state) => state.validPoin);
+  const validPromo = useCheckoutStore((state) => state.validPromo);
+  const [Meja, setMeja] = useState<
+    { id: number; number: number; status: string }[]
+  >([]);
   const fetchTable = async () => {
     try {
       const tables = await fetchtables();
@@ -96,30 +59,72 @@ export default function Cart({
     }
   };
 
+  const handleSubmit = async (
+    e: React.FormEvent,
+  ) => {
+    e.preventDefault();
+
+    const order_items = cart.map((item) => ({
+      menu_id: item.id,
+      quantity: item.qty,
+    }));
+    let payload;
+    if (isLoggedIn) {
+      payload = {
+        userId: user?.userId,
+        table_id: selectedMeja,
+        point_use: pointUse || 0,
+        promo_id: promoId || null,
+        note: catatan,
+        order_items,
+      };
+    } else {
+      payload = {
+        table_id: selectedMeja,
+        customer_name: namaPelanggan,
+        note: catatan,
+        order_items,
+      };
+    }
+    if (isLoggedIn) {
+      const validation = orderSchemaLogin.safeParse(payload);
+      if (!validation.success) {
+        const firstError = validation.error.issues[0];
+        toast.error(firstError.message);
+        return;
+      }
+      payload = validation.data;
+    }
+    console.log(validPoin, validPromo);
+    if (!validPromo) {
+      setValidPromo(true);
+      return;
+    }
+    if (!validPoin) {
+      setValidPoin(true);
+      return;
+    }
+    try {
+      await addOrder(payload);
+      toast.success("Pesanan berhasil dikirim");
+      clearCart();
+      setOnReset(true);
+    } catch (error) {
+      toast.error("Gagal mengirim pesanan");
+    }
+  };
+
   useEffect(() => {
     fetchTable();
   }, []);
-  console.log("meja", Meja);
   return (
-    <div className="flex h-full lg:border-l-2 border-l-primary flex-col items-center lg:pl-3">
+    <div className={cn(`flex h-full lg:border-l-2 border-l-primary flex-col items-center lg:pl-3`, classname)}>
       <Text size="heading3" className="w-full text-center">
         Keranjang Belanja
       </Text>
       <form
         onSubmit={(event) =>
-          handleSubmit(
-            event,
-            clearCart,
-            setOnReset,
-            cart,
-            selectedMeja ? parseInt(selectedMeja) : 0,
-            namaPelanggan,
-            catatan,
-            promoId,
-            pointUse,
-            isLoggedIn,
-            user
-          )
+          handleSubmit(event)
         }
         className="flex flex-col gap-2 w-full h-full min-h-0 pb-3"
       >
@@ -191,8 +196,8 @@ export default function Cart({
             inputBorderColor="white"
             inputProps={{
               placeholder: "Exp : Jangan terlalu manis",
-                value: catatan,
-                onChange: (e) => setCatatan(e.target.value),
+              value: catatan,
+              onChange: (e) => setCatatan(e.target.value),
             }}
             children={
               <>

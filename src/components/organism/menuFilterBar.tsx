@@ -1,7 +1,6 @@
 import React from "react";
 import SelectLabel from "../molecules/selectLabel";
 import InputForm from "../molecules/inputForm";
-// import { kategoriMenu } from "@/const/kategoriMenu";
 import { fetchKategoriMenu } from "@/api/kategoriMenu";
 import { toast } from "sonner";
 import type { MenuProps } from "@/types/menu";
@@ -21,7 +20,6 @@ export default function MenuFilterBar({
   const fetchCategories = async () => {
     try {
       const categories = await fetchKategoriMenu();
-      console.log(categories);
       setKategoriMenu(categories.data);
     } catch (error) {
       toast.error("Gagal memuat kategori menu");
