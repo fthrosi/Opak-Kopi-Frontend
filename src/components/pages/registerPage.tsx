@@ -1,21 +1,42 @@
-
 import FormSection from "../organism/formSection";
 import InputForm from "../molecules/inputForm";
 import { Title } from "../atoms/title";
 import { registerForm } from "@/const/Form";
-import { register } from "@/api/Auth";
-import { useForm } from "@/hooks/useForm";
+import { registerUser } from "@/api/Auth";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  registerSchema,
+  type RegisterFormData,
+} from "@/validateSchema/register";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
-  const {form, handleChange } = useForm({ name: "", email: "", password: "" });
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", form);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
+  const navigate = useNavigate();
+  const onSubmit = async (data: RegisterFormData) => {
     try {
-      const response = await register(form);
-      console.log("Registration successful:", response);
+      await registerUser(data);
+      toast.success(
+        "Registrasi berhasil!, silahkan periksa email anda untuk verifikasi"
+      );
+      reset();
+      navigate("/login");
     } catch (error) {
-      console.error("Registration failed:", error);
+      toast.error(error as string || "Registrasi gagal. Silakan coba lagi.");
     }
   };
   return (
@@ -35,24 +56,33 @@ export default function RegisterPage() {
           gapForm="xs"
           gap="sm"
           register={true}
-          buttonProps={{ type:"submit"}}
-          onSubmit={handleSubmit}
+          buttonProps={{ type: "submit", disabled: isSubmitting }}
+          onSubmit={handleSubmit(onSubmit)}
         >
-            {registerForm.map((item) => (
+          {registerForm.map((item) => (
+            <div key={item.id}>
               <InputForm
-                key={item.id}
                 inputId={item.inputId}
                 children={item.children}
                 labelSize="default"
                 inputVariant={item.variant}
+                inputClassName={
+                  errors[item.inputId as keyof RegisterFormData]
+                    ? "border-red-500"
+                    : ""
+                }
                 inputProps={{
+                  ...register(item.inputId as keyof RegisterFormData),
                   placeholder: item.placeHolder,
-                  onChange: handleChange,
-                  name: item.inputId,
-                  value: form[item.inputId as keyof typeof form] || "",
                 }}
               />
-            ))}
+              {errors[item.inputId as keyof RegisterFormData] && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors[item.inputId as keyof RegisterFormData]?.message}
+                </p>
+              )}
+            </div>
+          ))}
         </FormSection>
       </div>
       <div className="hidden md:block w-1/2 md:ml-1.5 bg-[url('/image/Header.png')] bg-cover bg-center rounded-2xl"></div>

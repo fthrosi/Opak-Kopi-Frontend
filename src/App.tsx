@@ -15,6 +15,9 @@ import PromoPage from "./components/pages/customer/promo";
 import FavoriteMenuPage from "./components/pages/customer/favoriteMenu";
 import ProfilePage from "./components/pages/profile";
 import HistoryOrderPage from "./components/pages/customer/historyOrder";
+import HistoryReservasiPage from "./components/pages/customer/historyReservasi";
+import HistoryPoinPage from "./components/pages/customer/historyPoin";
+import FeedbackPage from "./components/pages/customer/feedback";
 export default function App() {
   useAuthStore.getState().restore();
   return (
@@ -39,6 +42,9 @@ export default function App() {
             <Route path="/favorit" element={<FavoriteMenuPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/history-order" element={<HistoryOrderPage />} />
+            <Route path="/history-reservasi" element={<HistoryReservasiPage />} />
+            <Route path="/history-poin" element={<HistoryPoinPage />} />
+            <Route path="/feedback" element={<FeedbackPage />} />
           </Route>
         </Route>
         <Route path="*" element={<div>404 Not Found</div>}>

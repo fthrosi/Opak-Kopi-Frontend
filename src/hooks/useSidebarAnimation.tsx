@@ -1,4 +1,4 @@
-// hooks/useSidebarAnimation.ts
+
 import { useEffect, useState } from "react";
 
 export function useSidebarAnimation(isOpen: boolean, duration : number) {

@@ -1,8 +1,9 @@
 import api from "./index";
 
-export async function checkPromoCode(promo: string) {
+export async function checkPromoCode(promo: string , menuId: number[]) {
   try {
-    const res = await api.get(`/promos/code/${promo}`);
+    const menuIdsQuery = menuId.join(',');
+    const res = await api.get(`/promos/code/${promo}?menuIds=${menuIdsQuery}`);
     return res.data;
   } catch (error : any) {
     throw {

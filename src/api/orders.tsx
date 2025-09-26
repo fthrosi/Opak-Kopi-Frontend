@@ -18,3 +18,13 @@ export const getOrdersByUser = async () => {
     throw error;
   }
 };
+
+export const getHistoryPoint = async () => {
+  try {
+    const response = await api.get("/orders/history-point");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching point history:", error);
+    throw error;
+  }
+};

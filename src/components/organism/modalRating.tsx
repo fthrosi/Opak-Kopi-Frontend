@@ -68,7 +68,6 @@ export const ModalRating = ({ order, onClose, onSubmit }: ratingProps) => {
     );
   };
   const incompleteItems = getIncompleteItems();
-  const hasFormErrors = Object.keys(errors).length > 0;
   return (
     <Modal
       position="center"

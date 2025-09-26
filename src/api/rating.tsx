@@ -12,7 +12,6 @@ export const submitRating = async (data: Rating[]) => {
 export const getRatingsMenu = async (menuId: number[]) => {
   try {
     const menuIdsQuery = menuId.join(',');
-    console.log(menuIdsQuery);
     const response = await api.get(`/reviews/ratings?menuIds=${menuIdsQuery}`);
     return response.data;
   } catch (error) {

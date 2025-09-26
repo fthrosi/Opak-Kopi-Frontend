@@ -47,10 +47,17 @@ export default function HistoryOrder() {
     fetchOrders();
   }, []);
   return (
-    <Pages className="relative flex flex-col gap-3 items-center py-5">
+    <Pages className={`relative flex flex-col gap-3 items-center ${orders.length === 0 ? "justify-center" : ""} py-5 flex-1`}>
+      {orders.length === 0 && (
+        <div className="text-center w-full h-full flex justify-center items-center">
+          <Text size="heading2" weight="semiBold">
+            Tidak ada history pesanan yang ditemukan.
+          </Text>
+        </div>
+      )}
       {orders.map((order) => (
         <div
-          className="bg-white p-4 rounded-lg w-full sm:w-[40rem] md:w-[50rem] xl:w-[60rem]"
+          className="bg-white p-4 rounded-lg w-full sm:w-[40rem] md:w-[46rem] xl:w-[60rem]"
           key={order.id}
           onClick={() => {
             openModal("ordersDetail");

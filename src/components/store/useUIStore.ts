@@ -10,7 +10,10 @@ export type modalKey =
   | "editEmail"
   | "editPassword"
   | "rating"
-  | "ordersDetail";
+  | "ordersDetail"
+  | "reservasiDetail"
+  | "cancelReservasi"
+  | "logout";
 export type dropdownKey = "profile";
 interface UIState {
   activeStates: Record<UIKey, boolean>;

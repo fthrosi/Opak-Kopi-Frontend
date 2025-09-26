@@ -12,9 +12,11 @@ import { toast } from "sonner";
 export default function DetailHarga({
   subTotal,
   onReset,
+  menuId
 }: {
   subTotal: number;
   onReset: boolean;
+  menuId: number[];
 }) {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const user = useAuthStore((state) => state.user);
@@ -30,7 +32,8 @@ export default function DetailHarga({
   async function handlePromoCheck() {
     if (promo) {
       try {
-        const res = await checkPromoCode(promo);
+        console.log(menuId);
+        const res = await checkPromoCode(promo, menuId);
         console.log(res);
         if (res.data?.promo_type === "percent") {
           setDiscount((subTotal * res.data.percent_value) / 100);

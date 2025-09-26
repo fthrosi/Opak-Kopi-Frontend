@@ -29,6 +29,7 @@ export const ModalProfilePicture = ({
           background="white"
           padding="default"
           rounded="default"
+          modalClassName="max-w-[35rem]"
         >
           <div className="flex flex-col gap-4">
             <div className="preview-container bg-primary/10 w-full h-64 border-b-1 border-b-primary mb-2 relative overflow-hidden flex items-center justify-center">

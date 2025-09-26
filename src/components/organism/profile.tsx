@@ -182,13 +182,13 @@ export default function Profile() {
         />
         <div className="flex flex-col items-center mt-5 gap-5 ">
           <Img
-            src={profileData?.img ? profileData.img : "/image/defaultUser.jpg"}
+            src={(profileData?.img.split('/').pop() !== "null" ? profileData?.img : "/image/defaultUser.jpg") || "/image/defaultUser.jpg"}
             alt="Profile Picture"
             className="size-30 2xl:size-40 rounded-full"
           />
           <Button
             size="custom"
-            className="text-xs px-2 py-2"
+            className="text-xs px-2 py-2 hover:cursor-pointer"
             onClick={() => openModal("profilePicture")}
           >
             Pilih Gambar
@@ -233,7 +233,7 @@ export default function Profile() {
               <Button
                 key={button.id}
                 size="custom"
-                className={`text-xs px-2 py-2 w-full sm:max-w-[25rem] ${button.background}`}
+                className={`text-xs px-2 py-2 w-full sm:max-w-[25rem] hover:cursor-pointer ${button.background}`}
                 onClick={() => handleOpenModal(button.title as modalKey)}
               >
                 {button.field}

@@ -30,8 +30,6 @@ export default function Cart({
   clearCart,
   classname,
 }: CartProps) {
-  const setValidPromo = useCheckoutStore((state) => state.setValidPromo);
-  const setValidPoin = useCheckoutStore((state) => state.setValidPoin);
   const isLoggedIn = useAuthStore.getState().isLoggedIn;
   const user = useAuthStore.getState().user;
   const finalTotal = useCheckoutStore((state) => state.finalTotal);
@@ -50,6 +48,7 @@ export default function Cart({
   const [Meja, setMeja] = useState<
     { id: number; number: number; status: string }[]
   >([]);
+  const menuId = cart.map((item) => item.id);
   const fetchTable = async () => {
     try {
       const tables = await fetchtables();
@@ -97,11 +96,9 @@ export default function Cart({
     }
     console.log(validPoin, validPromo);
     if (!validPromo) {
-      setValidPromo(true);
       return;
     }
     if (!validPoin) {
-      setValidPoin(true);
       return;
     }
     try {
@@ -206,7 +203,7 @@ export default function Cart({
             }
           />
         </div>
-        <DetailHarga subTotal={subTotal} onReset={onReset} />
+        <DetailHarga subTotal={subTotal} onReset={onReset} menuId={menuId} />
         <div className="flex justify-between px-2">
           <Text size="body" weight="semiBold">
             Total Harga
