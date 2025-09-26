@@ -7,12 +7,12 @@ import GridMenu from "./gridMenu";
 import Cart from "./cart";
 import CartIcon from "../icons/cart";
 import { useUIStore } from "../store/useUIStore";
-import { fetchMenu } from "@/api/menu";
 import Modal from "./modal";
 import CardProduk from "../molecules/cardProduk";
 import Star from "../icons/star";
 import { Text } from "../atoms/text";
 import { formatRupiah } from "@/const/idrCurrency";
+import { useMenu } from "../store/useMenu";
 import {
   addFavoriteMenu,
   removeFavoriteMenu,
@@ -20,38 +20,44 @@ import {
 } from "@/api/favoriteMenu";
 
 export default function MenuCatalog() {
-  const [listMenu, setListMenu] = useState<MenuProps[]>([]);
+  const {
+    listMenu,
+    isLoading,
+    isRatingsLoading,
+    fetchMenuData,
+    getMenuRating,
+  } = useMenu();
   const [filteredMenu, setFilteredMenu] = useState<MenuProps[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<MenuProps | null>(
     null
   );
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
+
   const cart = useCartStore((state) => state.cart);
   const addToCart = useCartStore((state) => state.addToCart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const clearCart = useCartStore((state) => state.clearCart);
+
   const isModalOpen = useUIStore((state) => state.activeModal === "cart");
   const isDetailProductOpen = useUIStore(
     (state) => state.activeModal === "detailProduct"
   );
   const open = useUIStore((state) => state.open);
   const close = useUIStore((state) => state.close);
-  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
+
   const handleAddToCartAndClose = () => {
     addToCart(selectedProduct!);
     close();
   };
+
   const fetchFavoriteMenu = async () => {
     const res = await getFavoriteMenus();
     const ids = res.map((fav: any) => fav.menu_id);
     setFavoriteIds(ids);
   };
-  const fetchData = async () => {
-    const data = await fetchMenu();
-    console.log(data.data);
-    setListMenu(data.data);
-  };
+
   useEffect(() => {
-    fetchData();
+    fetchMenuData();
     fetchFavoriteMenu();
   }, []);
   const handleFavoriteClick = (product: MenuProps) => {
@@ -69,7 +75,13 @@ export default function MenuCatalog() {
     <Pages className="relativeflex flex-row justify-between bg-broken h-full">
       <div className="relative flex flex-col gap-6 w-full lg:mr-3">
         <MenuFilterBar onFilter={setFilteredMenu} menuList={listMenu} />
-        {listMenu.length === 0 ? (
+        {isLoading || isRatingsLoading ? (
+          <div className="flex justify-center items-center h-full">
+            <Text size="heading2" className="text-pretty">
+              Loading menu...
+            </Text>
+          </div>
+        ) : listMenu.length === 0 ? (
           <div className="flex justify-center items-center h-full">
             <Text size="heading1" className="text-pretty">
               Menu tidak tersedia
@@ -86,6 +98,7 @@ export default function MenuCatalog() {
               }}
               onFavoriteClick={handleFavoriteClick}
               favoriteIds={favoriteIds}
+              getMenuRating={getMenuRating}
             />
           </div>
         )}
@@ -123,7 +136,7 @@ export default function MenuCatalog() {
           }
         />
       )}
-      {isDetailProductOpen && (
+      {isDetailProductOpen && selectedProduct && (
         <Modal
           isModalActive={isDetailProductOpen}
           size="full"
@@ -149,12 +162,34 @@ export default function MenuCatalog() {
                 titleWeight: "semiBold",
                 titleColor: "secondary",
                 children: (
-                  <div className="flex items-center">
-                    <Star className="size-[0.60rem] 2xl:size-4 text-amber-300 mr-1" />
-                    <Text className="text-[0.7rem] 2xl:text-[1.1rem]">
-                      {selectedProduct?.rating ?? 0}
-                    </Text>
-                  </div>
+                  <>
+                    {getMenuRating(selectedProduct.id).averageRating > 0 && (
+                      <div className="flex items-center">
+                        <Star className="size-[clamp(0.5rem,2.3vw,0.75rem)] 2xl:size-4 text-amber-300 mr-1" />
+                        <Text className="text-[clamp(0.55rem,2.4vw,0.8rem)] 2xl:text-base">
+                          {getMenuRating(selectedProduct.id).averageRating}{" "}
+                        </Text>
+                        <Text className="text-[clamp(0.45rem,2.1vw,0.7rem)] 2xl:text-sm ml-1 opacity-60">
+                          ({getMenuRating(selectedProduct.id).totalReviews})
+                        </Text>
+                      </div>
+                    )}
+                  </>
+                  // <div className="flex items-center">
+                  //   <Star className="size-[0.60rem] 2xl:size-4 text-amber-300 mr-1" />
+                  //   <Text className="text-[0.7rem] 2xl:text-[1.1rem]">
+                  //     {selectedProduct
+                  //       ? getMenuRating(selectedProduct.id).averageRating
+                  //       : 0}
+                  //   </Text>
+                  //   <Text className="text-[0.6rem] 2xl:text-[0.9rem] ml-1 opacity-60">
+                  //     (
+                  //     {selectedProduct
+                  //       ? getMenuRating(selectedProduct.id).totalReviews
+                  //       : 0}
+                  //     )
+                  //   </Text>
+                  // </div>
                 ),
               }}
               buttonProps={{

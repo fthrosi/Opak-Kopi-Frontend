@@ -4,12 +4,11 @@ import Navigation from "../molecules/navigation";
 import LogoIcon from "../molecules/navbar/logo_icon";
 import { navigationPelangganLogin } from "@/const/constNavbar";
 import ProfileImage from "../molecules/navbar/profile";
-import { profileDropdownData } from "@/const/constNavbar";
-export default function CustomerLoginView() {
+export default function ProfileView() {
   return (
     <>
       <Navbar
-      className="border-b-1 border-primary"
+        className="border-b-1 border-primary"
         logoIcon={
           <LogoIcon
             textprops={{
@@ -38,7 +37,7 @@ export default function CustomerLoginView() {
             }}
           />
         }
-        navigationButton={<ProfileImage children={profileDropdownData} />}
+        navigationButton={<ProfileImage children={navigationPelangganLogin} />}
       />
       <Outlet />
     </>

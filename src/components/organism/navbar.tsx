@@ -2,15 +2,18 @@ import React, { useEffect } from "react";
 import { useUIStore } from "../store/useUIStore";
 import { useStickyNavbar } from "@/hooks/useStickyNavbar";
 import { useSidebarAnimation } from "@/hooks/useSidebarAnimation";
+import { cn } from "@/lib/utils";
 type NavbarProps = {
   logoIcon?: React.ReactNode;
   navigation?: React.ReactNode;
   navigationButton?: React.ReactNode;
+  className?: string;
 };
 export default function Navbar({
   logoIcon,
   navigation,
   navigationButton,
+  className,
 }: NavbarProps) {
   const isScroll = useUIStore((state) => state.scrollY);
   const isOpen = useUIStore((state) => state.activeStates.sidebar);
@@ -31,7 +34,7 @@ export default function Navbar({
     <>
       {isScroll <= 0 && (
         <header
-          className={`fixed top-0 z-20 w-full 2xl:h-[5.75rem]  transition-transform duration-300 ease-in-out bg-transparent`}
+          className={cn(`fixed top-0 z-20 w-full 2xl:h-[5.75rem]  transition-transform duration-300 ease-in-out bg-transparent`, className)}
         >
           <div className="block md:flex items-center justify-between md:p-4 lg:px-14 xl:px-24 2xl:px-[4.375rem] 2xl:py-0 xl:max-w-[1440px] mx-auto 2xl:h-full">
             <div

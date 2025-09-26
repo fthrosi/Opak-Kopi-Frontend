@@ -8,6 +8,7 @@ type AuthState = {
   login: (userData: User) => void;
   logout: () => void;
   restore: () => void;
+  updateUserData: (newUserData: User) => void;
 };
 
 const useAuthStore = create<AuthState>((set) => ({
@@ -27,6 +28,15 @@ const useAuthStore = create<AuthState>((set) => ({
       const { isLoggedIn, user } = JSON.parse(auth);
       set({ isLoggedIn, user });
     }
+  },
+  updateUserData: (newUserData: User) => {
+    set({ user: newUserData });
+    // Update localStorage dengan data terbaru
+    const currentAuth = JSON.parse(localStorage.getItem("auth") || "{}");
+    localStorage.setItem("auth", JSON.stringify({
+      ...currentAuth,
+      user: newUserData
+    }));
   },
 }));
 

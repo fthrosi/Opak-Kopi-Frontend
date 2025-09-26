@@ -6,7 +6,6 @@ type categorymenu = {
 export type MenuProps = {
   id: number;
   name: string;
-  rating: number;
   current_price: number;
   description: string;
   kategori: string;

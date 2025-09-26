@@ -14,13 +14,23 @@ import Star from "@/components/icons/star";
 import { formatRupiah } from "@/const/idrCurrency";
 import CartIcon from "@/components/icons/cart";
 import Cart from "@/components/organism/cart";
+import { useMenu } from "@/components/store/useMenu";
 
 export default function FavoriteMenuPage() {
+  const {
+    listMenu,
+    isLoading,
+    fetchMenuData,
+    getMenuRating,
+  } = useMenu();
+
   const [favoriteMenus, setFavoriteMenus] = useState<MenuProps[]>([]);
   const [filteredMenu, setFilteredMenu] = useState<MenuProps[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<MenuProps | null>(
     null
   );
+  const [isFetchingFavorites, setIsFetchingFavorites] = useState(false);
+
   const addToCart = useCartStore((state) => state.addToCart);
   const cart = useCartStore((state) => state.cart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
@@ -31,27 +41,46 @@ export default function FavoriteMenuPage() {
   const isDetailProductOpen = useUIStore(
     (state) => state.activeModal === "detailProduct"
   );
+
   const handleAddToCartAndClose = () => {
     addToCart(selectedProduct!);
     close();
   };
+
   const fetchData = async () => {
     try {
+      setIsFetchingFavorites(true);
+      if (listMenu.length === 0) {
+        await fetchMenuData();
+      }
       const data = await getFavoriteMenus();
-      const favorite = data.map((fav: any) => fav.menu);
-      setFavoriteMenus(favorite);
+
+      const favoriteIds = data.map((fav: any) => fav.menu_id);
+      const favorites = listMenu.filter((menu) =>
+        favoriteIds.includes(menu.id)
+      );
+      setFavoriteMenus(favorites);
+      setIsFetchingFavorites(false);
     } catch (error) {
       console.error("Error fetching favorite menus:", error);
     }
   };
-  const handleFavoriteClick = (product: MenuProps) => {
+  const handleFavoriteClick = async (product: MenuProps) => {
     let updatedFavorites;
-    removeFavoriteMenu(product.id);
+    await removeFavoriteMenu(product.id);
     updatedFavorites = favoriteMenus.filter((menu) => menu.id !== product.id);
     setFavoriteMenus(updatedFavorites);
   };
   useEffect(() => {
-    fetchData();
+    if (listMenu.length > 0) {
+      fetchData();
+    }
+  }, [listMenu.length]);
+
+  useEffect(() => {
+    if (listMenu.length === 0) {
+      fetchMenuData();
+    }
   }, []);
 
   return (
@@ -64,10 +93,16 @@ export default function FavoriteMenuPage() {
       </div>
       <Pages className="w-full h-full flex flex-col gap-4">
         <MenuFilterBar onFilter={setFilteredMenu} menuList={favoriteMenus} />
-        {favoriteMenus.length === 0 ? (
+        {isLoading || isFetchingFavorites ? (
+          <div className="flex justify-center items-center h-full">
+            <Text size="heading2" className="text-pretty">
+              Loading favorite menus...
+            </Text>
+          </div>
+        ) : favoriteMenus.length === 0 ? (
           <div className="flex justify-center items-center h-full">
             <Text size="heading1" className="text-pretty">
-              Menu tidak tersedia
+              Tidak ada menu favorit
             </Text>
           </div>
         ) : (
@@ -83,11 +118,12 @@ export default function FavoriteMenuPage() {
                 handleFavoriteClick(product);
               }}
               favoriteIds={favoriteMenus.map((menu) => menu.id)}
+              getMenuRating={getMenuRating}
               gridType="full"
             />
           </div>
         )}
-        {isDetailProductOpen && (
+        {isDetailProductOpen && selectedProduct && (
           <Modal
             isModalActive={isDetailProductOpen}
             size="full"
@@ -115,12 +151,19 @@ export default function FavoriteMenuPage() {
                   titleWeight: "semiBold",
                   titleColor: "secondary",
                   children: (
-                    <div className="flex items-center">
-                      <Star className="size-[0.60rem] 2xl:size-4 text-amber-300 mr-1" />
-                      <Text className="text-[0.7rem] 2xl:text-[1.1rem]">
-                        {selectedProduct?.rating ?? 0}
-                      </Text>
-                    </div>
+                    <>
+                      {getMenuRating(selectedProduct.id).averageRating > 0 && (
+                        <div className="flex items-center">
+                          <Star className="size-[clamp(0.5rem,2.3vw,0.75rem)] 2xl:size-4 text-amber-300 mr-1" />
+                          <Text className="text-[clamp(0.55rem,2.4vw,0.8rem)] 2xl:text-base">
+                            {getMenuRating(selectedProduct.id).averageRating}{" "}
+                          </Text>
+                          <Text className="text-[clamp(0.45rem,2.1vw,0.7rem)] 2xl:text-sm ml-1 opacity-60">
+                            ({getMenuRating(selectedProduct.id).totalReviews})
+                          </Text>
+                        </div>
+                      )}
+                    </>
                   ),
                 }}
                 buttonProps={{

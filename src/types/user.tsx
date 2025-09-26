@@ -8,3 +8,13 @@ export type User = {
   poin: number;
   role: string;
 };
+
+export type updateEmail = {
+  email: string;
+  password: string;
+};
+
+export type updatePassword = {
+  currentPassword: string;
+  newPassword: string;
+};

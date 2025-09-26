@@ -8,26 +8,58 @@ const api = axios.create({
   },
 });
 
+// Promise untuk track refresh process
+let refreshPromise: Promise<any> | null = null;
+
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    
     if (
       error.response &&
       error.response.status === 401 &&
-      !originalRequest._retry
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/auth/refresh-token")
     ) {
       originalRequest._retry = true;
+      
+      // Jika belum ada refresh process, mulai refresh
+      if (!refreshPromise) {
+        console.log("Starting refresh token...");
+        refreshPromise = api.post("/auth/refresh-token")
+          .then((response) => {
+            console.log("Refresh token success");
+            refreshPromise = null; // Reset promise
+            return response;
+          })
+          .catch((refreshError) => {
+            console.error("Refresh token failed:", refreshError);
+            refreshPromise = null; // Reset promise
+            
+            // Logout user
+            localStorage.removeItem("auth");
+            
+            if (typeof window !== 'undefined') {
+              window.location.href = '/login';
+            }
+            
+            throw refreshError;
+          });
+      }
+      
       try {
-        await api.post("/auth/refresh-token");
+        // Tunggu refresh selesai
+        await refreshPromise;
+        console.log("Retrying original request...");
+        
+        // Retry original request
         return api(originalRequest);
-      } catch (err) {
-        // Jika gagal refresh, bisa logout user di sini
-        localStorage.removeItem("auth");
-        return Promise.reject(err);
+      } catch (refreshError) {
+        return Promise.reject(refreshError);
       }
     }
-    console.error("API Error:", error.response || error.message);
+    
     return Promise.reject(error);
   }
 );

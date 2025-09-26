@@ -77,6 +77,7 @@ const inputVariants = cva(
           "focus-visible:border-white focus-visible:ring-white/50 focus-visible:ring-[3px]",
         gray:
           "focus-visible:border-gray focus-visible:ring-gray/50 focus-visible:ring-[3px]",
+        none: "focus-visible:ring-0 focus-visible:border-primary",
       },
     },
     defaultVariants: {

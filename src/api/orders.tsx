@@ -9,3 +9,12 @@ export const addOrder = async (orderData: any) => {
     throw error;
   }
 };
+export const getOrdersByUser = async () => {
+  try {
+    const response = await api.get("/orders/user");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw error;
+  }
+};

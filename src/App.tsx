@@ -13,6 +13,8 @@ import { Toaster } from "sonner";
 import PublicRoute from "./components/routes/publicRoutes";
 import PromoPage from "./components/pages/customer/promo";
 import FavoriteMenuPage from "./components/pages/customer/favoriteMenu";
+import ProfilePage from "./components/pages/profile";
+import HistoryOrderPage from "./components/pages/customer/historyOrder";
 export default function App() {
   useAuthStore.getState().restore();
   return (
@@ -35,7 +37,11 @@ export default function App() {
             <Route path="/reservasi" element={<Reservasi />} />
             <Route path="/promo" element={<PromoPage />} />
             <Route path="/favorit" element={<FavoriteMenuPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/history-order" element={<HistoryOrderPage />} />
           </Route>
+        </Route>
+        <Route path="*" element={<div>404 Not Found</div>}>
         </Route>
       </Routes>
     </BrowserRouter>

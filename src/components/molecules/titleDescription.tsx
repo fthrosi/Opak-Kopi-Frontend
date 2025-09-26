@@ -17,6 +17,7 @@ const titleDescriptionVariants = cva("flex", {
     gap: {
       default: "",
       bestProduct: "gap-2 md:gap-3 2xl:gap-4",
+      profile: "gap-1 md:gap-2 2xl:gap-3",
     },
   },
   defaultVariants: {

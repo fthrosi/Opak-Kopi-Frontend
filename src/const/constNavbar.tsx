@@ -38,3 +38,36 @@ export const navigationPelangganLogin =[
         path: "/favorit"
     }
 ]
+
+export const profileDropdownData = [
+    {
+        id: 1,
+        title: "Profile",
+        path: "/profile"
+    },
+    {
+        id: 2,
+        title: "History Order",
+        path: "/history-order"
+    },
+    {
+        id: 3,
+        title: "History Reservasi",
+        path: "/history-reservasi"
+    },
+    {
+        id: 4,
+        title: "History Poin",
+        path: "/history-poin"
+    },
+    {
+        id: 5,
+        title: "Kritik Dan Saran",
+        path: "/kritik-dan-saran"
+    },
+    {
+        id: 6,
+        title: "Logout",
+        path: "/logout"
+    }
+]

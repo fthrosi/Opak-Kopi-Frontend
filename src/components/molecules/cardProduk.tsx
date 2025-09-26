@@ -8,7 +8,7 @@ import { useUIStore } from "../store/useUIStore";
 import { HeartFill } from "../icons/heartFill";
 
 const cardProdukVariants = cva(
-  "flex flex-col rounded-lg overflow-hidden hover:shadow-md aspect-[52/76] bg-white",
+  "flex flex-col rounded-lg overflow-hidden hover:shadow-md aspect-[52/80] bg-white",
   {
     variants: {
       layout: {
