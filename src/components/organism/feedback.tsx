@@ -3,7 +3,7 @@ import SelectLabel from "../molecules/selectLabel";
 import { Button } from "../atoms/button";
 import SecondNavbar from "../molecules/secondNavbar";
 import { Pages } from "../atoms/page";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect} from "react";
 import { fetchFeedbacksByUser } from "@/api/feedback";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
