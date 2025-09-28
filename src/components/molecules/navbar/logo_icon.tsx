@@ -8,11 +8,12 @@ type LogoIconProps = {
   textprops: Pick<TextVariantProps<React.ElementType>, "className" | "as" | "family" | "textColor" | "size" | "weight">;
   href? : string;
   children?: React.ReactNode;
+  handleOpen?: () => void;
+  handleClose?: () => void;
 }
 
-export default function LogoIcon( { className, textprops, href, children }: LogoIconProps) {
-  const isOpen = useUIStore((state) => state.activeStates.sidebar);
-  const toggleSidebar = useUIStore((state) => state.toggle);
+export default function LogoIcon( { className, textprops, href, children, handleOpen, handleClose }: LogoIconProps) {
+  const isOpen = useUIStore((state) => state.activeSidebar === "sidebarCustomer");
   return (
     <div className={cn("flex items-center justify-between", className)}>
       <Text
@@ -23,9 +24,9 @@ export default function LogoIcon( { className, textprops, href, children }: Logo
       </Text>
       <div className="md:hidden">
         {isOpen ? (
-          <CloseIcon className=" text-primary" onClick={() => toggleSidebar("sidebar")} />
+          <CloseIcon className=" text-primary" onClick={handleClose} />
         ) : (
-          <BurgerMenu className=" text-primary" onClick={() => toggleSidebar("sidebar")} />
+          <BurgerMenu className=" text-primary" onClick={handleOpen} />
         )}
       </div>
     </div>

@@ -16,7 +16,7 @@ export default function Navbar({
   className,
 }: NavbarProps) {
   const isScroll = useUIStore((state) => state.scrollY);
-  const isOpen = useUIStore((state) => state.activeStates.sidebar);
+  const isOpen = useUIStore((state) => state.activeSidebar === "sidebarCustomer");
   const isSticky = useStickyNavbar(300);
   const isFullyClosed = useSidebarAnimation(isOpen, 500);
   useEffect(() => {

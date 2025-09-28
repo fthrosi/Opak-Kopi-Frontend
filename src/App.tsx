@@ -18,6 +18,10 @@ import HistoryOrderPage from "./components/pages/customer/historyOrder";
 import HistoryReservasiPage from "./components/pages/customer/historyReservasi";
 import HistoryPoinPage from "./components/pages/customer/historyPoin";
 import FeedbackPage from "./components/pages/customer/feedback";
+import KasirTemplate from "./components/templates/kasir";
+import KasirPesananPage from "./components/pages/kasir/pesanan";
+import KasirMenuPage from "./components/pages/kasir/menu";
+import KasirReservasiPage from "./components/pages/kasir/reservasi";
 export default function App() {
   useAuthStore.getState().restore();
   return (
@@ -45,6 +49,12 @@ export default function App() {
             <Route path="/history-reservasi" element={<HistoryReservasiPage />} />
             <Route path="/history-poin" element={<HistoryPoinPage />} />
             <Route path="/feedback" element={<FeedbackPage />} />
+          </Route>
+
+          <Route element={<KasirTemplate />}>
+            <Route path="/kasir/pesanan" element={<KasirPesananPage />} />
+            <Route path="/kasir/menu" element={<KasirMenuPage />} />
+            <Route path="/kasir/reservasi" element={<KasirReservasiPage />} />
           </Route>
         </Route>
         <Route path="*" element={<div>404 Not Found</div>}>

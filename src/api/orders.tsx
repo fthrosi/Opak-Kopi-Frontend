@@ -28,3 +28,22 @@ export const getHistoryPoint = async () => {
     throw error;
   }
 };
+export const getDailyOrders = async () => {
+  try {
+    const response = await api.get("/orders/daily");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching daily orders:", error);
+    throw error;
+  }
+};
+
+export const updateOrderStatus = async (orderId: number, status: { status: string; cancellation_reason?: string; payment_method?: string }) => {
+  try {
+    const response = await api.put(`/orders/update/${orderId}`, status);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    throw error;
+  }
+};

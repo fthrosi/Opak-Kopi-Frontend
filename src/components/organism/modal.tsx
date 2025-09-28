@@ -5,7 +5,7 @@ import CloseIcon from "@/components/atoms/icons/close";
 import { useUIStore } from "../store/useUIStore";
 
 const modalVariants = cva(
-  "transition-transform duration-300 ease-in-out  fixed z-20 h-full bg-black/30 inset-0 w-full",
+  "transition-transform duration-300 ease-in-out  fixed z-50 h-full bg-black/30 inset-0 w-full",
   {
     variants: {
       position: {

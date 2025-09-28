@@ -1,6 +1,4 @@
 import { create } from "zustand";
-
-type UIKey = "sidebar";
 export type modalKey =
   | "cart"
   | "detailProduct"
@@ -13,11 +11,15 @@ export type modalKey =
   | "ordersDetail"
   | "reservasiDetail"
   | "cancelReservasi"
-  | "logout";
+  | "logout"
+  | "detailPesanan"
+  | "RejectOrder";
 export type dropdownKey = "profile";
+export type sidebarKey = "sidebarCustomer" | "sidebarStaf";
 interface UIState {
-  activeStates: Record<UIKey, boolean>;
-  toggle: (key: UIKey) => void;
+  activeSidebar: sidebarKey | null;
+  openSidebar: (key: sidebarKey) => void;
+  closeSidebar: () => void;
 
   activeModal: modalKey | null;
   open: (key: modalKey) => void;
@@ -32,9 +34,10 @@ interface UIState {
 }
 
 export const useUIStore = create<UIState>((set) => ({
-  activeStates: {
-    sidebar: false,
-  },
+  activeSidebar: null,
+  openSidebar: (key: sidebarKey) => set(() => ({ activeSidebar: key })),
+  closeSidebar: () => set(() => ({ activeSidebar: null })),
+
   activeDropdown: null,
   openDropdown: (key: dropdownKey) => set(() => ({ activeDropdown: key })),
   closeDropdown: () => set(() => ({ activeDropdown: null })),
@@ -42,13 +45,7 @@ export const useUIStore = create<UIState>((set) => ({
   activeModal: null,
   open: (key: modalKey) => set(() => ({ activeModal: key })),
   close: () => set(() => ({ activeModal: null })),
-  toggle: (key: UIKey) =>
-    set((state) => ({
-      activeStates: {
-        ...state.activeStates,
-        [key]: !state.activeStates[key],
-      },
-    })),
+
   scrollY: 0,
   setScrollY: (y: number) => set(() => ({ scrollY: y })),
 }));

@@ -3,16 +3,18 @@ import type { SecondNavigasi } from "@/types/navigasi";
 import { cn } from "@/lib/utils";
 type SecondNavbarProps = {
   navigasi?: SecondNavigasi[];
-  activeStatus?: string; // Tambahkan properti ini jika diperlukan
-  onStatusChange?: (status: string) => void; // Tambahkan properti ini jika diperlukan
+  activeStatus?: string;
+  onStatusChange?: (status: string) => void;
+  className?: string;
 };
 export default function SecondNavbar({
   navigasi,
   activeStatus,
   onStatusChange,
+  className,
 }: SecondNavbarProps) {
   return (
-    <div className="w-full bg-white flex justify-between rounded-lg sm:w-[40rem] md:w-[46rem] xl:w-[60rem]">
+    <div className={cn("w-full bg-white flex justify-between rounded-lg sm:w-[40rem] md:w-[46rem] xl:w-[60rem]", className)}>
       {navigasi?.map((item) => (
         <div
           className={cn(
@@ -35,7 +37,7 @@ export default function SecondNavbar({
               activeStatus === item.title ? "text-secondary" : "text-primary"
             )}
           >
-            {item.title}
+            {item.label}
           </Text>
         </div>
       ))}

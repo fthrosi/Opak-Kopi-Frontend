@@ -10,10 +10,13 @@ import { useUIStore } from "../store/useUIStore";
 import useAuthStore from "../store/useAuthStore";
 import { logoutUser } from "@/api/Auth";
 import { toast } from "sonner";
+
 export default function CustomerLoginView() {
   const { logout } = useAuthStore();
   const close = useUIStore((state) => state.close);
   const open = useUIStore((state) => state.open);
+  const openSidebar = useUIStore((state) => state.openSidebar);
+  const closeSidebar = useUIStore((state) => state.closeSidebar);
   const isModalConfirmation = useUIStore(
     (state) => state.activeModal === "logout"
   );
@@ -51,6 +54,8 @@ export default function CustomerLoginView() {
             }}
             href="/"
             children={"Opak kopi"}
+            handleOpen={() => openSidebar("sidebarCustomer")}
+            handleClose={() => closeSidebar()}
           />
         }
         navigation={

@@ -1,4 +1,8 @@
-
+type point = {
+    id: number,
+    type: string,
+    amount: number,
+}
 type customer = {
     id: number,
     name: string,
@@ -44,4 +48,6 @@ export type Order = {
     total_price: number,
     updated_at: string,
     is_rated: boolean,
+    payment_method: string,
+    history_point: point[],
 }
