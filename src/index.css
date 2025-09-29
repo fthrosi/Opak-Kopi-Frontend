@@ -61,3 +61,102 @@
   }
   /* FBF2E6 */
 }
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Courier New', monospace !important;
+  }
+
+  /* ← HIDE EVERYTHING FIRST */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* ← SHOW ONLY RECEIPT AND ITS CHILDREN */
+  .receipt-container,
+  .receipt-container * {
+    visibility: visible !important;
+  }
+
+  /* ← FORCE RECEIPT TO TOP OF PAGE */
+  .receipt-container {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    max-width: 80mm !important; /* ← THERMAL PAPER WIDTH */
+    margin: 0 !important;
+    z-index: 9999 !important;
+  }
+
+  .receipt-content {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 5mm !important; /* ← SMALLER PADDING */
+    font-size: 10px !important; /* ← SMALLER FONT */
+    line-height: 1.2 !important; /* ← TIGHTER LINE HEIGHT */
+    color: black !important;
+    background: white !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .receipt-content * {
+    color: black !important;
+    background: transparent !important;
+  }
+
+  /* ← TAILWIND CLASSES OVERRIDE */
+  .receipt-content .flex {
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+
+  .receipt-content .text-center {
+    text-align: center !important;
+  }
+
+  .receipt-content .font-bold {
+    font-weight: bold !important;
+  }
+
+  .receipt-content .border-t {
+    border-top: 1px solid black !important;
+    padding-top: 4px !important;
+  }
+
+  .receipt-content .border-b {
+    border-bottom: 1px solid black !important;
+    padding-bottom: 4px !important;
+  }
+
+  .receipt-content .mb-4 {
+    margin-bottom: 8px !important; /* ← SMALLER MARGINS */
+  }
+
+  .receipt-content .mb-2 {
+    margin-bottom: 4px !important;
+  }
+
+  .receipt-content h2 {
+    font-size: 14px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .receipt-content p {
+    margin-bottom: 2px !important;
+  }
+
+  /* ← THERMAL PAPER PAGE SIZE */
+  @page {
+    margin: 0 !important; /* ← NO MARGINS */
+    size: 80mm auto !important; /* ← THERMAL PAPER: 80mm width, auto height */
+  }
+}

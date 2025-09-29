@@ -22,6 +22,7 @@ import KasirTemplate from "./components/templates/kasir";
 import KasirPesananPage from "./components/pages/kasir/pesanan";
 import KasirMenuPage from "./components/pages/kasir/menu";
 import KasirReservasiPage from "./components/pages/kasir/reservasi";
+import TambahPesanan from "./components/pages/kasir/tambahPesanan";
 export default function App() {
   useAuthStore.getState().restore();
   return (
@@ -55,6 +56,8 @@ export default function App() {
             <Route path="/kasir/pesanan" element={<KasirPesananPage />} />
             <Route path="/kasir/menu" element={<KasirMenuPage />} />
             <Route path="/kasir/reservasi" element={<KasirReservasiPage />} />
+            <Route path="/kasir/tambah-pesanan" element={<TambahPesanan />} />
+            <Route path="/kasir/profile" element={<ProfilePage />} />
           </Route>
         </Route>
         <Route path="*" element={<div>404 Not Found</div>}>

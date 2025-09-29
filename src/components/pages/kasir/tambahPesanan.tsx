@@ -1,25 +1,19 @@
 import type { MenuProps } from "@/types/menu";
-import { Pages } from "../atoms/page";
 import { useState, useEffect } from "react";
-import { useCartStore } from "../store/cart";
-import MenuFilterBar from "./menuFilterBar";
-import GridMenu from "./gridMenu";
-import Cart from "./cart";
-import CartIcon from "../icons/cart";
-import { useUIStore } from "../store/useUIStore";
-import Modal from "./modal";
-import CardProduk from "../molecules/cardProduk";
-import Star from "../icons/star";
-import { Text } from "../atoms/text";
+import { useCartStore } from "@/components/store/cart";
+import MenuFilterBar from "@/components/organism/menuFilterBar";
+import GridMenu from "@/components/organism/gridMenu";
+import Cart from "@/components/organism/cart";
+import CartIcon from "@/components/icons/cart";
+import { useUIStore } from "@/components/store/useUIStore";
+import Modal from "@/components/organism/modal";
+import CardProduk from "@/components/molecules/cardProduk";
+import Star from "@/components/icons/star";
+import { Text } from "@/components/atoms/text";
 import { formatRupiah } from "@/const/idrCurrency";
-import { useMenu } from "../store/useMenu";
-import {
-  addFavoriteMenu,
-  removeFavoriteMenu,
-  getFavoriteMenus,
-} from "@/api/favoriteMenu";
+import { useMenu } from "@/components/store/useMenu";
 
-export default function MenuCatalog() {
+export default function TambahPesanan() {
   const {
     listMenu,
     isLoading,
@@ -31,7 +25,6 @@ export default function MenuCatalog() {
   const [selectedProduct, setSelectedProduct] = useState<MenuProps | null>(
     null
   );
-  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
 
   const cart = useCartStore((state) => state.cart);
   const addToCart = useCartStore((state) => state.addToCart);
@@ -50,58 +43,44 @@ export default function MenuCatalog() {
     close();
   };
 
-  const fetchFavoriteMenu = async () => {
-    const res = await getFavoriteMenus();
-    const ids = res.map((fav: any) => fav.menu_id);
-    setFavoriteIds(ids);
-  };
-
   useEffect(() => {
     fetchMenuData();
-    fetchFavoriteMenu();
   }, []);
-  const handleFavoriteClick = (product: MenuProps) => {
-    let updatedFavorites;
-    if (favoriteIds.includes(product.id)) {
-      removeFavoriteMenu(product.id);
-      updatedFavorites = favoriteIds.filter((id) => id !== product.id);
-    } else {
-      addFavoriteMenu(product.id);
-      updatedFavorites = [...favoriteIds, product.id];
-    }
-    setFavoriteIds(updatedFavorites);
-  };
+
   return (
-    <Pages className="relativeflex flex-row justify-between bg-broken h-full">
-      <div className="relative flex flex-col gap-6 w-full lg:mr-3">
-        <MenuFilterBar onFilter={setFilteredMenu} menuList={listMenu} />
-        {isLoading || isRatingsLoading ? (
-          <div className="flex justify-center items-center h-full">
-            <Text size="heading2" className="text-pretty">
-              Loading menu...
-            </Text>
-          </div>
-        ) : listMenu.length === 0 ? (
-          <div className="flex justify-center items-center h-full">
-            <Text size="heading1" className="text-pretty">
-              Menu tidak tersedia
-            </Text>
-          </div>
-        ) : (
-          <div className="h-full mx-auto md:m-0 overflow-y-auto scrollbar-hide">
-            <GridMenu
-              filteredMenu={filteredMenu.length ? filteredMenu : listMenu}
-              addToCart={addToCart}
-              onProductClick={(product) => {
-                setSelectedProduct(product);
-                open("detailProduct");
-              }}
-              onFavoriteClick={handleFavoriteClick}
-              favoriteIds={favoriteIds}
-              getMenuRating={getMenuRating}
-            />
-          </div>
-        )}
+    <div className="relative flex flex-row justify-between w-full bg-broken h-full px-2 md:px-4 lg:px-8 xl:px-10 2xl:px-12 pt-7">
+      <div className="relative flex flex-col gap-6 w-full lg:mr-3 h-full overflow-hidden">
+        <div className="flex-shrink-0">
+          <MenuFilterBar onFilter={setFilteredMenu} menuList={listMenu} />
+        </div>
+        <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hide">
+          {isLoading || isRatingsLoading ? (
+            <div className="flex justify-center items-center h-full">
+              <Text size="heading2" className="text-pretty">
+                Loading menu...
+              </Text>
+            </div>
+          ) : listMenu.length === 0 ? (
+            <div className="flex justify-center items-center h-full">
+              <Text size="heading1" className="text-pretty">
+                Menu tidak tersedia
+              </Text>
+            </div>
+          ) : (
+            <div className="min-h-0 max-auto lg:m-0">
+              <GridMenu
+                filteredMenu={filteredMenu.length ? filteredMenu : listMenu}
+                addToCart={addToCart}
+                isCustomer={false}
+                onProductClick={(product) => {
+                  setSelectedProduct(product);
+                  open("detailProduct");
+                }}
+                getMenuRating={getMenuRating}
+              />
+            </div>
+          )}
+        </div>
         <div
           className="absolute p-2 sm:p-4 rounded-full bg-white bottom-4 z-10 right-3  shadow-2xl shadow-black lg:hidden"
           onClick={() => open("cart")}
@@ -109,7 +88,7 @@ export default function MenuCatalog() {
           <CartIcon className="size-5 sm:size-7 text-primary " />
         </div>
       </div>
-      <div className="w-[28.3rem] hidden lg:block">
+      <div className="w-[28.3rem] hidden lg:block h-full">
         <Cart
           cart={cart}
           addToCart={addToCart}
@@ -149,8 +128,6 @@ export default function MenuCatalog() {
           children={
             <CardProduk
               imageSrc={selectedProduct?.image_url || ""}
-              onFavoriteClick={() => handleFavoriteClick(selectedProduct!)}
-              isFavorite={favoriteIds.includes(selectedProduct?.id!)}
               layout="custom"
               contentClassName="flex flex-col justify-between pt-2 px-1"
               className="hover:shadow-none"
@@ -207,6 +184,6 @@ export default function MenuCatalog() {
           }
         />
       )}
-    </Pages>
+    </div>
   );
 }

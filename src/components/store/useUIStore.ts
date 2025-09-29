@@ -13,7 +13,12 @@ export type modalKey =
   | "cancelReservasi"
   | "logout"
   | "detailPesanan"
-  | "RejectOrder";
+  | "RejectOrder"
+  | "printReceipt"
+  | "detailReservasi"
+  | "terimaReservasi"
+  | "tolakReservasi"
+  | "checkinReservasi";
 export type dropdownKey = "profile";
 export type sidebarKey = "sidebarCustomer" | "sidebarStaf";
 interface UIState {

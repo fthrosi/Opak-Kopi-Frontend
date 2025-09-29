@@ -95,7 +95,7 @@ export default function DetailHarga({
   }, [finalTotal]);
   return (
     <div className="bg-white p-2 flex flex-col gap-2 rounded-lg">
-      {isLoggedIn && (
+      {isLoggedIn && user?.role === "Pelanggan" && (
         <>
           <InputForm
             inputId="Promo"

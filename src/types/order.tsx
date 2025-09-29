@@ -49,5 +49,5 @@ export type Order = {
     updated_at: string,
     is_rated: boolean,
     payment_method: string,
-    history_point: point[],
+    point_history: point[],
 }

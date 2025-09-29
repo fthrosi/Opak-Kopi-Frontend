@@ -65,7 +65,7 @@ export default function StafNav({ handleOpen, onItemClick, children }: StafNavPr
             />
           </div>
           {isProfileDropdownOpen && (
-            <div className="pt-2">
+            <div className="pt-2 z-50">
               <div className="absolute top-full right-0  bg-white w-48 p-2 rounded-lg shadow-lg">
                 {children.map((item) => (
                   <Text

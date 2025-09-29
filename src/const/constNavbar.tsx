@@ -2,6 +2,13 @@ import type { NavigasiProfile } from "@/types/navigasi";
 import { ReservasiIcon } from "@/components/icons/reservasi";
 import { PesananIcon } from "@/components/icons/pesanan";
 import { MenuIcon } from "@/components/icons/menu";
+import { DashboardIcon } from "@/components/icons/dashboard";
+import { KategoriIcon } from "@/components/icons/kategori";
+import VoucherIcon from "@/components/icons/voucher";
+import { LaporanIcon } from "@/components/icons/laporan";
+import { UserIcon } from "@/components/icons/user";
+import { KritikSaranIcon } from "@/components/icons/kritikSaran";
+import path from "path";
 
 export const navigationData = [
   {
@@ -167,6 +174,56 @@ export const navbarKasir  = [
   },
 ];
 
+export const navbarOwner = [
+  {
+    id: 1,
+    title: "Dashboard",
+    path: "/owner/dashboard",
+    icon: <DashboardIcon className="w-full h-full" />,
+  },{
+    id: 2,
+    title: "Pesanan",
+    path: "/owner/pesanan",
+    icon: <PesananIcon className="w-full h-full" />,
+  },
+  {
+    id: 3,
+    title: "Reservasi",
+    path: "/owner/reservasi",
+    icon: <ReservasiIcon className="w-full h-full" />,
+  },{
+    id: 4,
+    title: "Menu",
+    path: "/owner/menu",
+    icon: <MenuIcon className="w-full h-full" />,
+  },{
+    id: 5,
+    title: "Promo",
+    path: "/owner/promo",
+    icon: <VoucherIcon className="w-full h-full" />,
+  },{
+    id: 6,
+    title: "Kategori",
+    path: "/owner/kategori",
+    icon: <KategoriIcon className="w-full h-full" />,
+  },{
+    id: 7,
+    title: "Kritik & Saran",
+    path: "/owner/kritik-saran",
+    icon: <KritikSaranIcon className="w-full h-full" />,
+  },{
+    id: 8,
+    title: "Pengguna",
+    path: "/owner/pengguna",
+    icon: <UserIcon className="w-full h-full" />,
+  },{
+    id: 9,
+    title: "Laporan",
+    path: "/owner/laporan",
+    icon: <LaporanIcon className="w-full h-full" />,
+  }
+]
+
 export const secNavPesanan = [
   { id: 1, title: "Dikirim", label: "Baru" },
   { id: 2, title: "Diproses", label: "Diproses" },
@@ -178,7 +235,7 @@ export const navbarStaf : NavigasiProfile[] = [
   {
     id: 1,
     title: "Profile",
-    path: "/profile",
+    path: "/kasir/profile",
     action: "navigate",
   },
   {

@@ -1,9 +1,10 @@
 import CloseIcon from "../atoms/icons/close";
 import { Text } from "../atoms/text";
 import { MenuItem } from "./navigationStaf";
-import { navbarKasir } from "@/const/constNavbar";
+import { navbarKasir,navbarOwner } from "@/const/constNavbar";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import useAuthStore from "../store/useAuthStore";
 
 type SidebarProps = {
   handleClose: () => void;
@@ -14,7 +15,7 @@ export default function Sidebar({ handleClose }: SidebarProps) {
   const [activeMenu, setActiveMenu] = useState<string>("");
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-
+  const user = useAuthStore((state) => state.user);
   useEffect(() => {
     const currentMenuItem = navbarKasir.find((item) =>
       location.pathname.startsWith(item.path)
@@ -44,7 +45,7 @@ export default function Sidebar({ handleClose }: SidebarProps) {
       setTimeout(() => setIsTransitioning(false), 300);
     }
   };
-
+  const navbar = user?.role === "Owner" ? navbarOwner : navbarKasir;
   return (
     <div className="w-full sm:w-[20rem] md:w-[25rem] lg:w-full h-full py-4 bg-white flex flex-col over-flow-hidden rounded-r-4xl">
       <div className="flex justify-between px-2 2xl:h-[5.75rem] h-[4rem] lg:h-[5.5rem]">
@@ -88,7 +89,7 @@ export default function Sidebar({ handleClose }: SidebarProps) {
           </div>
         </div>
         <ul className=" relative z-25">
-          {navbarKasir.map((item) => (
+          {navbar.map((item) => (
             <MenuItem
               key={item.id}
               item={item}

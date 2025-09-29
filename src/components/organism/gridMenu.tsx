@@ -29,12 +29,13 @@ export interface GridMenuProps
   filteredMenu: Array<MenuProps>;
   addToCart: (item: any) => void;
   onProductClick: (item: MenuProps) => void; // Tambah ini
-  onFavoriteClick: (item: MenuProps) => void; // Tambah ini
-  favoriteIds: number[]; // Tambah ini
+  onFavoriteClick?: (item: MenuProps) => void; // Tambah ini
+  favoriteIds?: number[]; // Tambah ini
   getMenuRating: (menuId: number) => {
     averageRating: number;
     totalReviews: number;
   }; // Tambah ini
+  isCustomer?: boolean;
 }
 export default function GridMenu({
   filteredMenu,
@@ -45,6 +46,7 @@ export default function GridMenu({
   className,
   gridType,
   getMenuRating,
+  isCustomer,
 }: GridMenuProps) {
   return (
     <div className={cn(gridMenuVariants({ gridType }), className)}>
@@ -53,10 +55,11 @@ export default function GridMenu({
         return (
           <CardProduk
             onClick={() => onProductClick(item)}
-            onFavoriteClick={() => onFavoriteClick(item)}
+            onFavoriteClick={() => onFavoriteClick?.(item)}
             key={item.id}
             imageSrc={item.image_url}
-            isFavorite={favoriteIds.includes(item.id)}
+            isCustomer={isCustomer}
+            isFavorite={favoriteIds?.includes(item.id)}
             favoriteClassName="right-1"
             contentClassName="flex flex-col justify-between px-[clamp(0.5rem,2.3vw,0.75rem)] py-[clamp(0.5rem,2.7vw,0.9rem)] sm:py-[0.8rem] md:py-[1.2rem] lg:py-[0.9rem]"
             titleProps={{

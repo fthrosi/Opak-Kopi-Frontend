@@ -105,6 +105,7 @@ export interface CardProdukProps
   onClick?: () => void;
   onFavoriteClick?: () => void;
   favoriteClassName?: string;
+  isCustomer?: boolean;
 }
 export default function CardProduk({
   className,
@@ -121,6 +122,7 @@ export default function CardProduk({
   onFavoriteClick,
   isFavorite = false,
   favoriteClassName,
+  isCustomer = true,
 }: CardProdukProps) {
   const detailProduct = useUIStore((state) => state.activeModal);
   return (
@@ -128,21 +130,26 @@ export default function CardProduk({
       className={cn(cardProdukVariants({ layout }), className)}
       onClick={onClick}
     >
-      <div className="h-3/5 w-full relative bg-amber-300">
+      <div className="h-3/5 w-full relative">
         <img className={`h-full w-full`} src={imageSrc} />
-        <div
-          className={cn("absolute top-1 p-2 rounded-full bg-white/90", favoriteClassName)}
-          onClick={(e) => {
-            e.stopPropagation();
-            onFavoriteClick?.();
-          }}
-        >
-          <HeartFill
-            className={`w-5 h-4.5  ${
-              isFavorite ? "text-primary" : "text-white"
-            }`}
-          />
-        </div>
+        {isCustomer && (
+          <div
+            className={cn(
+              "absolute top-1 p-2 rounded-full bg-white/90",
+              favoriteClassName
+            )}
+            onClick={(e) => {
+              e.stopPropagation();
+              onFavoriteClick?.();
+            }}
+          >
+            <HeartFill
+              className={`w-5 h-4.5  ${
+                isFavorite ? "text-primary" : "text-white"
+              }`}
+            />
+          </div>
+        )}
       </div>
 
       <div className={cn("z-10 h-2/5", contentClassName)}>

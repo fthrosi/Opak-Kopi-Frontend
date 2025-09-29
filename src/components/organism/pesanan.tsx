@@ -18,6 +18,8 @@ import { useUIStore } from "../store/useUIStore";
 import { updateOrderStatus } from "@/api/orders";
 import { ModalReject } from "./modalReject";
 import { toast } from "sonner";
+import { Receipt } from "./receipt";
+import { Button } from "../atoms/button";
 
 export default function Pesanan() {
   const open = useUIStore((state) => state.open);
@@ -28,7 +30,7 @@ export default function Pesanan() {
   const isRejectOrderModal = useUIStore(
     (state) => state.activeModal === "RejectOrder"
   );
-
+  const isPrint = useUIStore((state) => state.activeModal === "printReceipt");
   const handleClickCard = (order: Order) => {
     open("detailPesanan");
     setSelectedOrder(order);
@@ -36,15 +38,13 @@ export default function Pesanan() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [activeStatus, setActiveStatus] = useState<string>("Dikirim");
-  const [searchQuery, setSearchQuery] = useState<string>(""); 
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const fetchDailyOrders = async () => {
     try {
       setLoading(true);
       const data = await getDailyOrders();
-      console.log("Fetched daily orders:", data.data);
       setOrders(data.data || []);
-    } catch (error) {
     } finally {
       setLoading(false);
     }
@@ -120,11 +120,15 @@ export default function Pesanan() {
       toast.error("Gagal menolak pesanan");
     }
   };
+  const handlePrintReceipt = (order: Order) => {
+    setSelectedOrder(order);
+    open("printReceipt");
+  };
   useEffect(() => {
     fetchDailyOrders();
   }, []);
   return (
-    <div className="flex flex-col gap-5 h-full reative">
+    <div className="flex flex-col gap-5 h-full relative">
       <div className="lg:flex-shrink-0">
         <ButtonText
           text="Pesanan"
@@ -136,7 +140,7 @@ export default function Pesanan() {
           position="row"
           button={true}
           children={
-            <a className="flex gap-1 text-primary hover:text-white text-[0.7rem] hover:cursor-pointer">
+            <a href="/kasir/tambah-pesanan" className="flex gap-1 text-primary hover:text-white text-[0.7rem] hover:cursor-pointer">
               <AddIcon className="size-3 text-primary hover:text-white" />
               Tambah Pesanan
             </a>
@@ -146,7 +150,6 @@ export default function Pesanan() {
       <div className="lg:flex-shrink-0">
         <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-2">
           <CardInformation
-            className=""
             title="Pesanan Baru"
             count={orderStats.baru.toString()}
             variant="white"
@@ -238,6 +241,7 @@ export default function Pesanan() {
           onPayment={(method: string) =>
             handleUpdateStatus(selectedOrder!, method)
           }
+          onPrintReceipt={handlePrintReceipt}
         />
       )}
       {isRejectOrderModal && (
@@ -247,6 +251,38 @@ export default function Pesanan() {
             handleTolakOrder(selectedOrder!, reason)
           }
         />
+      )}
+      {isPrint && selectedOrder && (
+        <div className="fixed inset-0 z-50 print-hidden">
+          {" "}
+          {/* ← TAMBAH print-hidden class */}
+          <div className="fixed inset-0 bg-black/50" onClick={() => close()}>
+            <div className="flex items-center justify-center min-h-screen p-4">
+              <div
+                className="bg-white rounded-lg max-w-md w-full"
+                onClick={(e) => e.stopPropagation()} // ← TAMBAH ini biar modal gak close
+              >
+                <Receipt order={selectedOrder} />
+                <div className="p-4 border-t flex gap-2 print-hidden">
+                  {" "}
+                  {/* ← TAMBAH print-hidden ke buttons */}
+                  <Button
+                    className="flex-1 bg-secondary text-white"
+                    onClick={() => close()}
+                  >
+                    Tutup
+                  </Button>
+                  <Button
+                    className="flex-1 bg-primary text-white"
+                    onClick={() => window.print()}
+                  >
+                    Cetak
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

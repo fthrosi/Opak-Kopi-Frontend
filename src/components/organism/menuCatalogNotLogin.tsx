@@ -13,13 +13,8 @@ import Star from "../icons/star";
 import { Text } from "../atoms/text";
 import { formatRupiah } from "@/const/idrCurrency";
 import { useMenu } from "../store/useMenu";
-import {
-  addFavoriteMenu,
-  removeFavoriteMenu,
-  getFavoriteMenus,
-} from "@/api/favoriteMenu";
 
-export default function MenuCatalog() {
+export default function Menu() {
   const {
     listMenu,
     isLoading,
@@ -31,7 +26,6 @@ export default function MenuCatalog() {
   const [selectedProduct, setSelectedProduct] = useState<MenuProps | null>(
     null
   );
-  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
 
   const cart = useCartStore((state) => state.cart);
   const addToCart = useCartStore((state) => state.addToCart);
@@ -50,27 +44,10 @@ export default function MenuCatalog() {
     close();
   };
 
-  const fetchFavoriteMenu = async () => {
-    const res = await getFavoriteMenus();
-    const ids = res.map((fav: any) => fav.menu_id);
-    setFavoriteIds(ids);
-  };
 
   useEffect(() => {
     fetchMenuData();
-    fetchFavoriteMenu();
   }, []);
-  const handleFavoriteClick = (product: MenuProps) => {
-    let updatedFavorites;
-    if (favoriteIds.includes(product.id)) {
-      removeFavoriteMenu(product.id);
-      updatedFavorites = favoriteIds.filter((id) => id !== product.id);
-    } else {
-      addFavoriteMenu(product.id);
-      updatedFavorites = [...favoriteIds, product.id];
-    }
-    setFavoriteIds(updatedFavorites);
-  };
   return (
     <Pages className="relativeflex flex-row justify-between bg-broken h-full">
       <div className="relative flex flex-col gap-6 w-full lg:mr-3">
@@ -92,12 +69,11 @@ export default function MenuCatalog() {
             <GridMenu
               filteredMenu={filteredMenu.length ? filteredMenu : listMenu}
               addToCart={addToCart}
+              isCustomer={false}
               onProductClick={(product) => {
                 setSelectedProduct(product);
                 open("detailProduct");
               }}
-              onFavoriteClick={handleFavoriteClick}
-              favoriteIds={favoriteIds}
               getMenuRating={getMenuRating}
             />
           </div>
@@ -149,8 +125,7 @@ export default function MenuCatalog() {
           children={
             <CardProduk
               imageSrc={selectedProduct?.image_url || ""}
-              onFavoriteClick={() => handleFavoriteClick(selectedProduct!)}
-              isFavorite={favoriteIds.includes(selectedProduct?.id!)}
+              isCustomer={false}
               layout="custom"
               contentClassName="flex flex-col justify-between pt-2 px-1"
               className="hover:shadow-none"

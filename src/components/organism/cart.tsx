@@ -12,7 +12,11 @@ import useAuthStore from "../store/useAuthStore";
 import { toast } from "sonner";
 import { fetchtables } from "@/api/tables";
 import { addOrder } from "@/api/orders";
-import { orderSchemaLogin } from "@/validateSchema/pesanan";
+import {
+  orderSchemaLogin,
+  orderSchemaGuest,
+  kasirSchema,
+} from "@/validateSchema/pesanan";
 import { cn } from "@/lib/utils";
 
 type CartProps = {
@@ -30,8 +34,9 @@ export default function Cart({
   clearCart,
   classname,
 }: CartProps) {
-  const isLoggedIn = useAuthStore.getState().isLoggedIn;
-  const user = useAuthStore.getState().user;
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const user = useAuthStore((state) => state.user);
+  const isPelanggan = user?.role === "Pelanggan";
   const finalTotal = useCheckoutStore((state) => state.finalTotal);
   const promoId = useCheckoutStore((state) => state.id_promo);
   const pointUse = useCheckoutStore((state) => state.point_use);
@@ -58,9 +63,7 @@ export default function Cart({
     }
   };
 
-  const handleSubmit = async (
-    e: React.FormEvent,
-  ) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const order_items = cart.map((item) => ({
@@ -68,12 +71,20 @@ export default function Cart({
       quantity: item.qty,
     }));
     let payload;
-    if (isLoggedIn) {
+    if (isLoggedIn && isPelanggan) {
       payload = {
         userId: user?.userId,
         table_id: selectedMeja,
         point_use: pointUse || 0,
         promo_id: promoId || null,
+        note: catatan,
+        order_items,
+      };
+    } else if (isLoggedIn && !isPelanggan) {
+      payload = {
+        customer_name: namaPelanggan,
+        userId: user?.userId,
+        table_id: selectedMeja,
         note: catatan,
         order_items,
       };
@@ -85,7 +96,8 @@ export default function Cart({
         order_items,
       };
     }
-    if (isLoggedIn) {
+    console.log(isPelanggan)
+    if (isLoggedIn && isPelanggan) {
       const validation = orderSchemaLogin.safeParse(payload);
       if (!validation.success) {
         const firstError = validation.error.issues[0];
@@ -93,18 +105,36 @@ export default function Cart({
         return;
       }
       payload = validation.data;
-    }
-    console.log(validPoin, validPromo);
-    if (!validPromo) {
-      return;
-    }
-    if (!validPoin) {
-      return;
+      if (!validPromo) {
+        return;
+      }
+      if (!validPoin) {
+        return;
+      }
+    } else if (isLoggedIn && !isPelanggan) {
+      const validation = kasirSchema.safeParse(payload);
+      if (!validation.success) {
+        const firstError = validation.error.issues[0];
+        toast.error(firstError.message);
+        return;
+      }
+      payload = validation.data;
+    } else {
+      const validation = orderSchemaGuest.safeParse(payload);
+      if (!validation.success) {
+        const firstError = validation.error.issues[0];
+        toast.error(firstError.message);
+        return;
+      }
+      payload = validation.data;
     }
     try {
       await addOrder(payload);
       toast.success("Pesanan berhasil dikirim");
       clearCart();
+      setSelectedMeja("");
+      setNamaPelanggan("");
+      setCatatan("");
       setOnReset(true);
     } catch (error) {
       toast.error("Gagal mengirim pesanan");
@@ -115,14 +145,17 @@ export default function Cart({
     fetchTable();
   }, []);
   return (
-    <div className={cn(`flex h-full lg:border-l-2 border-l-primary flex-col items-center lg:pl-3`, classname)}>
+    <div
+      className={cn(
+        `flex h-full lg:border-l-2 border-l-primary flex-col items-center lg:pl-3`,
+        classname
+      )}
+    >
       <Text size="heading3" className="w-full text-center">
         Keranjang Belanja
       </Text>
       <form
-        onSubmit={(event) =>
-          handleSubmit(event)
-        }
+        onSubmit={(event) => handleSubmit(event)}
         className="flex flex-col gap-2 w-full h-full min-h-0 pb-3"
       >
         <div className="mt-5">
@@ -153,7 +186,7 @@ export default function Cart({
             }}
           />
         </div>
-        {!isLoggedIn && (
+        {!isPelanggan && (
           <InputForm
             inputId="NamaPelanggan"
             inputBgColor="white"

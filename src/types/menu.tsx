@@ -11,4 +11,5 @@ export type MenuProps = {
   kategori: string;
   image_url: string;
   category: categorymenu;
+  status: string;
 }

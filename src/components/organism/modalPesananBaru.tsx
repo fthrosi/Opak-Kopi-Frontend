@@ -19,6 +19,7 @@ type modalPesananBaruProps = {
   onUpdateStatus?: () => void;
   onReject?: () => void;
   onPayment?: (paymentMethod: string) => Promise<void>;
+  onPrintReceipt?: (order: Order) => void;
 };
 
 export const ModalPesananBaru = ({
@@ -26,6 +27,7 @@ export const ModalPesananBaru = ({
   onUpdateStatus,
   onReject,
   onPayment,
+  onPrintReceipt,
 }: modalPesananBaruProps) => {
   const totalSubTotal = useMemo(() => {
     return order?.order_items.reduce((total, item) => {
@@ -52,6 +54,10 @@ export const ModalPesananBaru = ({
     } finally {
       setIsProcessingPayment(false);
     }
+  };
+  const handlePrintReceipt = () => {
+    if (!order) return;
+    onPrintReceipt?.(order);
   };
   return (
     <Modal
@@ -135,7 +141,9 @@ export const ModalPesananBaru = ({
       </div>
       <div
         className={`flex flex-col justify-between flex-1 ${
-          order?.status === "Diproses" || order?.status === "Selesai" ? "gap-3" : ""
+          order?.status === "Diproses" || order?.status === "Selesai"
+            ? "gap-3"
+            : ""
         }`}
       >
         <div
@@ -306,34 +314,38 @@ export const ModalPesananBaru = ({
             </div>
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-2">
-                  <div className="flex justify-between">
-                    <Text size="caption" textColor="secondary">
-                      Metode Pembayaran
-                    </Text>
-                    <Text size="caption" className="text-secondary capitalize">
-                      {order.payment_method}
-                    </Text>
-                  </div>
-                  <div className="flex justify-between">
-                    <Text size="caption" textColor="secondary">
-                      Poin Didapat
-                    </Text>
-                    <Text size="caption" className="text-secondary">
-                      {order.history_point?.filter(poin => poin.type === "Pendapatan").reduce((total, poin) => total + poin.amount, 0) || 0} Poin
-                    </Text>
-                  </div>
-                  <div className="flex justify-between">
-                    <Text size="caption" textColor="secondary">
-                        Waktu Selesai
-                    </Text>
-                    <Text size="caption" className="text-secondary">
-                      {formatDateTime(order.updated_at)}
-                    </Text>
-                  </div>
+                <div className="flex justify-between">
+                  <Text size="caption" textColor="secondary">
+                    Metode Pembayaran
+                  </Text>
+                  <Text size="caption" className="text-secondary capitalize">
+                    {order.payment_method}
+                  </Text>
+                </div>
+                <div className="flex justify-between">
+                  <Text size="caption" textColor="secondary">
+                    Poin Didapat
+                  </Text>
+                  <Text size="caption" className="text-secondary">
+                    {order.point_history
+                      ?.filter((point) => point.type === "Pendapatan")
+                      .reduce((total, point) => total + point.amount, 0) ||
+                      0}{" "}
+                    Poin
+                  </Text>
+                </div>
+                <div className="flex justify-between">
+                  <Text size="caption" textColor="secondary">
+                    Waktu Selesai
+                  </Text>
+                  <Text size="caption" className="text-secondary">
+                    {formatDateTime(order.updated_at)}
+                  </Text>
+                </div>
               </div>
               <Button
                 className="w-full bg-secondary"
-                onClick={handlePayment}
+                onClick={handlePrintReceipt}
               >
                 Cetak Struk
               </Button>

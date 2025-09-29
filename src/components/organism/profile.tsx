@@ -1,12 +1,8 @@
 import { useState } from "react";
-import Img from "../atoms/img";
 import { Pages } from "../atoms/page";
 import TitleDescription from "../molecules/titleDescription";
-import { Button } from "../atoms/button";
 import useAuthStore from "../store/useAuthStore";
-import { Text } from "../atoms/text";
 import { imgDetail } from "@/const/user";
-import InputForm from "../molecules/inputForm";
 import {
   updateDataUser,
   updateUserProfilePicture,
@@ -23,6 +19,7 @@ import {
   fieldModalEditPassword,
 } from "@/const/user";
 import { ModalEditUser } from "./modalEditUser";
+import ProfileComponent from "./profileComponent";
 
 export default function Profile() {
   const fieldToShow = [
@@ -44,6 +41,7 @@ export default function Profile() {
     },
   ];
   const updateUser = useAuthStore((state) => state.updateUserData);
+  const userActive = useAuthStore((state) => state.user);
   const handleUpdateProfilePicture = async (file: File | null) => {
     if (file) {
       const formDataWithFile = new FormData();
@@ -167,81 +165,63 @@ export default function Profile() {
     }
     setFormData(initialFormData);
   };
+  const handleButtonProfileClick = (buttonTitle: string) => {
+    handleOpenModal(buttonTitle as modalKey);
+  };
   return (
-    <Pages className="flex-1 flex flex-col mt-5">
-      <div className="xs:bg-white xs:p-4 xs:rounded-lg ">
-        <TitleDescription
-          title="Profile Page"
-          titleSize="heading3"
-          titleWeight="semiBold"
-          description="Kelola informasi profil Anda untuk mengontrol, melindungi dan mengamankan akun"
-          descriptionSize="caption"
-          gap="profile"
-          descriptionPosition="left"
-          className="border-b-1 border-b-primary pb-2"
-        />
-        <div className="flex flex-col items-center mt-5 gap-5 ">
-          <Img
-            src={(profileData?.img.split('/').pop() !== "null" ? profileData?.img : "/image/defaultUser.jpg") || "/image/defaultUser.jpg"}
-            alt="Profile Picture"
-            className="size-30 2xl:size-40 rounded-full"
+    <Pages
+      className={`flex flex-col pt-5 ${
+        userActive?.role === "Pelanggan" ? "flex-1" : "h-full"
+      }`}
+    >
+      {userActive?.role === "Pelanggan" ? (
+        <div className="xs:bg-white xs:p-4 xs:rounded-lg ">
+          <TitleDescription
+            title="Profile Page"
+            titleSize="heading3"
+            titleWeight="semiBold"
+            description="Kelola informasi profil Anda untuk mengontrol, melindungi dan mengamankan akun"
+            descriptionSize="caption"
+            gap="profile"
+            descriptionPosition="left"
+            className="border-b-1 border-b-primary pb-2"
           />
-          <Button
-            size="custom"
-            className="text-xs px-2 py-2 hover:cursor-pointer"
-            onClick={() => openModal("profilePicture")}
-          >
-            Pilih Gambar
-          </Button>
-          <div className="flex flex-col gap-1">
-            {imgDetail.map((item) => (
-              <Text
-                key={item.id}
-                size="caption"
-                color="secondary"
-                className="text-center"
-              >
-                {item.title}
-              </Text>
-            ))}
+          <ProfileComponent
+            profileData={profileData}
+            fieldToShow={fieldToShow}
+            imgDetail={imgDetail}
+            buttonProfile={buttonProfile}
+            onButtonImageClick={() => openModal("profilePicture")}
+            onButtonProfileClick={handleButtonProfileClick}
+          />
+        </div>
+      ) : (
+        <div className="flex flex-col h-full overflow-hidden">
+          <div className="flex-shrink-0 xs:bg-white xs:px-4 xs:pt-4">
+            <TitleDescription
+              title="Profile Page"
+              titleSize="heading3"
+              titleWeight="semiBold"
+              description="Kelola informasi profil Anda untuk mengontrol, melindungi dan mengamankan akun"
+              descriptionSize="caption"
+              gap="profile"
+              descriptionPosition="left"
+              className="border-b-1 border-b-primary pb-2"
+            />
           </div>
-          {fieldToShow.map((field) => {
-            let value = profileData?.[field.id as keyof typeof profileData];
-            if (typeof value === "number" && !value) {
-              value = 0;
-            } else if (value === null || value === undefined) {
-              value = "-";
-            }
-            return (
-              <div className="w-full sm:max-w-[25rem]">
-                <InputForm
-                  key={field.id}
-                  children={field.label}
-                  labelClassName="capitalize"
-                  inputFocus="none"
-                  inputProps={{
-                    value,
-                    readOnly: true,
-                    disabled: field.id === "poin",
-                  }}
-                />
-              </div>
-            );
-          })}
-          <div className="flex flex-col gap-2 w-full items-center">
-            {buttonProfile.map((button) => (
-              <Button
-                key={button.id}
-                size="custom"
-                className={`text-xs px-2 py-2 w-full sm:max-w-[25rem] hover:cursor-pointer ${button.background}`}
-                onClick={() => handleOpenModal(button.title as modalKey)}
-              >
-                {button.field}
-              </Button>
-            ))}
+          <div className="flex-1 min-h-0 overflow-y-auto scrollbar-hide xs:bg-white xs:px-4 xs:pb-4">
+            <ProfileComponent
+              profileData={profileData}
+              fieldToShow={fieldToShow}
+              imgDetail={imgDetail}
+              buttonProfile={buttonProfile}
+              onButtonImageClick={() => openModal("profilePicture")}
+              onButtonProfileClick={handleButtonProfileClick}
+            />
           </div>
         </div>
-      </div>
+      )}
+
       {isopenModalProfilePicture && (
         <ModalProfilePicture
           preview={preview}

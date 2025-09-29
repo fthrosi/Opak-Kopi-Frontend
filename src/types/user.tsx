@@ -18,3 +18,10 @@ export type updatePassword = {
   currentPassword: string;
   newPassword: string;
 };
+
+export type buttonProfile = {
+    id: number;
+    title: string;
+    field: string;
+    background: string;
+};
