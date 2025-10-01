@@ -9,6 +9,29 @@ export const addOrder = async (orderData: any) => {
     throw error;
   }
 };
+export const getAllOrders = async () => {
+  try {
+    const response = await api.get("/orders/all");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw error;
+  }
+};
+export const getOrderRange = async (startDate?: string, endDate?: string) => {
+  try {
+    const response = await api.get("/orders/history", {
+      params: {
+        ...(startDate && { startDate }),
+        ...(endDate && { endDate }),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw error;
+  }
+};
 export const getOrdersByUser = async () => {
   try {
     const response = await api.get("/orders/user");
@@ -38,7 +61,14 @@ export const getDailyOrders = async () => {
   }
 };
 
-export const updateOrderStatus = async (orderId: number, status: { status: string; cancellation_reason?: string; payment_method?: string }) => {
+export const updateOrderStatus = async (
+  orderId: number,
+  status: {
+    status: string;
+    cancellation_reason?: string;
+    payment_method?: string;
+  }
+) => {
   try {
     const response = await api.put(`/orders/update/${orderId}`, status);
     return response.data;

@@ -1,7 +1,7 @@
 import CloseIcon from "../atoms/icons/close";
 import { Text } from "../atoms/text";
 import { MenuItem } from "./navigationStaf";
-import { navbarKasir,navbarOwner } from "@/const/constNavbar";
+import { navbarKasir, navbarOwner } from "@/const/constNavbar";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import useAuthStore from "../store/useAuthStore";
@@ -16,14 +16,18 @@ export default function Sidebar({ handleClose }: SidebarProps) {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const user = useAuthStore((state) => state.user);
+
+  const navbar = user?.role === "Owner" ? navbarOwner : navbarKasir;
   useEffect(() => {
-    const currentMenuItem = navbarKasir.find((item) =>
+    const currentMenuItem = navbar.find((item) =>
       location.pathname.startsWith(item.path)
     );
 
     if (currentMenuItem) {
-      const newIndex = navbarKasir.findIndex(item => item.title === currentMenuItem.title);
-      
+      const newIndex = navbar.findIndex(
+        (item) => item.title === currentMenuItem.title
+      );
+
       if (newIndex !== activeIndex) {
         setIsTransitioning(true);
         setActiveMenu(currentMenuItem.title);
@@ -35,17 +39,17 @@ export default function Sidebar({ handleClose }: SidebarProps) {
   }, [location.pathname, activeIndex]);
 
   const handleMenuClick = (menuTitle: string) => {
-     const newIndex = navbarKasir.findIndex(item => item.title === menuTitle);
-    
+    const newIndex = navbar.findIndex((item) => item.title === menuTitle);
+
     if (newIndex !== activeIndex) {
       setIsTransitioning(true);
       setActiveMenu(menuTitle);
       setActiveIndex(newIndex);
-      
+
       setTimeout(() => setIsTransitioning(false), 300);
     }
   };
-  const navbar = user?.role === "Owner" ? navbarOwner : navbarKasir;
+
   return (
     <div className="w-full sm:w-[20rem] md:w-[25rem] lg:w-full h-full py-4 bg-white flex flex-col over-flow-hidden rounded-r-4xl">
       <div className="flex justify-between px-2 2xl:h-[5.75rem] h-[4rem] lg:h-[5.5rem]">
@@ -57,15 +61,15 @@ export default function Sidebar({ handleClose }: SidebarProps) {
         </div>
       </div>
       <nav className="flex-1 relative">
-        <div 
+        <div
           className={`
             absolute right-0 w-full z-10
             transition-transform duration-500 ease-in-out
-            ${isTransitioning ? 'ease-out' : 'ease-in-out'}
+            ${isTransitioning ? "ease-out" : "ease-in-out"}
           `}
           style={{
             transform: `translateY(${activeIndex * 66}px)`,
-            height: '64px',
+            height: "64px",
           }}
         >
           <div className="absolute -top-4 right-0 w-4 h-4">

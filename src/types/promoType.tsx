@@ -5,7 +5,9 @@ type menu = {
 type promoMenu = {
     menu: menu;
 }
-
+type countClaim = {
+    orders : number;
+}
 export type promoType = {
     amount_value?: number;
     description: string;
@@ -15,6 +17,7 @@ export type promoType = {
     minimum_purchase?: number;
     name: string;
     percent_value?: number;
+    _count: countClaim;
     promo_code: string;
     promo_type: "amount" | "percent";
     start_date: string;

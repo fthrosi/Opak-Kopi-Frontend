@@ -19,8 +19,7 @@ const selectVariants = cva(
           "bg-transparent file:bg-transparent selection:bg-transparent",
       },
       textColor: {
-        default:
-          "text-primary file:text-primary/70 selection:text-primary",
+        default: "text-primary file:text-primary/70 selection:text-primary",
         gray: "text-gray file:text-gray/70 selection:text-gray",
       },
       borderColor: {
@@ -32,16 +31,15 @@ const selectVariants = cva(
           "focus-visible:border-primary focus-visible:ring-primary/50 focus-visible:ring-[3px]",
         white:
           "focus-visible:border-white focus-visible:ring-white/50 focus-visible:ring-[3px]",
-        gray:
-          "focus-visible:border-gray focus-visible:ring-gray/50 focus-visible:ring-[3px]",
+        gray: "focus-visible:border-gray focus-visible:ring-gray/50 focus-visible:ring-[3px]",
       },
     },
     defaultVariants: {
       formSize: "default",
       bgColor: "default",
-        textColor: "default",
-        borderColor: "default",
-        focus: "default",
+      textColor: "default",
+      borderColor: "default",
+      focus: "default",
     },
   }
 );
@@ -51,34 +49,51 @@ export interface SelectProps<T = any>
     VariantProps<typeof selectVariants> {
   className?: string;
   placeholder?: string;
-    id?: string;
-    disabled?: boolean;
-    hidden?: boolean;
-    options?: SelectOption<T>[];
-    getValue?: (option: T) => string | number;
+  id?: string;
+  disabled?: boolean;
+  hidden?: boolean;
+  options?: SelectOption<T>[];
+  getValue?: (option: T) => string | number;
   getLabel?: (option: T) => React.ReactNode;
+  isMultiple?: boolean;
 }
 export default function Select({
   className,
   formSize,
   placeholder,
   bgColor,
-    textColor,
-    borderColor,
-    focus,
+  textColor,
+  borderColor,
+  focus,
   id,
   disabled,
   hidden,
   options,
   getValue = (option) => option.id,
   getLabel = (option) => option.name,
+  isMultiple = false,
   ...props
 }: SelectProps) {
   return (
-    <select name={id} id={id} className={cn(selectVariants({ formSize, bgColor, textColor, borderColor, focus }), className)} {...props}>
-      <option disabled={disabled} hidden={hidden} value="">{placeholder}</option>
+    <select
+      multiple={isMultiple}
+      name={id}
+      id={id}
+      className={cn(
+        selectVariants({ formSize, bgColor, textColor, borderColor, focus }),
+        isMultiple && "min-h-[120px]",
+        className
+      )}
+      {...props}
+    >
+      {!isMultiple && (
+        <option disabled={disabled} hidden={hidden} value="">
+          {placeholder}
+        </option>
+      )}
+
       {options?.map((option) => (
-        <option key={(getValue(option))} value={getValue(option)}>
+        <option key={getValue(option)} value={getValue(option)}>
           {getLabel(option)}
         </option>
       ))}

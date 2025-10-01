@@ -9,9 +9,47 @@ export const fetchMenu = async () => {
   }
 };
 
-export const updateMenuStatus = async (id: number, status: {status : string}) => {
+export const updateMenuStatus = async (
+  id: number,
+  status: { status: string }
+) => {
   try {
     const response = await api.put(`/menus/update/${id}`, status);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateMenu = async (id: number, menuData: FormData) => {
+  try {
+    const response = await api.put(`/menus/update/${id}`, menuData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createMenu = async (menuData: FormData) => {
+  try {
+    const response = await api.post("/menus/add", menuData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteMenu = async (id: number) => {
+  try {
+    const response = await api.put(`/menus/delete/${id}`);
     return response.data;
   } catch (error) {
     throw error;

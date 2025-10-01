@@ -23,6 +23,11 @@ import KasirPesananPage from "./components/pages/kasir/pesanan";
 import KasirMenuPage from "./components/pages/kasir/menu";
 import KasirReservasiPage from "./components/pages/kasir/reservasi";
 import TambahPesanan from "./components/pages/kasir/tambahPesanan";
+import PesananOwnerPage from "./components/pages/owner/pesanan";
+import ReservasiOwnerPage from "./components/pages/owner/reservasi";
+import MenuOwnerPage from "./components/pages/owner/menu";
+import PromoOwnerPage from "./components/pages/owner/promo";
+
 export default function App() {
   useAuthStore.getState().restore();
   return (
@@ -58,6 +63,11 @@ export default function App() {
             <Route path="/kasir/reservasi" element={<KasirReservasiPage />} />
             <Route path="/kasir/tambah-pesanan" element={<TambahPesanan />} />
             <Route path="/kasir/profile" element={<ProfilePage />} />
+
+            <Route path="/owner/pesanan" element={<PesananOwnerPage />} />
+            <Route path="/owner/reservasi" element={<ReservasiOwnerPage />} />
+            <Route path="/owner/menu" element={<MenuOwnerPage />} />
+            <Route path="/owner/promo" element={<PromoOwnerPage />} />
           </Route>
         </Route>
         <Route path="*" element={<div>404 Not Found</div>}>

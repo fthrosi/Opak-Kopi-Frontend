@@ -54,3 +54,18 @@ export async function checkin(id: number,checkinCode: {checkinCode: string}) {
     throw error.response.data.error;
   }
 }
+
+export const getReservationRange = async (startDate?: string, endDate?: string) => {
+  try {
+    const response = await api.get("/reservations/getByRange", {
+      params: {
+        ...(startDate && { startDate }),
+        ...(endDate && { endDate }),
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    throw error;
+  }
+};

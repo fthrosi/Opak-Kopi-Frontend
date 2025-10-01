@@ -18,7 +18,16 @@ export type modalKey =
   | "detailReservasi"
   | "terimaReservasi"
   | "tolakReservasi"
-  | "checkinReservasi";
+  | "checkinReservasi"
+  | "detailPesananOwner"
+  | "detailReservasiOwner"
+  | "editMenu"
+  | "hapusMenu"
+  | "tambahMenu"
+  | "editPromo"
+  | "statusPromo"
+  | "hapusPromo"
+  | "tambahPromo";
 export type dropdownKey = "profile";
 export type sidebarKey = "sidebarCustomer" | "sidebarStaf";
 interface UIState {

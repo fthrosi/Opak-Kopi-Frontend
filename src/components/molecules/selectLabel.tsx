@@ -38,6 +38,7 @@ export interface SelectLabelProps
     | "options"
     | "disabled"
     | "hidden"
+    | "isMultiple"
   >;
   selectProps?: Omit<
     SelectProps,
@@ -52,6 +53,7 @@ export interface SelectLabelProps
     | "options"
     | "disabled"
     | "hidden"
+    | "isMultiple"
   >;
 }
 export default function SelectLabel({

@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 import timezone from "dayjs/plugin/timezone.js";
 import SelectLabel from "../molecules/selectLabel";
-import { statusReservasi } from "@/const/statusReservasi";
+import { statusReservasi } from "@/const/statusTransaksi";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";

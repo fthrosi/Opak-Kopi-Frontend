@@ -8,7 +8,6 @@ import VoucherIcon from "@/components/icons/voucher";
 import { LaporanIcon } from "@/components/icons/laporan";
 import { UserIcon } from "@/components/icons/user";
 import { KritikSaranIcon } from "@/components/icons/kritikSaran";
-import path from "path";
 
 export const navigationData = [
   {
