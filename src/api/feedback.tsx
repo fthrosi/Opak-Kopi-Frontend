@@ -19,3 +19,23 @@ export const fetchFeedbacksByUser = async () => {
         throw error;
     }
 };
+
+export const fetchAllFeedbacks = async () => {
+    try {
+        const response = await api.get("/feedbacks/all");
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching all feedbacks:", error);
+        throw error;
+    }
+};
+
+export const updateFeedbackStatus = async (feedbackId: number, status: string) => {
+    try {
+        const response = await api.put(`/feedbacks/update/${feedbackId}`, { status });  
+        return response.data;
+    } catch (error) {
+        console.error("Error updating feedback status:", error);
+        throw error;
+    }
+};

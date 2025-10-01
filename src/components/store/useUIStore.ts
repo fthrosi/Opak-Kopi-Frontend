@@ -27,7 +27,11 @@ export type modalKey =
   | "editPromo"
   | "statusPromo"
   | "hapusPromo"
-  | "tambahPromo";
+  | "tambahPromo"
+  | "detailFeedback"
+  | "hapusKategoriMenu"
+  | "tambahKategoriMenu"
+  | "editKategoriMenu";
 export type dropdownKey = "profile";
 export type sidebarKey = "sidebarCustomer" | "sidebarStaf";
 interface UIState {

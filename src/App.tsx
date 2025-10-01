@@ -27,6 +27,8 @@ import PesananOwnerPage from "./components/pages/owner/pesanan";
 import ReservasiOwnerPage from "./components/pages/owner/reservasi";
 import MenuOwnerPage from "./components/pages/owner/menu";
 import PromoOwnerPage from "./components/pages/owner/promo";
+import KritikSaranOwnerPage from "./components/pages/owner/kritikSaran";
+import KategoriMenuOwnerPage from "./components/pages/owner/kategoriMenu";
 
 export default function App() {
   useAuthStore.getState().restore();
@@ -68,6 +70,8 @@ export default function App() {
             <Route path="/owner/reservasi" element={<ReservasiOwnerPage />} />
             <Route path="/owner/menu" element={<MenuOwnerPage />} />
             <Route path="/owner/promo" element={<PromoOwnerPage />} />
+            <Route path="/owner/kritik-saran" element={<KritikSaranOwnerPage />} />
+            <Route path="/owner/kategori" element={<KategoriMenuOwnerPage />} />
           </Route>
         </Route>
         <Route path="*" element={<div>404 Not Found</div>}>
