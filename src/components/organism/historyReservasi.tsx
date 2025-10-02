@@ -36,7 +36,7 @@ export default function HistoryReservasi() {
       );
       setFilteredReservations(filteredData);
     } catch (error) {
-      console.error("Error fetching reservations:", error);
+      toast.error("Gagal memuat history reservasi");
     }
   };
   const handleCancelReservation = async () => {

@@ -81,21 +81,19 @@ export default function PromoOwnerPage() {
   const getMenu = async () => {
     try {
       const data = await fetchMenu();
-      console.log(data);
       setMenuData(data.data);
     } catch (error) {
-      console.error("Error fetching orders:", error);
+      toast.error("Gagal memuat menu");
     }
   };
   const fetchPromo = async () => {
     try {
       const data = await getPromoAllWithCount();
-      console.log(data.data);
       setPromoData(data.data);
       setActiveStatus("");
       setSearchQuery("");
     } catch (error) {
-      console.error("Error fetching promos:", error);
+      toast.error("Gagal memuat promo");
     }
   };
   const promoStats = useMemo(() => {

@@ -74,7 +74,7 @@ export default function ReservasiOwnerPage() {
       setActiveStatus("");
       setSearchQuery("");
     } catch (error) {
-      console.error("Error fetching orders:", error);
+      toast.error("Gagal memuat reservasi");
     }
   };
   const reservasiStats = useMemo(() => {

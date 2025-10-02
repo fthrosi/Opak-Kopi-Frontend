@@ -38,7 +38,6 @@ export async function getPromoAllWithCount() {
     const res = await api.get("/promos/with-claim-count");
     return res.data;
   } catch (error) {
-    console.error("Error fetching all promos with count:", error);
     throw { error };
   }
 }
@@ -52,7 +51,6 @@ export async function updatePromo(id: number, formData: FormData) {
     });
     return res.data;
   } catch (error) {
-    console.error("Error updating promo:", error);
     throw { error };
   }
 
@@ -63,7 +61,6 @@ export async function updatePromoStatus(id: number, status: string) {
     const res = await api.put(`/promos/update/${id}`, { status });
     return res.data;
   } catch (error) {
-    console.error("Error updating promo status:", error);
     throw { error };
   }
 }
@@ -73,7 +70,6 @@ export async function deletePromo(id: number) {
     const res = await api.put(`/promos/delete/${id}`);
     return res.data;
   } catch (error) {
-    console.error("Error deleting promo:", error);
     throw { error };
   }
 }
@@ -86,7 +82,6 @@ export async function createPromo(formData: FormData) {
     });
     return res.data;
   } catch (error) {
-    console.error("Error creating promo:", error);
     throw { error };
   }
 }

@@ -33,14 +33,14 @@ export default function KritikSaranOwnerPage() {
   const getAllFeedbacks = async () => {
     try {
       const data = await fetchAllFeedbacks();
-      console.log(data);
+      
       setFeedbacks(data.feedbacks);
       const filteredData = data.feedbacks.filter(
         (feedback: FeedbackData) => feedback.status === "Dikirim"
       );
       setFilteredFeedbacks(filteredData);
     } catch (error) {
-      console.error("Error fetching all feedbacks:", error);
+      toast.error("Gagal memuat kritik dan saran.");
     }
   };
   const feedbackStats = useMemo(() => {

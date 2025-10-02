@@ -5,7 +5,6 @@ export const addOrder = async (orderData: any) => {
     const response = await api.post("/orders/add", orderData);
     return response.data;
   } catch (error) {
-    console.error("Error adding order:", error);
     throw error;
   }
 };
@@ -14,7 +13,6 @@ export const getAllOrders = async () => {
     const response = await api.get("/orders/all");
     return response.data;
   } catch (error) {
-    console.error("Error fetching orders:", error);
     throw error;
   }
 };
@@ -28,7 +26,6 @@ export const getOrderRange = async (startDate?: string, endDate?: string) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching orders:", error);
     throw error;
   }
 };
@@ -37,7 +34,6 @@ export const getOrdersByUser = async () => {
     const response = await api.get("/orders/user");
     return response.data;
   } catch (error) {
-    console.error("Error fetching orders:", error);
     throw error;
   }
 };
@@ -47,7 +43,6 @@ export const getHistoryPoint = async () => {
     const response = await api.get("/orders/history-point");
     return response.data;
   } catch (error) {
-    console.error("Error fetching point history:", error);
     throw error;
   }
 };
@@ -56,7 +51,6 @@ export const getDailyOrders = async () => {
     const response = await api.get("/orders/daily");
     return response.data;
   } catch (error) {
-    console.error("Error fetching daily orders:", error);
     throw error;
   }
 };
@@ -73,7 +67,6 @@ export const updateOrderStatus = async (
     const response = await api.put(`/orders/update/${orderId}`, status);
     return response.data;
   } catch (error) {
-    console.error("Error updating order status:", error);
     throw error;
   }
 };

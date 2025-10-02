@@ -31,7 +31,11 @@ export type modalKey =
   | "detailFeedback"
   | "hapusKategoriMenu"
   | "tambahKategoriMenu"
-  | "editKategoriMenu";
+  | "editKategoriMenu"
+  | "statusUser"
+  | "hapusUser"
+  | "tambahUser"
+  | "blokirUser";
 export type dropdownKey = "profile";
 export type sidebarKey = "sidebarCustomer" | "sidebarStaf";
 interface UIState {

@@ -63,16 +63,15 @@ export default function MenuOwnerPage() {
       setActiveStatus("");
       setSearchQuery("");
     } catch (error) {
-      console.error("Error fetching orders:", error);
+      toast.error("Gagal memuat menu");
     }
   };
   const getKategoriMenu = async () => {
     try {
       const data = await fetchKategoriMenu();
-      console.log(data);
       setKategoriMenu(data.data);
     } catch (error) {
-      console.error("Error fetching kategori menu:", error);
+      toast.error("Gagal memuat kategori menu");
     }
   };
   useEffect(() => {
@@ -107,7 +106,6 @@ export default function MenuOwnerPage() {
       handleCloseModal();
       toast.success("Menu berhasil dihapus!");
     } catch (error) {
-      console.error("Error deleting menu:", error);
       toast.error("Gagal menghapus menu!");
     }
   };
@@ -129,7 +127,6 @@ export default function MenuOwnerPage() {
             <Text size="caption">Tambah Menu</Text>
           </div>
         </div>
-
         <SearchComponent
           statusReservasi={menuStatus}
           activeStatus={activeStatus}

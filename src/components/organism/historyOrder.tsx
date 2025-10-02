@@ -28,7 +28,7 @@ export default function HistoryOrder() {
       const orders = await getOrdersByUser();
       setOrders(orders.data);
     } catch (error) {
-      console.error("Error fetching orders:", error);
+      toast.error("Gagal memuat history pesanan");
     }
   };
   const handleSubmitRating = async (ratings: Rating[]) => {
@@ -39,7 +39,6 @@ export default function HistoryOrder() {
       await fetchOrders();
       close();
     } catch (error) {
-      console.error("Error submitting rating:", error);
       toast.error("Gagal mengirim rating");
     }
   };

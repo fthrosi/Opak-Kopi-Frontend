@@ -47,7 +47,6 @@ export default function Feedback() {
       toast.success("Pesan berhasil dikirim");
       reset(); // Reset form setelah submit
     } catch (error) {
-      console.error("Error submitting feedback:", error);
       toast.error("Gagal mengirim pesan");
     }
   };
@@ -60,7 +59,7 @@ export default function Feedback() {
       );
       setFilteredFeedbacks(filteredData);
     } catch (error) {
-      console.error("Error fetching feedback:", error);
+      toast.error("Gagal memuat feedback");
     }
   };
   const handleStatusChange = (status: string) => {

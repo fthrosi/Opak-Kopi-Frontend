@@ -75,13 +75,11 @@ export default function ModalTambahMenu({
         formData.append("image", data.image[0]);
       }
 
-      console.log(...formData);
         await createMenu(formData);
         toast.success("Menu baru berhasil ditambahkan!");
         onSuccess();
         onClose();
     } catch (error) {
-      console.error("Error creating menu:", error);
       toast.error("Gagal menambahkan menu baru!");
     }
   };

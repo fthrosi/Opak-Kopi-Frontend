@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import type { HistoryPoint } from "@/types/historyPoint";
 import { Text } from "../atoms/text";
 import PoinIcon from "../icons/poin";
+import { toast } from "sonner";
 export default function HistoryPoin() {
   const [activeStatus, setActiveStatus] = useState<string>("Pembelanjaan");
   const [filteredPoin, setFilteredPoin] = useState<HistoryPoint[]>([]);
@@ -21,7 +22,7 @@ export default function HistoryPoin() {
       );
       setFilteredPoin(filteredData);
     } catch (error) {
-      console.error("Error fetching point history:", error);
+      toast.error("Gagal memuat history poin");
     }
   };
   const handleStatusChange = (type: string) => {

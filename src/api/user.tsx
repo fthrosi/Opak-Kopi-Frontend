@@ -46,3 +46,56 @@ export const changeUserPassword = async (data: updatePassword) => {
     };
   }
 };
+
+export const fetchAllUsers = async () => {
+  try {
+    const response = await api.get("/user/getAll");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchCustomerStats = async () => {
+  try {
+    const response = await api.get("/user/customer/stats");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateStatusUser = async (id: string, status: string) => {
+  try {
+    const response = await api.put(`/user/updateStatus/${id}`, { status });
+    return response.data;
+  }
+  catch (error: any) {
+    throw {
+      status: error.response.status,
+      message: error.response.data?.error || "Terjadi kesalahan",
+    };
+  }
+};
+export const deleteUser = async (id: number) => {
+  try {
+    const response = await api.put(`/user/delete/${id}`);
+    return response.data;
+  } catch (error: any) {
+    throw {
+      status: error.response.status,
+      message: error.response.data?.error || "Terjadi kesalahan",
+    };
+  }
+};
+export const createUser = async (data: { name: string; email: string; phone: string }) => {
+  try {
+    const response = await api.post("/user/add", data);
+    return response.data;
+  } catch (error: any) {
+    throw {
+      status: error.response.status,
+      message: error.response.data?.error || "Terjadi kesalahan",
+    };
+  } 
+};

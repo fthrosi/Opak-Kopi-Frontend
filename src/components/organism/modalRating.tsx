@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ratingFormSchema, type RatingFormData } from "@/validateSchema/rating";
 import { useEffect } from "react";
 import { Text } from "../atoms/text";
+import { toast } from "sonner";
 
 type ratingProps = {
   order: Order | null;
@@ -45,12 +46,12 @@ export const ModalRating = ({ order, onClose, onSubmit }: ratingProps) => {
   }, [order, setValue]);
   const onFormSubmit = (data: RatingFormData) => {
     try {
-      console.log("Form data:", data);
       onSubmit(data.ratings);
       reset(); // Reset form setelah submit
       onClose();
+      toast.success("Rating berhasil dikirim. Terima kasih!");
     } catch (error) {
-      console.error("Error submitting rating:", error);
+      toast.error("Gagal mengirim rating. Silakan coba lagi.");
     }
   };
   const handleClose = () => {

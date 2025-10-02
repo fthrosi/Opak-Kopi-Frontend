@@ -16,8 +16,7 @@ export default function Sidebar({ handleClose }: SidebarProps) {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const user = useAuthStore((state) => state.user);
-
-  const navbar = user?.role === "Owner" ? navbarOwner : navbarKasir;
+  const navbar = user?.role.name === "Owner" ? navbarOwner : navbarKasir;
   useEffect(() => {
     const currentMenuItem = navbar.find((item) =>
       location.pathname.startsWith(item.path)

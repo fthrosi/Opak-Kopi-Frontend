@@ -36,7 +36,7 @@ export default function Cart({
 }: CartProps) {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const user = useAuthStore((state) => state.user);
-  const isPelanggan = user?.role === "Pelanggan";
+  const isPelanggan = user?.role.name === "Pelanggan";
   const finalTotal = useCheckoutStore((state) => state.finalTotal);
   const promoId = useCheckoutStore((state) => state.id_promo);
   const pointUse = useCheckoutStore((state) => state.point_use);
@@ -96,7 +96,6 @@ export default function Cart({
         order_items,
       };
     }
-    console.log(isPelanggan)
     if (isLoggedIn && isPelanggan) {
       const validation = orderSchemaLogin.safeParse(payload);
       if (!validation.success) {

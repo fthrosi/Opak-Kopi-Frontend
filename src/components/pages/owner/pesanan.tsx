@@ -69,7 +69,6 @@ export default function PesananOwnerPage() {
       setActiveStatus("");
       setSearchQuery("");
     } catch (error) {
-      console.error("Error fetching orders:", error);
       toast.error("Gagal mengambil data pesanan");
     }
   };

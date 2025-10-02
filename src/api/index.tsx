@@ -42,11 +42,9 @@ api.interceptors.response.use(
       
       // ← JIKA sedang refresh, queue request ini
       if (isRefreshing) {
-        console.log("Queueing request while refreshing...");
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         }).then(() => {
-          console.log("Retrying queued request...");
           return api(originalRequest);
         }).catch(err => {
           return Promise.reject(err);
@@ -56,21 +54,17 @@ api.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      console.log("Starting refresh token...");
       
       try {
         const response = await api.post("/auth/refresh-token");
-        console.log("Refresh token success");
         
         // ← Process semua queued requests
         processQueue(null, response.data.token);
         
         // ← Retry original request
-        console.log("Retrying original request...");
         return api(originalRequest);
         
       } catch (refreshError) {
-        console.error("Refresh token failed:", refreshError);
         
         // ← Process queue with error
         processQueue(refreshError, null);

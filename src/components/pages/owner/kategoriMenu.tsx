@@ -62,7 +62,7 @@ export default function KategoriMenuOwnerPage() {
       const response = await findAllWithCount();
       setKategoriMenuData(response.data);
     } catch (error) {
-      console.error("Error fetching kategori menu:", error);
+      toast.error("Gagal memuat kategori menu");
     }
   };
   const handleSubmit = async (e: React.FormEvent) => {
@@ -79,7 +79,6 @@ export default function KategoriMenuOwnerPage() {
       getKategoriMenu();
       toast.success("Kategori menu berhasil diperbarui");
     } catch (error) {
-      console.error("Error updating kategori menu:", error);
       setIsSubmitting(false);
       toast.error("Gagal memperbarui kategori menu");
     }
@@ -94,7 +93,7 @@ export default function KategoriMenuOwnerPage() {
       getKategoriMenu();
       toast.success("Kategori menu berhasil dihapus");
     } catch (error: any) {
-      console.error("Error deleting kategori menu:", error);
+      
       setIsSubmitting(false);
       toast.error(error);
       close();
@@ -107,7 +106,7 @@ export default function KategoriMenuOwnerPage() {
     }
     e.preventDefault();
     setIsSubmitting(true);
-    console.log(namaKategori);
+    
     try {
         await createKategoriMenu(
             namaKategori
@@ -119,7 +118,7 @@ export default function KategoriMenuOwnerPage() {
         toast.success("Kategori menu berhasil ditambahkan");
     }
     catch (error) {
-        console.error("Error adding kategori menu:", error);
+      
         setIsSubmitting(false);
         setNamaKategori("");
         toast.error("Gagal menambahkan kategori menu");

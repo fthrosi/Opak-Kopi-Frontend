@@ -13,7 +13,7 @@ export default function KasirTemplate() {
   const location = useLocation();
 
   // Define pages yang butuh overflow-hidden dari awal
-  const alwaysOverflowPages = ["/kasir/tambah-pesanan", "/kasir/menu","/owner/kritik-saran"];
+  const alwaysOverflowPages = ["/kasir/tambah-pesanan", "/kasir/menu","/owner/kritik-saran","/owner/pengguna"];
   const needsAlwaysOverflow = alwaysOverflowPages.includes(location.pathname);
   const { logout } = useAuthStore();
   const close = useUIStore((state) => state.close);

@@ -90,7 +90,7 @@ export default function StafNav({ handleOpen, onItemClick, children }: StafNavPr
               {user?.name}
             </Text>
             <Text className="opacity-70" size="caption">
-              {user?.role}
+              {user?.role.name}
             </Text>
           </div>
         </div>

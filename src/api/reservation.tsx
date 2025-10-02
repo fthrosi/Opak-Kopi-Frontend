@@ -41,7 +41,6 @@ export async function updateStatusReservasi(id: number,status: {status: string, 
     const res = await api.put(`/reservations/update/${id}`, status );
     return res.data;
   } catch (error) {
-    console.error("Error updating reservation status:", error);
     throw error;
   }
 }
@@ -50,7 +49,6 @@ export async function checkin(id: number,checkinCode: {checkinCode: string}) {
     const res = await api.put(`/reservations/checkin/${id}`, checkinCode);
     return res.data;
   } catch (error :any) {
-    console.error("Error during check-in:", error);
     throw error.response.data.error;
   }
 }
@@ -65,7 +63,6 @@ export const getReservationRange = async (startDate?: string, endDate?: string) 
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching orders:", error);
     throw error;
   }
 };

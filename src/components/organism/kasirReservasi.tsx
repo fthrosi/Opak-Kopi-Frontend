@@ -158,7 +158,6 @@ export default function KasirReservasi() {
       setIsSubmitting(false);
       close();
     } catch (error) {
-        console.error("Error updating reservation status:", error);
       toast.error("Gagal memperbarui status reservasi");
       close();
       setSelectedReservation(null);

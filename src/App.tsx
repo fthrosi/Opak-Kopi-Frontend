@@ -29,6 +29,8 @@ import MenuOwnerPage from "./components/pages/owner/menu";
 import PromoOwnerPage from "./components/pages/owner/promo";
 import KritikSaranOwnerPage from "./components/pages/owner/kritikSaran";
 import KategoriMenuOwnerPage from "./components/pages/owner/kategoriMenu";
+import PenggunaOwnerPage from "./components/pages/owner/pengguna";
+import LaporanOwnerPage from "./components/pages/owner/Laporan";
 
 export default function App() {
   useAuthStore.getState().restore();
@@ -72,6 +74,8 @@ export default function App() {
             <Route path="/owner/promo" element={<PromoOwnerPage />} />
             <Route path="/owner/kritik-saran" element={<KritikSaranOwnerPage />} />
             <Route path="/owner/kategori" element={<KategoriMenuOwnerPage />} />
+            <Route path="/owner/pengguna" element={<PenggunaOwnerPage />} />
+            <Route path="/owner/laporan" element={<LaporanOwnerPage />} />
           </Route>
         </Route>
         <Route path="*" element={<div>404 Not Found</div>}>

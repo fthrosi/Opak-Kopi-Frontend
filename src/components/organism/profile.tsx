@@ -46,14 +46,9 @@ export default function Profile() {
     if (file) {
       const formDataWithFile = new FormData();
       formDataWithFile.append("image", file);
-      console.log("FormData contents:");
-      formDataWithFile.forEach((value, key) => {
-        console.log(key, value);
-      });
       try {
         const user = await updateUserProfilePicture(formDataWithFile);
         updateUser(user.data);
-        console.log("Updated user:", user);
         toast.success("User updated successfully");
         closeModal();
         setSelectedFile(null);
@@ -117,7 +112,6 @@ export default function Profile() {
         toast.success("Email updated successfully");
       } else if (activeModal === "editUser") {
         user = await updateDataUser(formData);
-        console.log("Updated user:", user);
         toast.success("User updated successfully");
       } else if (activeModal === "editPassword") {
         if (formData["newPassword"] !== formData["confirmNewPassword"]) {
@@ -171,10 +165,10 @@ export default function Profile() {
   return (
     <Pages
       className={`flex flex-col pt-5 ${
-        userActive?.role === "Pelanggan" ? "flex-1" : "h-full"
+        userActive?.role.name === "Pelanggan" ? "flex-1" : "h-full"
       }`}
     >
-      {userActive?.role === "Pelanggan" ? (
+      {userActive?.role.name === "Pelanggan" ? (
         <div className="xs:bg-white xs:p-4 xs:rounded-lg ">
           <TitleDescription
             title="Profile Page"

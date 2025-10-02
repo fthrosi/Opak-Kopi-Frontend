@@ -1,4 +1,6 @@
-
+type role = {
+  name: string;
+};
 export type User = {
   userId: string;
   email: string;
@@ -6,7 +8,8 @@ export type User = {
   phone: string;
   img: string;
   poin: number;
-  role: string;
+  role: role;
+  status: string;
 };
 
 export type updateEmail = {
@@ -25,3 +28,23 @@ export type buttonProfile = {
     field: string;
     background: string;
 };
+
+export type UserOwner = {
+  id: string;
+  email: string;
+  name: string;
+  phone: string;
+  role: role;
+  status: string;
+};
+
+export type UserCustomer = {
+  id: string;
+  email: string;
+  name: string;
+  created_at: string;
+  total_orders: number | null;
+  total_transactions: number | null;
+  last_order_date: string | null;
+  status: string;
+}

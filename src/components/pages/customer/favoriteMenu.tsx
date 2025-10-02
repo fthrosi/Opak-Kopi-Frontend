@@ -15,6 +15,7 @@ import { formatRupiah } from "@/const/idrCurrency";
 import CartIcon from "@/components/icons/cart";
 import Cart from "@/components/organism/cart";
 import { useMenu } from "@/components/store/useMenu";
+import { toast } from "sonner";
 
 export default function FavoriteMenuPage() {
   const {
@@ -62,7 +63,8 @@ export default function FavoriteMenuPage() {
       setFavoriteMenus(favorites);
       setIsFetchingFavorites(false);
     } catch (error) {
-      console.error("Error fetching favorite menus:", error);
+      toast.error("Gagal memuat menu favorit.");
+      setIsFetchingFavorites(false);
     }
   };
   const handleFavoriteClick = async (product: MenuProps) => {

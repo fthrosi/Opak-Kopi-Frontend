@@ -5,7 +5,6 @@ import Menu from "@/components/organism/menuCatalogNotLogin";
 
 export default function MenuPage() {
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  console.log(isLoggedIn);
   return (
     <SectionPage variant="menu" backgroundColor="dark" className="h-dvh">
       {isLoggedIn ? <MenuCatalog /> : <Menu />}

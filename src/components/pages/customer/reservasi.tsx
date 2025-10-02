@@ -42,7 +42,6 @@ export default function Reservasi() {
       ...data,
       reservation_time: reservationTimeStr,
     };
-    console.log(reservasiData.reservation_time);
     try {
        await createReservation(reservasiData);
       toast.success("Reservasi berhasil!");

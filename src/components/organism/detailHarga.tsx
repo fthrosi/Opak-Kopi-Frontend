@@ -32,9 +32,7 @@ export default function DetailHarga({
   async function handlePromoCheck() {
     if (promo) {
       try {
-        console.log(menuId);
         const res = await checkPromoCode(promo, menuId);
-        console.log(res);
         if (res.data?.promo_type === "percent") {
           setDiscount((subTotal * res.data.percent_value) / 100);
         } else if (res.data?.promo_type === "amount") {
@@ -95,7 +93,7 @@ export default function DetailHarga({
   }, [finalTotal]);
   return (
     <div className="bg-white p-2 flex flex-col gap-2 rounded-lg">
-      {isLoggedIn && user?.role === "Pelanggan" && (
+      {isLoggedIn && user?.role.name === "Pelanggan" && (
         <>
           <InputForm
             inputId="Promo"

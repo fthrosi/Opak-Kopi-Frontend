@@ -1,3 +1,7 @@
+import dayjs from "dayjs";
+import "dayjs/locale/id";
+dayjs.locale("id");
+
 export const formatDateTime = (dateString: string) => {
     if (!dateString) return "";
     let processedString = dateString;
@@ -9,7 +13,6 @@ export const formatDateTime = (dateString: string) => {
     const date = new Date(processedString);
     
     if (isNaN(date.getTime())) {
-        console.error("Invalid date:", dateString);
         return dateString;
     }
     
@@ -22,3 +25,22 @@ export const formatDateTime = (dateString: string) => {
     return `${day}-${month}-${year} ${hours}:${minutes}`;
     
 };
+
+export const formatPeriode = (dateString: string) => {
+   const [awal, akhir] = dateString.split(" - ");
+
+  const d1 = dayjs(awal);
+  const d2 = dayjs(akhir);
+
+  // kalau tahun sama
+  if (d1.year() === d2.year()) {
+    // kalau bulan sama
+    if (d1.month() === d2.month()) {
+      return `${d1.format("D")} - ${d2.format("D MMMM YYYY")}`;
+    }
+    return `${d1.format("D MMMM")} - ${d2.format("D MMMM YYYY")}`;
+  }
+
+  // kalau beda tahun
+  return `${d1.format("D MMMM YYYY")} - ${d2.format("D MMMM YYYY")}`;
+}

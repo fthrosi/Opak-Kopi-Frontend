@@ -98,7 +98,6 @@ export default function ModalEditMenu({ menu, kategoriMenu, onClose, onSuccess }
       onSuccess();
       onClose(); 
     } catch (error) {
-      console.error("Error updating menu:", error);
       toast.error("Gagal mengupdate menu!");
     }
   };

@@ -127,7 +127,6 @@ export default function ModalTambahPromo({
       onSuccess();
       onClose();
     } catch (error) {
-      console.error("Error adding promo:", error);
       toast.error("Gagal menambahkan promo!");
     }
   };

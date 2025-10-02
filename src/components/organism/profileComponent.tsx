@@ -5,20 +5,22 @@ import type { User } from "@/types/user";
 import InputForm from "../molecules/inputForm";
 import type { buttonProfile } from "@/types/user";
 type ProfileData = {
-    profileData: User | null;
-    onButtonImageClick?: () => void;
-    imgDetail?: {id: number;
-        title: string;
-    }[];
-    fieldToShow?: {id: string;
-        label: string;
-    }[];
-    buttonProfile: buttonProfile[];
-    onButtonProfileClick?: (buttonTitle: string) => void;
+  profileData: User | null;
+  onButtonImageClick?: () => void;
+  imgDetail?: { id: number; title: string }[];
+  fieldToShow?: { id: string; label: string }[];
+  buttonProfile: buttonProfile[];
+  onButtonProfileClick?: (buttonTitle: string) => void;
+};
 
-}
-
-export default function ProfileComponent({profileData, onButtonImageClick, imgDetail, fieldToShow, buttonProfile, onButtonProfileClick}:ProfileData) {
+export default function ProfileComponent({
+  profileData,
+  onButtonImageClick,
+  imgDetail,
+  fieldToShow,
+  buttonProfile,
+  onButtonProfileClick,
+}: ProfileData) {
   return (
     <div className="flex flex-col items-center mt-5 gap-5 ">
       <Img
@@ -56,15 +58,15 @@ export default function ProfileComponent({profileData, onButtonImageClick, imgDe
         } else if (value === null || value === undefined) {
           value = "-";
         }
+
         return (
-          <div className="w-full sm:max-w-[25rem]">
+          <div className="w-full sm:max-w-[25rem]" key={field.id}>
             <InputForm
-              key={field.id}
               children={field.label}
               labelClassName="capitalize"
               inputFocus="none"
               inputProps={{
-                value,
+                value: value as string,
                 readOnly: true,
                 disabled: field.id === "poin",
               }}
