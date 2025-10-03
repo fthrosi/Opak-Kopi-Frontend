@@ -1,17 +1,21 @@
 import ReusableTable from "../atoms/table";
-import {fetchLaporanReservasi } from "@/api/reports";
+import { fetchLaporanReservasi } from "@/api/reports";
 import { useState, useEffect } from "react";
 import InformationsCard from "./informationsCard";
-import type { LaporanReservasi,SumaryReservasi } from "@/types/laporan";
+import type { LaporanReservasi, SumaryReservasi } from "@/types/laporan";
 import { columnLaporanReservasi } from "./columLaporanReservasi";
 
 interface LaporanReservasiProps {
-    startDate?: string;
-    endDate?: string;
-    shouldFetch?: boolean;
+  startDate?: string;
+  endDate?: string;
+  shouldFetch?: boolean;
 }
 
-export default function LaporanReservasi({startDate, endDate, shouldFetch=true}: LaporanReservasiProps) {
+export default function LaporanReservasi({
+  startDate,
+  endDate,
+  shouldFetch = true,
+}: LaporanReservasiProps) {
   const [data, setData] = useState<LaporanReservasi[] | null>([]);
   const [sumary, setSummary] = useState<SumaryReservasi | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,15 +27,15 @@ export default function LaporanReservasi({startDate, endDate, shouldFetch=true}:
       setData(laporanData.data.rows);
       setSummary(laporanData.data.summary);
     } catch (error) {
-        setData([]);
-        setSummary(null);
+      setData([]);
+      setSummary(null);
     } finally {
       setIsLoading(false);
     }
   };
   useEffect(() => {
-    if (shouldFetch){
-        getLaporanReservasi();
+    if (shouldFetch) {
+      getLaporanReservasi();
     }
   }, [startDate, endDate, shouldFetch]);
   if (isLoading) {
@@ -51,7 +55,8 @@ export default function LaporanReservasi({startDate, endDate, shouldFetch=true}:
             title: "Total Reservasi",
             count: sumary ? sumary.totalReservasi.toString() : "0",
             variant: "white",
-            titleClassName: " md:text-[1.5rem] xl:text-[1.5rem] 2xl:text-[1.8rem]",
+            titleClassName:
+              " md:text-[1.5rem] xl:text-[1.5rem] 2xl:text-[1.8rem]",
             numberClassName:
               "text-[1rem] xs:text-[1.3rem] lg:text-[1.6rem] xl:text-[1.7rem] 2xl:text-[2.2rem] xs:text-center text-secondary/80",
             icon: <></>,
@@ -60,7 +65,8 @@ export default function LaporanReservasi({startDate, endDate, shouldFetch=true}:
             title: "Tingkat Kehadiran",
             count: sumary ? `${sumary.tingkatKehadiran.toFixed(2)}%` : "0%",
             variant: "white",
-            titleClassName: "md:text-[1.5rem] xl:text-[1.5rem] 2xl:text-[1.8rem]",
+            titleClassName:
+              "md:text-[1.5rem] xl:text-[1.5rem] 2xl:text-[1.8rem]",
             numberClassName:
               "text-[1rem] xs:text-[1.3rem] lg:text-[1.6rem] xl:text-[1.7rem] 2xl:text-[2.2rem] xs:text-center text-secondary/80",
             icon: <></>,
@@ -69,7 +75,8 @@ export default function LaporanReservasi({startDate, endDate, shouldFetch=true}:
             title: "Tingkat Tidak Hadir",
             count: sumary ? `${sumary.tingkatTidakHadir.toFixed(2)}%` : "0%",
             variant: "white",
-            titleClassName: "md:text-[1.5rem] xl:text-[1.5rem] 2xl:text-[1.8rem]",
+            titleClassName:
+              "md:text-[1.5rem] xl:text-[1.5rem] 2xl:text-[1.8rem]",
             numberClassName:
               "text-[1rem] xs:text-[1.3rem] lg:text-[1.6rem] xl:text-[1.7rem] 2xl:text-[2.2rem] xs:text-center text-secondary/80",
             icon: <></>,

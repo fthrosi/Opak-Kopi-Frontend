@@ -5,7 +5,6 @@ import LoginPage from "./components/pages/loginPage";
 import RegisterPage from "./components/pages/registerPage";
 import CustomerView from "./components/templates/customerView";
 import MenuPage from "./components/pages/customer/menuPage";
-import ProtectedRoute from "./components/routes/protectedRoutes";
 import useAuthStore from "./components/store/useAuthStore";
 import CustomerLoginView from "./components/templates/customerLoginView";
 import Reservasi from "./components/pages/customer/reservasi";
@@ -31,6 +30,12 @@ import KritikSaranOwnerPage from "./components/pages/owner/kritikSaran";
 import KategoriMenuOwnerPage from "./components/pages/owner/kategoriMenu";
 import PenggunaOwnerPage from "./components/pages/owner/pengguna";
 import LaporanOwnerPage from "./components/pages/owner/Laporan";
+import Dashboard from "./components/pages/owner/dashboard";
+import RoleBasedRoute from "./components/routes/roleBasedRoute";
+import EmailPage from "./components/pages/emailResetPassword";
+import OTPPage from "./components/pages/otp";
+import PasswordPage from "./components/pages/password";
+import ContactPage from "./components/pages/contact";
 
 export default function App() {
   useAuthStore.getState().restore();
@@ -46,9 +51,13 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route element={<CustomerView />}>
             <Route path="/menu" element={<MenuPage />} />
+            <Route path="/kontak" element={<ContactPage />} />
           </Route>
+          <Route path="/email" element={<EmailPage />} />
+          <Route path="/otp" element={<OTPPage />} />
+          <Route path="/password" element={<PasswordPage />} />
         </Route>
-        <Route element={<ProtectedRoute />}>
+        <Route element={<RoleBasedRoute allowedRoles={["Pelanggan"]} />}>
           <Route element={<CustomerLoginView />}>
             <Route path="/menulogin" element={<MenuPage />} />
             <Route path="/reservasi" element={<Reservasi />} />
@@ -56,30 +65,45 @@ export default function App() {
             <Route path="/favorit" element={<FavoriteMenuPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/history-order" element={<HistoryOrderPage />} />
-            <Route path="/history-reservasi" element={<HistoryReservasiPage />} />
+            <Route
+              path="/history-reservasi"
+              element={<HistoryReservasiPage />}
+            />
             <Route path="/history-poin" element={<HistoryPoinPage />} />
             <Route path="/feedback" element={<FeedbackPage />} />
           </Route>
-
+        </Route>
+        <Route element={<RoleBasedRoute allowedRoles={["Kasir"]} />}>
           <Route element={<KasirTemplate />}>
             <Route path="/kasir/pesanan" element={<KasirPesananPage />} />
             <Route path="/kasir/menu" element={<KasirMenuPage />} />
             <Route path="/kasir/reservasi" element={<KasirReservasiPage />} />
             <Route path="/kasir/tambah-pesanan" element={<TambahPesanan />} />
             <Route path="/kasir/profile" element={<ProfilePage />} />
-
+          </Route>
+        </Route>
+        <Route element={<RoleBasedRoute allowedRoles={["Kasir", "Owner"]} />}>
+          <Route element={<KasirTemplate />}>
+            <Route path="/staff/profile" element={<ProfilePage />} />
+          </Route>
+        </Route>
+        <Route element={<RoleBasedRoute allowedRoles={["Owner"]} />}>
+          <Route element={<KasirTemplate />}>
             <Route path="/owner/pesanan" element={<PesananOwnerPage />} />
             <Route path="/owner/reservasi" element={<ReservasiOwnerPage />} />
             <Route path="/owner/menu" element={<MenuOwnerPage />} />
             <Route path="/owner/promo" element={<PromoOwnerPage />} />
-            <Route path="/owner/kritik-saran" element={<KritikSaranOwnerPage />} />
+            <Route
+              path="/owner/kritik-saran"
+              element={<KritikSaranOwnerPage />}
+            />
             <Route path="/owner/kategori" element={<KategoriMenuOwnerPage />} />
             <Route path="/owner/pengguna" element={<PenggunaOwnerPage />} />
             <Route path="/owner/laporan" element={<LaporanOwnerPage />} />
+            <Route path="/owner/dashboard" element={<Dashboard />} />
           </Route>
         </Route>
-        <Route path="*" element={<div>404 Not Found</div>}>
-        </Route>
+        <Route path="*" element={<div>404 Not Found</div>}></Route>
       </Routes>
     </BrowserRouter>
   );

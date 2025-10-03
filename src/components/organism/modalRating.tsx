@@ -77,7 +77,7 @@ export const ModalRating = ({ order, onClose, onSubmit }: ratingProps) => {
       background="white"
       padding="default"
       rounded="default"
-      modalClassName="max-w-lg pt-10"
+      modalClassName="max-w-lg pt-10 max-h-[50rem] overflow-y-auto"
     >
       <form
         onSubmit={handleSubmit(onFormSubmit)}

@@ -4,7 +4,12 @@ import Navigation from "../molecules/navigation";
 import NavigationAuth from "../molecules/navbar/navigationAuth";
 import LogoIcon from "../molecules/navbar/logo_icon";
 import { navigationData } from "@/const/constNavbar";
+import { useUIStore } from "../store/useUIStore";
 export default function CustomerView() {
+  const close = useUIStore((state) => state.closeSidebar);
+  const open = useUIStore((state) => state.openSidebar);
+
+
   return (
     <>
       <Navbar
@@ -20,6 +25,8 @@ export default function CustomerView() {
             }}
             href="/"
             children={"Opak kopi"}
+            handleOpen={() => open("sidebarCustomer")}
+            handleClose={() => close()}
           />
         }
         navigation={

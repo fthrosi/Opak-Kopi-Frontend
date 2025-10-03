@@ -234,7 +234,7 @@ export const navbarStaf : NavigasiProfile[] = [
   {
     id: 1,
     title: "Profile",
-    path: "/kasir/profile",
+    path: "/staff/profile",
     action: "navigate",
   },
   {

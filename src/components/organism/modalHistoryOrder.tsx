@@ -19,7 +19,7 @@ export default function ModalHistoryOrder({
       background="white"
       padding="default"
       rounded="default"
-      modalClassName="max-w-lg pt-10"
+      modalClassName="max-w-lg pt-10 max-h-[50rem] overflow-y-auto"
     >
       <div className="h-full w-full flex flex-col">
         <div className="w-full flex justify-between items-center py-1 border-b-1 border-primary">

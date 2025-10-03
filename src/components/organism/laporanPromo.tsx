@@ -21,8 +21,7 @@ export default function LaporanPromo({startDate, endDate, shouldFetch=true}: Lap
     setIsLoading(true);
     try {
       const laporanData = await fetchLaporanPromo(startDate, endDate);
-      console.log(laporanData.data);
-      setData(laporanData.data.reportRows);
+      setData(laporanData.data.rows);
       setSummary(laporanData.data.summary);
     } catch (error) {
         setData([]);

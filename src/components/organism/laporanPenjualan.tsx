@@ -48,7 +48,7 @@ export default function LaporanPenjualan({startDate, endDate, shouldFetch=true}:
     );
   }
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 min-h-0 overflow-y-auto">
       <InformationsCard
         className="xs:grid-cols-2 xl:grid-cols-6"
         items={[

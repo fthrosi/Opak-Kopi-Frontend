@@ -57,7 +57,7 @@ export default function LoginPage() {
           buttonProps={{ type: "submit", disabled: isSubmitting }}
           textProps={{
             as: "a",
-            href: "/forgot-password",
+            href: "/email",
             size: "caption",
             children: "Lupa Kata Sandi?",
             position: "right",

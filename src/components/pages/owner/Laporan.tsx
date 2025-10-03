@@ -3,7 +3,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useState } from "react";
 import { Text } from "@/components/atoms/text";
-import { ExportIcon } from "@/components/icons/export";
 import SelectLabel from "@/components/molecules/selectLabel";
 import LaporanPenjualan from "@/components/organism/laporanPenjualan";
 import LaporanMenu from "@/components/organism/laporanMenu";
@@ -11,6 +10,8 @@ import LaporanReservasi from "@/components/organism/laporanReservasi";
 import LaporanPromo from "@/components/organism/laporanPromo";
 import type { Dayjs } from "dayjs";
 import { toast } from "sonner";
+import { useExportLaporan } from "@/hooks/exportLaporan";
+import ExportButton from "@/components/organism/exportButton";
 
 export default function LaporanOwnerPage() {
   const [laporanActive, setLaporanActive] = useState("penjualan");
@@ -21,6 +22,11 @@ export default function LaporanOwnerPage() {
     endDate: string | undefined;
     isValid: boolean;
   }>({ startDate: undefined, endDate: undefined, isValid: false });
+
+  const {
+    isExporting,
+    exportToPDF,
+  } = useExportLaporan();
 
   const validateDates = (): boolean => {
     if (!startDate || !endDate) {
@@ -96,12 +102,10 @@ export default function LaporanOwnerPage() {
           <Text size="heading2" weight="semiBold">
             Laporan Kafe Opak Kopi
           </Text>
-          <div className="flex items-center p-2 bg-white rounded-md ">
-            <ExportIcon className="size-5 text-primary mr-2" />
-            <Text size="body" weight="medium" className="text-primary">
-              Export Laporan
-            </Text>
-          </div>
+          <ExportButton
+            isExporting={isExporting}
+            onExport={() => exportToPDF(laporanActive, validatedDates)}
+          />
         </div>
         <div className="flex-shrink-0 flex flex-col md:flex-row gap-4 md:justify-between md:items-center">
           <SelectLabel
