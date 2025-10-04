@@ -2,7 +2,7 @@ import { Text } from "../atoms/text";
 import CardInformation from "./cardInformation";
 import ResNew from "../icons/resNew";
 import ResNow from "../icons/resNow";
-import { fetchAllReservations } from "@/api/reservation";
+import { fetchAllReservations,fetchReservationById } from "@/api/reservation";
 import { useEffect, useState, useMemo } from "react";
 import type { Reservasi } from "@/types/reservasi";
 import dayjs from "dayjs";
@@ -24,11 +24,13 @@ import { toast } from "sonner";
 import Modal from "./modal";
 import { Button } from "../atoms/button";
 import { checkin } from "@/api/reservation";
+import useSocketStore from "../store/socketStore";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default function KasirReservasi() {
+  const { socket } = useSocketStore();
   const open = useUIStore((state) => state.open);
   const close = useUIStore((state) => state.close);
   const isTerima = useUIStore(
@@ -136,6 +138,49 @@ export default function KasirReservasi() {
   useEffect(() => {
     handleFetchReservations();
   }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleNotification = (data: any) => {
+
+      if (data.type === "NEW_RESERVATION") {
+        // Fetch ONLY the new reservation by ID
+        const fetchNewReservation = async () => {
+          try {
+            const newReservation = await fetchReservationById(data.data.reservationId);
+        
+
+            // Add to top of list without replacing existing data
+            setReservations((prevReservations) => [newReservation, ...prevReservations]);
+
+          } catch (error) {
+            toast.error("Error fetching new reservation: " + (error as Error).toString());
+          }
+        };
+
+        fetchNewReservation();
+      }
+
+      if (data.type === "RESERVATION_STATUS_UPDATE") {
+        // Update specific reservation in the list
+        setReservations((prevReservations) =>
+          prevReservations.map((reservation) =>
+            reservation.id === data.data.reservationId
+              ? { ...reservation, status: data.data.status }
+              : reservation
+          )
+        );
+      }
+    };
+
+    socket.on("notification", handleNotification);
+
+    return () => {
+      socket.off("notification", handleNotification);
+    };
+  }, [socket]);
+
   const handleConfirmation = async (cancellation_reason?: string) => {
     setIsSubmitting(true);
     let newStatus = "";
@@ -183,7 +228,7 @@ export default function KasirReservasi() {
       toast.success("Check-in berhasil");
       setIsSubmitting(false);
       close();
-    } catch (error :any) {
+    } catch (error: any) {
       toast.error(error);
       setIsSubmitting(false);
       close();

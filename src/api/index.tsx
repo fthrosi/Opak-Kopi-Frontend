@@ -1,4 +1,5 @@
 import axios from "axios";
+import useAuthStore from "@/components/store/useAuthStore";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3000",
@@ -8,80 +9,38 @@ const api = axios.create({
   },
 });
 
-// ← TAMBAH: Queue untuk pending requests
-let isRefreshing = false;
-let failedQueue: Array<{
-  resolve: (value?: any) => void;
-  reject: (error?: any) => void;
-}> = [];
-
-// ← TAMBAH: Function untuk process queue
-const processQueue = (error: any, token: string | null = null) => {
-  failedQueue.forEach(({ resolve, reject }) => {
-    if (error) {
-      reject(error);
-    } else {
-      resolve(token);
-    }
-  });
-  
-  failedQueue = [];
-};
-
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    
+    const { setCheckingAuth, logout, login } = useAuthStore.getState();
+
     if (
       error.response &&
       error.response.status === 401 &&
       !originalRequest._retry &&
       !originalRequest.url.includes("/auth/refresh-token")
     ) {
-      
-      // ← JIKA sedang refresh, queue request ini
-      if (isRefreshing) {
-        return new Promise((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        }).then(() => {
-          return api(originalRequest);
-        }).catch(err => {
-          return Promise.reject(err);
-        });
-      }
 
       originalRequest._retry = true;
-      isRefreshing = true;
 
-      
       try {
+        setCheckingAuth(true);
         const response = await api.post("/auth/refresh-token");
         
-        // ← Process semua queued requests
-        processQueue(null, response.data.token);
-        
-        // ← Retry original request
-        return api(originalRequest);
-        
-      } catch (refreshError) {
-        
-        // ← Process queue with error
-        processQueue(refreshError, null);
-        
-        // Logout user
-        localStorage.removeItem("auth");
-        
-        if (typeof window !== 'undefined') {
-          window.location.href = '/login';
+        if(response.data?.user){
+          login(response.data.user);
         }
-        
-        return Promise.reject(refreshError);
+        return api(originalRequest);
+      } catch (refreshError) {
+        // ← Process queue with error
+       logout();
+       return Promise.reject(refreshError);
       } finally {
-        isRefreshing = false; // ← Reset flag
+        setCheckingAuth(false);
       }
     }
-    
+
     return Promise.reject(error);
   }
 );

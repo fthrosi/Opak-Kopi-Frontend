@@ -27,6 +27,15 @@ export async function updateReservationStatus(id: number, status: string) {
   }
 }
 
+export async function fetchReservationById(id: number) {
+  try {
+    const res = await api.get(`/reservations/getBy/${id}`);
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function fetchAllReservations() {
   try {
     const res = await api.get("/reservations/getAll");

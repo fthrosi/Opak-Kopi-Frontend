@@ -36,9 +36,34 @@ import EmailPage from "./components/pages/emailResetPassword";
 import OTPPage from "./components/pages/otp";
 import PasswordPage from "./components/pages/password";
 import ContactPage from "./components/pages/contact";
+import useSocketStore from "./components/store/socketStore";
+import { useEffect } from "react";
 
 export default function App() {
-  useAuthStore.getState().restore();
+  const {initSocket,disconnectSocket} = useSocketStore();
+  const {isLoggedIn,isCheckingAuth} = useAuthStore();
+  const {restore} = useAuthStore();
+
+  useEffect(() => { 
+    restore();
+  }, [restore]);
+  useEffect(() => {
+    if (isCheckingAuth) {
+      return;
+    }
+    if (isLoggedIn) {
+      const timer = setTimeout(() => {
+        initSocket();
+      }, 100);
+      
+      return () => {
+        clearTimeout(timer);
+      };
+    } else {
+      disconnectSocket();
+    }
+   
+  }, [isLoggedIn, initSocket,disconnectSocket]);
   return (
     <BrowserRouter>
       <Toaster position="top-center" richColors />

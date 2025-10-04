@@ -3,6 +3,8 @@ import { useUIStore } from "../store/useUIStore";
 import { useStickyNavbar } from "@/hooks/useStickyNavbar";
 import { useSidebarAnimation } from "@/hooks/useSidebarAnimation";
 import { cn } from "@/lib/utils";
+import NotificationList from "./notificationIcon";
+import useAuthStore from "../store/useAuthStore";
 type NavbarProps = {
   logoIcon?: React.ReactNode;
   navigation?: React.ReactNode;
@@ -15,8 +17,11 @@ export default function Navbar({
   navigationButton,
   className,
 }: NavbarProps) {
+  const { isLoggedIn } = useAuthStore();
   const isScroll = useUIStore((state) => state.scrollY);
-  const isOpen = useUIStore((state) => state.activeSidebar === "sidebarCustomer");
+  const isOpen = useUIStore(
+    (state) => state.activeSidebar === "sidebarCustomer"
+  );
   const isSticky = useStickyNavbar(300);
   const isFullyClosed = useSidebarAnimation(isOpen, 500);
   useEffect(() => {
@@ -34,7 +39,10 @@ export default function Navbar({
     <>
       {isScroll <= 0 && (
         <header
-          className={cn(`fixed top-0 z-20 w-full 2xl:h-[5.75rem]  transition-transform duration-300 ease-in-out bg-transparent`, className)}
+          className={cn(
+            `fixed top-0 z-20 w-full 2xl:h-[5.75rem]  transition-transform duration-300 ease-in-out bg-transparent`,
+            className
+          )}
         >
           <div className="block md:flex items-center justify-between md:p-4 lg:px-14 xl:px-24 2xl:px-[4.375rem] 2xl:py-0 xl:max-w-[1440px] mx-auto 2xl:h-full">
             <div
@@ -45,15 +53,15 @@ export default function Navbar({
             <div
               className={` md:h-fit bg-broken px-4 flex justify-center md:contents transition-transform duration-400 md:translate-0 ${
                 isFullyClosed ? "h-0 overflow-hidden" : "h-dvh"
-              } ${
-                isOpen
-                  ? "translate-x-0 "
-                  : "-translate-x-200 "
-              }`}
+              } ${isOpen ? "translate-x-0 " : "-translate-x-200 "}`}
             >
               <div className="flex flex-col md:contents items-start justify-center md:justify-between">
                 {navigation}
-                {navigationButton}
+                <div className="flex gap-5 items-center">
+                  {isLoggedIn && <NotificationList />}
+
+                  {navigationButton}
+                </div>
               </div>
             </div>
           </div>
@@ -78,11 +86,7 @@ export default function Navbar({
             <div
               className={` md:h-fit bg-broken px-4 flex justify-center md:contents transition-transform duration-400 md:translate-0 ${
                 isFullyClosed ? "h-0 overflow-hidden" : "h-dvh"
-              } ${
-                isOpen
-                  ? "translate-x-0 "
-                  : "-translate-x-200 "
-              }`}
+              } ${isOpen ? "translate-x-0 " : "-translate-x-200 "}`}
             >
               <div className="flex flex-col md:contents items-start justify-center md:justify-between">
                 {navigation}

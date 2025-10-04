@@ -12,7 +12,9 @@ import { ModalRating } from "./modalRating";
 import type { Rating } from "@/types/rating";
 import { submitRating } from "@/api/rating";
 import { toast } from "sonner";
+import useSocketStore from "../store/socketStore";
 export default function HistoryOrder() {
+  const {socket} = useSocketStore();
   const [orders, setOrders] = useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const isModalRatingOpen = useUIStore(
@@ -45,6 +47,27 @@ export default function HistoryOrder() {
   useEffect(() => {
     fetchOrders();
   }, []);
+  useEffect(() => {
+    if (!socket) return;
+    
+    const handleNotification = (data: any) => {
+      
+      if (data.type === 'ORDER_STATUS_UPDATE') {
+        // Update specific order status in list
+        setOrders((prevOrders) => 
+          prevOrders.map((order) => 
+            order.id === data.data.orderId
+              ? { ...order, status: data.data.status }
+              : order
+          )
+        );
+      }
+    };
+    socket.on('notification', handleNotification);
+    return () => {
+      socket.off('notification', handleNotification);
+    };
+  }, [socket]);
   return (
     <Pages className={`relative flex flex-col gap-3 items-center ${orders.length === 0 ? "justify-center" : ""} py-5 flex-1`}>
       {orders.length === 0 && (

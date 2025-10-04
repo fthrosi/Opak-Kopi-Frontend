@@ -29,6 +29,15 @@ export const getOrderRange = async (startDate?: string, endDate?: string) => {
     throw error;
   }
 };
+export const getOrderById = async (orderId: number) => {
+  try {
+    const response = await api.get(`/orders/by/${orderId}`);
+    return response.data;
+  }
+  catch (error) {
+    throw error;
+  }
+};
 export const getOrdersByUser = async () => {
   try {
     const response = await api.get("/orders/user");

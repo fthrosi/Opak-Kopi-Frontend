@@ -5,7 +5,7 @@ import ProsesIcon from "../icons/proses";
 import SelesaiIcon from "../icons/selesai";
 import DitolakIcon from "../icons/ditolak";
 import CardInformation from "./cardInformation";
-import { getDailyOrders } from "@/api/orders";
+import { getDailyOrders,getOrderById } from "@/api/orders";
 import { useEffect, useMemo, useState } from "react";
 import { secNavPesanan } from "@/const/constNavbar";
 import SecondNavbar from "../molecules/secondNavbar";
@@ -20,8 +20,10 @@ import { ModalReject } from "./modalReject";
 import { toast } from "sonner";
 import { Receipt } from "./receipt";
 import { Button } from "../atoms/button";
+import useSocketStore from "../store/socketStore";
 
 export default function Pesanan() {
+  const {socket} = useSocketStore();
   const open = useUIStore((state) => state.open);
   const close = useUIStore((state) => state.close);
   const activeModal = useUIStore(
@@ -127,6 +129,46 @@ export default function Pesanan() {
   useEffect(() => {
     fetchDailyOrders();
   }, []);
+  useEffect(() => {
+    if (!socket) return;
+    
+    const handleNotification = (data: any) => {
+      
+      if (data.type === 'NEW_ORDER') {
+        // Fetch ONLY the new order by ID
+        const fetchNewOrder = async () => {
+          try {
+            const newOrder = await getOrderById(data.data.orderId);
+            const orderBaru = newOrder.data;
+            
+            // Add to top of list without replacing existing data
+            setOrders((prevOrders) => [orderBaru, ...prevOrders]);
+          } catch (error) {
+            toast.error("Error fetching new order: " + (error as Error).toString());
+          }
+        };
+        
+        fetchNewOrder();
+      }
+      
+      if (data.type === 'ORDER_STATUS_UPDATE') {
+        // Update specific order in the list
+        setOrders((prevOrders) => 
+          prevOrders.map((order) => 
+            order.id === data.data.orderId 
+              ? { ...order, status: data.data.status } 
+              : order
+          )
+        );
+      }
+    };
+    
+    socket.on('notification', handleNotification);
+    
+    return () => {
+      socket.off('notification', handleNotification);
+    };
+  }, [socket]);
   return (
     <div className="flex flex-col gap-5 h-full relative">
       <div className="lg:flex-shrink-0">

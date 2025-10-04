@@ -11,7 +11,9 @@ import { ModalConfirmation } from "./modalConfirmation";
 import { updateReservationStatus } from "@/api/reservation";
 import { toast } from "sonner";
 import { Text } from "../atoms/text";
+import useSocketStore from "../store/socketStore";
 export default function HistoryReservasi() {
+  const { socket } = useSocketStore();
   const [reservations, setReservations] = useState<Reservasi[]>([]);
   const [filteredReservations, setFilteredReservations] = useState<Reservasi[]>(
     []
@@ -64,6 +66,29 @@ export default function HistoryReservasi() {
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+    if (!socket) {
+    return;
+  }
+    
+    const handleNotification = (data: any) => {
+      
+      if (data.type === 'RESERVATION_STATUS_UPDATE') {
+        // Update specific reservation status in list
+        setReservations((prevReservations) => 
+          prevReservations.map((reservation) => 
+            reservation.id === data.data.reservationId
+              ? { ...reservation, status: data.data.status }
+              : reservation
+          )
+        );
+      }
+    };
+    socket.on('notification', handleNotification);
+    return () => {
+      socket.off('notification', handleNotification);
+    };
+  }, [socket]);
   return (
     <Pages className="relative py-5 flex flex-col items-center gap-5 h-full">
       <SecondNavbar

@@ -7,6 +7,7 @@ import useAuthStore from "../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useSocketStore from "../store/socketStore";
 import { loginSchema, type LoginFormData } from "@/validateSchema/login";
 import { toast } from "sonner";
 export default function LoginPage() {
@@ -30,7 +31,20 @@ export default function LoginPage() {
       useAuthStore.getState().login(response.user);
       toast.success("Login berhasil!");
       reset();
-      navigate("/menulogin");
+      setTimeout(() => {
+        useSocketStore.getState();
+        // Navigate based on role
+        const role = response.user?.role?.name;
+        if (role === "Pelanggan") {
+          navigate("/menulogin");
+        } else if (role === "Kasir") {
+          navigate("/kasir/pesanan");
+        } else if (role === "Owner") {
+          navigate("/owner/dashboard");
+        } else {
+          navigate("/");
+        }
+      }, 500);
     } catch (error) {
       toast.error(error as string || "Login gagal. Silakan coba lagi.");
       reset();
