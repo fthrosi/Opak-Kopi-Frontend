@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Text } from "@/components/atoms/text";
 import SelectLabel from "@/components/molecules/selectLabel";
 import InputForm from "@/components/molecules/inputForm";
@@ -24,6 +25,7 @@ type CartProps = {
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
+  onclose?: () => void;
   classname?: string;
 };
 
@@ -33,7 +35,10 @@ export default function Cart({
   removeFromCart,
   clearCart,
   classname,
+  onclose,
 }: CartProps) {
+  const navigate = useNavigate();
+  const MIDTRANS_CLIENT_KEY = import.meta.env.VITE_MIDTRANS_CLIENT_KEY;
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const user = useAuthStore((state) => state.user);
   const isPelanggan = user?.role.name === "Pelanggan";
@@ -128,13 +133,33 @@ export default function Cart({
       payload = validation.data;
     }
     try {
-      await addOrder(payload);
-      toast.success("Pesanan berhasil dikirim");
+      const result = await addOrder(payload);
+      console.log(result);
       clearCart();
       setSelectedMeja("");
       setNamaPelanggan("");
       setCatatan("");
       setOnReset(true);
+      onclose && onclose();
+      const { payment_token } = result;
+
+      if (payment_token) {
+        (window as any).snap.pay(payment_token, {
+          onSuccess: function () {
+           toast.success("Pembayaran berhasil!");
+            navigate("/history-order");
+          },
+          onError: function () {
+            toast.error("Pembayaran gagal. Silakan coba lagi.");
+          },
+          onClose: function () {
+            toast.info("Anda menutup popup tanpa menyelesaikan pembayaran");
+          },
+        });
+      }else{
+        toast.success("Pesanan berhasil dibuat!");
+        navigate("/history-order");
+      }
     } catch (error) {
       toast.error("Gagal mengirim pesanan");
     }
@@ -142,6 +167,15 @@ export default function Cart({
 
   useEffect(() => {
     fetchTable();
+  }, []);
+  useEffect(() => {
+    if (!document.querySelector("#midtrans-script")) {
+      const script = document.createElement("script");
+      script.id = "midtrans-script";
+      script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
+      script.setAttribute("data-client-key", MIDTRANS_CLIENT_KEY);
+      document.body.appendChild(script);
+    }
   }, []);
   return (
     <div
