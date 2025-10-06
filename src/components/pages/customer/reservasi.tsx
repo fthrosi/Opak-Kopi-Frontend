@@ -12,8 +12,10 @@ import { toast } from "sonner";
 import dayjs from "dayjs";
 import { createReservation } from "@/api/reservation";
 import useAuthStore from "@/components/store/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 export default function Reservasi() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit, control, reset
@@ -46,6 +48,7 @@ export default function Reservasi() {
        await createReservation(reservasiData);
       toast.success("Reservasi berhasil!");
       reset();
+      navigate("/history-reservasi");
     } catch (error) {
       toast.error("Gagal membuat reservasi. Silakan coba lagi.");
     }

@@ -11,14 +11,10 @@ import ProsesIcon from "../icons/proses";
 import DitolakIcon from "../icons/ditolak";
 import { CentangIcon } from "../icons/centang";
 import { useMemo, useState } from "react";
-import SelectLabel from "../molecules/selectLabel";
-import { metodePembayaran } from "@/const/metodePemabayaran";
-import { toast } from "sonner";
 type modalPesananBaruProps = {
   order: Order | null;
   onUpdateStatus?: () => void;
   onReject?: () => void;
-  onPayment?: (paymentMethod: string) => Promise<void>;
   onPrintReceipt?: (order: Order) => void;
 };
 
@@ -26,39 +22,19 @@ export const ModalPesananBaru = ({
   order,
   onUpdateStatus,
   onReject,
-  onPayment,
   onPrintReceipt,
 }: modalPesananBaruProps) => {
   const totalSubTotal = useMemo(() => {
     return order?.order_items.reduce((total, item) => {
-      return total + item.subtotal; // ← LANGSUNG pakai sub_total field
+      return total + item.subtotal;
     }, 0);
   }, [order?.order_items]);
-  const [metodePembayaranSelected, setMetodePembayaranSelected] =
-    useState<string>("");
-  const [isProcessingPayment, setIsProcessingPayment] =
-    useState<boolean>(false);
-  const handlePaymentMethodChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setMetodePembayaranSelected(e.target.value);
-  };
-  const handlePayment = async () => {
-    if (!metodePembayaranSelected) {
-      toast.error("Silakan pilih metode pembayaran");
-      return;
-    }
-    setIsProcessingPayment(true);
-    try {
-      await onPayment?.(metodePembayaranSelected);
-    } finally {
-      setIsProcessingPayment(false);
-    }
-  };
+  useState<string>("");
   const handlePrintReceipt = () => {
     if (!order) return;
     onPrintReceipt?.(order);
   };
+  console.log(order);
   return (
     <Modal
       position="center"
@@ -247,26 +223,28 @@ export const ModalPesananBaru = ({
               </div>
             </div>
             <div className="flex flex-col gap-5">
-              <SelectLabel
-                children="Pilih Metode Pembayaran"
-                selectFormProps={{
-                  id: "payment_method",
-                  placeholder: "Pilih Metode Pembayaran",
-                  options: metodePembayaran,
-                }}
-                selectProps={{
-                  value: metodePembayaranSelected,
-                  onChange: handlePaymentMethodChange,
-                  getValue: (option) => option.value,
-                }}
-              ></SelectLabel>
-              <Button
-                className="w-full bg-green-600"
-                onClick={handlePayment}
-                disabled={isProcessingPayment || !metodePembayaranSelected}
+              <div className="flex justify-between">
+                <Text size="caption" textColor="secondary">
+                  Metode Pembayaran
+                </Text>
+                <Text size="caption" className="text-secondary">
+                  {order.payment_method}
+                </Text>
+              </div>
+              <div className="flex justify-between gap-2">
+                <Button
+                className="w-full bg-secondary flex-1"
+                onClick={handlePrintReceipt}
               >
-                {isProcessingPayment ? "Memproses..." : "Bayar"}
+                Cetak Struk
               </Button>
+                <Button
+                  className="w-full bg-green-600 flex-1"
+                  onClick={onUpdateStatus}
+                >
+                  Selesai
+                </Button>
+              </div>
             </div>
           </div>
         )}

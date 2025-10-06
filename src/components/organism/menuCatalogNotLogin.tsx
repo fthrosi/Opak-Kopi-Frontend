@@ -91,6 +91,7 @@ export default function Menu() {
           addToCart={addToCart}
           removeFromCart={removeFromCart}
           clearCart={clearCart}
+          onclose={close}
         />
       </div>
       {isModalOpen && (
@@ -108,6 +109,7 @@ export default function Menu() {
               addToCart={addToCart}
               removeFromCart={removeFromCart}
               clearCart={clearCart}
+              onclose={close}
             />
           }
         />

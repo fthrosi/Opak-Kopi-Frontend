@@ -50,4 +50,6 @@ export type Order = {
     is_rated: boolean,
     payment_method: string,
     point_history: point[],
+    payment_url: string | null,
+    payment_token: string | null,
 }

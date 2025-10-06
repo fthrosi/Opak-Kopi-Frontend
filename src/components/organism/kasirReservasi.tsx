@@ -145,13 +145,9 @@ export default function KasirReservasi() {
     const handleNotification = (data: any) => {
 
       if (data.type === "NEW_RESERVATION") {
-        // Fetch ONLY the new reservation by ID
         const fetchNewReservation = async () => {
           try {
             const newReservation = await fetchReservationById(data.data.reservationId);
-        
-
-            // Add to top of list without replacing existing data
             setReservations((prevReservations) => [newReservation, ...prevReservations]);
 
           } catch (error) {

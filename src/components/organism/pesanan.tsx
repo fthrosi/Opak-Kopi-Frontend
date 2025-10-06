@@ -280,9 +280,6 @@ export default function Pesanan() {
           order={selectedOrder}
           onUpdateStatus={() => handleUpdateStatus(selectedOrder!)}
           onReject={() => open("RejectOrder")}
-          onPayment={(method: string) =>
-            handleUpdateStatus(selectedOrder!, method)
-          }
           onPrintReceipt={handlePrintReceipt}
         />
       )}

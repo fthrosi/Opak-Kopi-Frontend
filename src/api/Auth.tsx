@@ -50,3 +50,11 @@ export const resetPassword = async (resetToken: string, newPassword: string) => 
     throw error.response?.data?.error || "Reset kata sandi gagal. Silakan coba lagi.";
   }
 };
+export const verifyEmail = async (verificationToken: string) => {
+  try {
+    const response = await api.get(`/auth/verify-email?token=${verificationToken}`);
+    return response.data;
+  } catch (error : any) {
+    throw error.response?.data?.error || "Verifikasi email gagal. Silakan coba lagi.";
+  }
+};

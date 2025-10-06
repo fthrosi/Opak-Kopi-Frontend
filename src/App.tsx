@@ -37,6 +37,7 @@ import OTPPage from "./components/pages/otp";
 import PasswordPage from "./components/pages/password";
 import ContactPage from "./components/pages/contact";
 import useSocketStore from "./components/store/socketStore";
+import { VerifyEmailContent } from "./components/organism/verificationEmail";
 import { useEffect } from "react";
 
 export default function App() {
@@ -72,6 +73,7 @@ export default function App() {
           <Route element={<CompanyProfileLayout />}>
             <Route path="/" element={<HomePages />} />
           </Route>
+          <Route path="/verify-email" element={<VerifyEmailContent />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route element={<CustomerView />}>

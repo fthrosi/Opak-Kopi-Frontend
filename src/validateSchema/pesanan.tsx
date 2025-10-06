@@ -64,4 +64,5 @@ export const kasirSchema = z.object({
     .string()
     .min(1, { message: "Nama pelanggan harus diisi" })
     .max(100, { message: "Nama pelanggan maksimal 100 karakter" }),
+  payment_method: z.string().nonempty({ message: "Metode pembayaran harus dipilih" }),
 });

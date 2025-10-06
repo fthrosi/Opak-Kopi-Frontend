@@ -97,7 +97,7 @@ const NotificationList: React.FC = () => {
   };
 
   return (
-    <div className="notification-container relative" ref={dropdownRef}>
+    <div className="notification-container relative hidden md:block" ref={dropdownRef}>
       {/* Notification Icon with Badge */}
       <button 
         className="notification-icon relative p-2 hover:bg-gray-100 rounded-full transition-colors" 

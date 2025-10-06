@@ -12,6 +12,7 @@ import { useCheckoutStore } from "../store/checkoutStore";
 import useAuthStore from "../store/useAuthStore";
 import { toast } from "sonner";
 import { fetchtables } from "@/api/tables";
+import { metodePembayaran } from "@/const/metodePemabayaran";
 import { addOrder } from "@/api/orders";
 import {
   orderSchemaLogin,
@@ -38,6 +39,8 @@ export default function Cart({
   onclose,
 }: CartProps) {
   const navigate = useNavigate();
+  const [metodePembayaranSelected, setMetodePembayaranSelected] =
+    useState<string>("");
   const MIDTRANS_CLIENT_KEY = import.meta.env.VITE_MIDTRANS_CLIENT_KEY;
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const user = useAuthStore((state) => state.user);
@@ -45,6 +48,11 @@ export default function Cart({
   const finalTotal = useCheckoutStore((state) => state.finalTotal);
   const promoId = useCheckoutStore((state) => state.id_promo);
   const pointUse = useCheckoutStore((state) => state.point_use);
+  const handlePaymentMethodChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setMetodePembayaranSelected(e.target.value);
+  };
   const [onReset, setOnReset] = useState(false);
   const subTotal = cart.reduce(
     (sum, item) => sum + item.current_price * item.qty,
@@ -83,6 +91,7 @@ export default function Cart({
         point_use: pointUse || 0,
         promo_id: promoId || null,
         note: catatan,
+
         order_items,
       };
     } else if (isLoggedIn && !isPelanggan) {
@@ -92,6 +101,7 @@ export default function Cart({
         table_id: selectedMeja,
         note: catatan,
         order_items,
+        payment_method: metodePembayaranSelected || "",
       };
     } else {
       payload = {
@@ -146,8 +156,10 @@ export default function Cart({
       if (payment_token) {
         (window as any).snap.pay(payment_token, {
           onSuccess: function () {
-           toast.success("Pembayaran berhasil!");
-            navigate("/history-order");
+            toast.success("Pembayaran berhasil!");
+            {
+              isLoggedIn ? navigate("/history-order") : navigate("/menu");
+            }
           },
           onError: function () {
             toast.error("Pembayaran gagal. Silakan coba lagi.");
@@ -156,7 +168,7 @@ export default function Cart({
             toast.info("Anda menutup popup tanpa menyelesaikan pembayaran");
           },
         });
-      }else{
+      } else {
         toast.success("Pesanan berhasil dibuat!");
         navigate("/history-order");
       }
@@ -278,6 +290,25 @@ export default function Cart({
             {formatRupiah({ value: finalTotal ?? 0 })}
           </Text>
         </div>
+        {user?.role.name === "Kasir" && (
+          <div className="bg-white p-2">
+            <SelectLabel
+              children="Pilih Metode Pembayaran"
+              selectFormProps={{
+                id: "payment_method",
+                placeholder: "Pilih Metode Pembayaran",
+                options: metodePembayaran,
+              }}
+              selectProps={{
+                name: "payment_method",
+                value: metodePembayaranSelected,
+                onChange: handlePaymentMethodChange,
+                getValue: (option) => option.value,
+              }}
+            ></SelectLabel>
+          </div>
+        )}
+
         <Button type="submit" className="mt-1">
           Pesan
         </Button>
