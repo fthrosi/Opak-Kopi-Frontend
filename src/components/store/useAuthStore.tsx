@@ -30,6 +30,7 @@ const useAuthStore = create<AuthState>()(
       logout: () => {
         set({ isLoggedIn: false, user: null });
         localStorage.removeItem("auth");
+        localStorage.removeItem("cart-storage");
       },
       updateUserData: (newUserData: User) => {
         set({ user: newUserData });
