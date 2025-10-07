@@ -15,12 +15,12 @@ export default defineConfig({
     proxy: {
       // REST API
       '/api': {
-        target: process.env.VITE_API_URL || 'http://localhost:3000',
+        target: process.env.VITE_API_URL,
         changeOrigin: true,
         secure: false
       },
       '/socket.io': {
-        target: process.env.VITE_API_URL || 'http://localhost:3000',
+        target: process.env.VITE_API_URL,
         ws: true,
         changeOrigin: true,
         secure: false
