@@ -1,6 +1,8 @@
 {
-    "rewrites":[{
-        "source":"/:path*",
-        "destination":"/index.html"
-    }]
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://opak-kopi.trisnautama.site/:path*"
+    }
+  ]
 }
