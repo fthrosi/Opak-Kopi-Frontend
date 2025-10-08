@@ -402,7 +402,7 @@ export default function PenggunaOwnerPage() {
                   className="bg-primary text-xs sm:text-base flex-1"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Menambah..." : "Tambah Promo"}
+                  {isSubmitting ? "Menambah..." : "Tambah Manajemen"}
                 </Button>
               </div>
             </div>

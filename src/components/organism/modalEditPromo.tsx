@@ -97,9 +97,9 @@ export default function ModalEditPromo({
         promo_code: promo.promo_code || "",
         description: promo.description || "",
         syarat_promo: syarat,
-        amount_value: promo.amount_value || undefined, // ← CONVERT NULL TO UNDEFINED
-        percent_value: promo.percent_value || undefined, // ← CONVERT NULL TO UNDEFINED
-        minimum_purchase: promo.minimum_purchase || undefined, // ← CONVERT NULL TO UNDEFINED
+        amount_value: promo.amount_value || undefined, 
+        percent_value: promo.percent_value || undefined, 
+        minimum_purchase: promo.minimum_purchase || undefined,
         promo_menus: promo.promo_menus || [],
       });
     }
@@ -187,10 +187,7 @@ export default function ModalEditPromo({
       modalClassName="max-w-[40rem] max-h-[40rem] overflow-y-auto pt-10"
     >
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit(onSubmit);
-        }}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex flex-col gap-5 items-center">
           {/* Upload Image */}

@@ -45,6 +45,7 @@ export default function Feedback() {
     try {
       await submitFeedback(data);
       toast.success("Pesan berhasil dikirim");
+      fetchFeedback();
       reset(); // Reset form setelah submit
     } catch (error) {
       toast.error("Gagal mengirim pesan");

@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { promoSchema, type PromoFormValues } from "@/validateSchema/promo";
@@ -40,7 +40,6 @@ export default function ModalTambahPromo({
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string>("");
 
-  // ← REACT HOOK FORM + ZOD
   const {
     register,
     handleSubmit,
@@ -58,7 +57,7 @@ export default function ModalTambahPromo({
       end_date: "",
       promo_code: "",
       description: "",
-      syarat_promo: "menu", // default syarat
+      syarat_promo: "menu",
       amount_value: 0,
       percent_value: 0,
       minimum_purchase: 0,
@@ -70,7 +69,6 @@ export default function ModalTambahPromo({
   const watchedSyarat = watch("syarat_promo");
   const watchedMenus = watch("promo_menus");
 
-  // ← RESET FORM SAAT MODAL DIBUKA/DITUTUP
   useEffect(() => {
     if (isOpen) {
       reset();
@@ -89,7 +87,6 @@ export default function ModalTambahPromo({
     }
   }, [watchedImage]);
 
-  // ← SUBMIT HANDLER
   const onSubmit = async (data: PromoFormValues) => {
     try {
       const formData = new FormData();
@@ -115,7 +112,6 @@ export default function ModalTambahPromo({
         }
       }
 
-      // Handle nilai promo
       if (data.promo_type === "amount" && data.amount_value) {
         formData.append("amount_value", data.amount_value.toString());
       } else if (data.promo_type === "percent" && data.percent_value) {
@@ -143,9 +139,12 @@ export default function ModalTambahPromo({
       rounded="default"
       modalClassName="max-w-[40rem] max-h-[40rem] overflow-y-auto pt-10"
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit, (errors) => {
+          console.log("Validation Errors:", errors);
+        })}
+      >
         <div className="flex flex-col gap-5 items-center">
-          {/* Upload Image */}
           <div className="flex flex-col items-center gap-2">
             <div
               className={` bg-gray-200 rounded-md ${
@@ -183,7 +182,6 @@ export default function ModalTambahPromo({
           </div>
 
           <div className="w-full flex flex-col gap-2">
-            {/* Row 1: Nama & Syarat */}
             <div className="flex flex-col xs:flex-row gap-3">
               <div className="xs:flex-1">
                 <InputForm
@@ -218,7 +216,6 @@ export default function ModalTambahPromo({
                         getValue: (option: any) => option.value,
                         onChange: (e: React.ChangeEvent<HTMLSelectElement>) => {
                           field.onChange(e.target.value);
-                          // Reset fields when changing syarat
                           if (e.target.value === "menu") {
                             setValue("minimum_purchase", undefined);
                             setValue("promo_menus", []);
@@ -238,8 +235,6 @@ export default function ModalTambahPromo({
                 )}
               </div>
             </div>
-
-            {/* Row 2: Tipe & Status */}
             <div className="flex flex-col xs:flex-row gap-3">
               <div className="xs:flex-1">
                 <Controller
@@ -258,7 +253,6 @@ export default function ModalTambahPromo({
                         getValue: (option: any) => option.value,
                         onChange: (e: React.ChangeEvent<HTMLSelectElement>) => {
                           field.onChange(e.target.value);
-                          // Reset values when changing type
                           setValue("amount_value", undefined);
                           setValue("percent_value", undefined);
                         },
@@ -290,7 +284,6 @@ export default function ModalTambahPromo({
               </div>
             </div>
 
-            {/* Row 3: Tanggal */}
             <div className="flex flex-col xs:flex-row gap-3 mt-3">
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <div className="xs:flex-1">
@@ -344,7 +337,6 @@ export default function ModalTambahPromo({
               </LocalizationProvider>
             </div>
 
-            {/* Row 4: Kode Promo & Nilai */}
             <div className="flex flex-col xs:flex-row gap-3">
               {watchedType === "amount" ? (
                 <div className="xs:flex-1">
@@ -473,7 +465,6 @@ export default function ModalTambahPromo({
               )}
             </div>
 
-            {/* Description */}
             <div className="flex flex-col gap-1">
               <Text size="caption">Deskripsi</Text>
               <textarea
@@ -492,7 +483,6 @@ export default function ModalTambahPromo({
               </Text>
             </div>
 
-            {/* Action Buttons */}
             <div className="flex w-full justify-between gap-2 mt-4">
               <Button
                 type="button"
