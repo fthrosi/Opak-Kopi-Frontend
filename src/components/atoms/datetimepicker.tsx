@@ -12,12 +12,10 @@ export default function ResponsiveDateTimePickers({
   value,
   onChange,
 }: DateTimePickerProps) {
-  const OPENING_HOUR = 15; // Jam buka (3 sore)
-  const CLOSING_HOUR = 20; // Jam tutup (jam 20 udah tutup, jadi max 19:59)
-  const MIN_HOURS_ADVANCE = 3; // Minimal booking 3 jam sebelumnya
-  const MINUTE_STEP = 5; // Step menit di picker
-
-  // Fungsi untuk bulatkan ke kelipatan 5 menit berikutnya
+  const OPENING_HOUR = 15;
+  const CLOSING_HOUR = 22; 
+  const MIN_HOURS_ADVANCE = 3;
+  const MINUTE_STEP = 5;
   const roundUpToNearestStep = (time: Dayjs, step: number) => {
     const minutes = time.minute();
     const roundedMinutes = Math.ceil(minutes / step) * step;
