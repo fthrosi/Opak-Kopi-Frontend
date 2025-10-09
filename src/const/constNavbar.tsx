@@ -8,6 +8,7 @@ import VoucherIcon from "@/components/icons/voucher";
 import { LaporanIcon } from "@/components/icons/laporan";
 import { UserIcon } from "@/components/icons/user";
 import { KritikSaranIcon } from "@/components/icons/kritikSaran";
+import UsersIcon from "@/components/icons/users";
 
 export const navigationData = [
   {
@@ -111,6 +112,11 @@ export const navbarHistoryReservasi = [
   },
   {
     id: 5,
+    title: "Tidak Hadir",
+    label: "Tidak Hadir",
+  },
+  {
+    id: 6,
     title: "Selesai",
     label: "Selesai",
   },
@@ -171,6 +177,12 @@ export const navbarKasir  = [
     path: "/kasir/reservasi",
     icon: <ReservasiIcon className="w-full h-full" />,
   },
+  {
+    id: 4,
+    title: "Profile",
+    path: "/staff/profile",
+    icon: <UserIcon className="w-full h-full" />,
+  }
 ];
 
 export const navbarOwner = [
@@ -214,12 +226,18 @@ export const navbarOwner = [
     id: 8,
     title: "Pengguna",
     path: "/owner/pengguna",
-    icon: <UserIcon className="w-full h-full" />,
+    icon: <UsersIcon className="w-full h-full" />,
   },{
     id: 9,
     title: "Laporan",
     path: "/owner/laporan",
     icon: <LaporanIcon className="w-full h-full" />,
+  },
+  {
+    id: 10,
+    title: "Profile",
+    path: "/staff/profile",
+    icon: <UserIcon className="w-full h-full" />,
   }
 ]
 

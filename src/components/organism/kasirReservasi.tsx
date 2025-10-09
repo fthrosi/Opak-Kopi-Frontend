@@ -487,7 +487,7 @@ export default function KasirReservasi() {
                   <Text size="body">
                     Jumlah Orang : {selectedReservation.number_of_guest}
                   </Text>
-                  <Text size="body">Status : {selectedReservation.status}</Text>
+                  <Text size="body" className={`${selectedReservation.status === "Dikirim" ? "text-primary" : selectedReservation.status === "Diterima" ? "text-green-700" : selectedReservation.status === "Ditolak" ? "text-red-500" : selectedReservation.status === "Dibatalkan" ? "text-orange-500": selectedReservation.status === "Tidak Hadir" ? "text-indigo-700" : "text-blue-600"}`}><span className="text-primary">Status : </span>  {selectedReservation.status}</Text>
                 </div>
               </div>
               {selectedReservation.status === "Ditolak" && (
@@ -496,7 +496,7 @@ export default function KasirReservasi() {
                     Alasan Penolakan
                   </Text>
                   <textarea
-                    value={selectedReservation.cancellation_reason || ""}
+                    value={selectedReservation.cancellation_reason || "Tidak ada alasan yang diberikan."}
                     readOnly={true}
                     className="w-full text-secondary h-24 p-2 border-1 border-primary text-sm bg-input rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-primary"
                   ></textarea>

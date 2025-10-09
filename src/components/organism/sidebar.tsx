@@ -5,12 +5,16 @@ import { navbarKasir, navbarOwner } from "@/const/constNavbar";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import useAuthStore from "../store/useAuthStore";
+import { navbarStaf } from "@/const/constNavbar";
+import type { NavigasiProfile } from "@/types/navigasi";
+import { LogoutIcon } from "../icons/logout";
 
 type SidebarProps = {
   handleClose: () => void;
+  onItemClick: (item: NavigasiProfile) => void;
 };
 
-export default function Sidebar({ handleClose }: SidebarProps) {
+export default function Sidebar({ handleClose, onItemClick }: SidebarProps) {
   const location = useLocation();
   const [activeMenu, setActiveMenu] = useState<string>("");
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -48,7 +52,9 @@ export default function Sidebar({ handleClose }: SidebarProps) {
       setTimeout(() => setIsTransitioning(false), 300);
     }
   };
-
+  const handleItemClick = (item: NavigasiProfile) => {
+    onItemClick(item);
+  };
   return (
     <div className="w-full sm:w-[20rem] md:w-[25rem] lg:w-full h-full py-4 bg-white flex flex-col over-flow-hidden rounded-r-4xl">
       <div className="flex justify-between px-2 2xl:h-[5.75rem] h-[4rem] lg:h-[5.5rem]">
@@ -91,15 +97,52 @@ export default function Sidebar({ handleClose }: SidebarProps) {
             />
           </div>
         </div>
-        <ul className=" relative z-25">
+        <ul className="relative z-25">
           {navbar.map((item) => (
             <MenuItem
               key={item.id}
               item={item}
-              isActive={activeMenu === item.title} // ← CHECK by title
+              isActive={activeMenu === item.title}
               setActiveMenu={handleMenuClick}
+              className={`${item.title === "Profile" ? "lg:hidden" : ""}`}
             />
           ))}
+          {navbarStaf.map(
+            (item) =>
+              item.title === "Logout" && (
+                <li
+                  key={item.id}
+                  className="relative h-16.5 lg:hidden"
+                  onClick={
+                    item.action === "logout"
+                      ? () => handleItemClick(item)
+                      : undefined
+                  }
+                >
+                  <div
+                    className={`
+                  cursor-pointer transition-all duration-300 ease-out h-full flex items-center
+                  `}
+                  >
+                    <p
+                      className={`
+                      flex items-center px-6 py-4 text-base font-medium 
+                      transition-all duration-300 relative z-20 rounded-l-[30px] text-secondary
+                    `}
+                    >
+                      <span
+                        className={`
+                        mr-4 transition-colors duration-300 size-5
+                      `}
+                      >
+                        <LogoutIcon className="mr-4 transition-colors duration-300 w-full h-full" />
+                      </span>
+                      Keluar
+                    </p>
+                  </div>
+                </li>
+              )
+          )}
         </ul>
       </nav>
     </div>

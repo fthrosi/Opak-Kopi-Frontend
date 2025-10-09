@@ -53,7 +53,6 @@ export default function HistoryOrder() {
     const handleNotification = (data: any) => {
       
       if (data.type === 'ORDER_STATUS_UPDATE') {
-        // Update specific order status in list
         setOrders((prevOrders) => 
           prevOrders.map((order) => 
             order.id === data.data.orderId
@@ -91,7 +90,7 @@ export default function HistoryOrder() {
               <Text size="caption" color="secondary">
                 Nomor Pesanan : {order?.order_code}
               </Text>
-              <Text size="caption" color="secondary">
+              <Text size="caption" className={`${order?.status === "Menunggu Pembayaran" ? "text-amber-400" : order?.status === "Diproses" ? "text-green-700" : order?.status === "Ditolak" ? "text-red-500" : order?.status === "Gagal" ? "text-orange-500": order?.status === "Dikirim" ? "text-blue-600" : "text-cyan-500"}`}>
                 {order?.status}
               </Text>
             </div>

@@ -36,6 +36,7 @@ export interface GridMenuProps
     totalReviews: number;
   }; // Tambah ini
   isCustomer?: boolean;
+  layout? : "default" | "kasir" | "sm" | "lg" | "xl" | "custom";
 }
 export default function GridMenu({
   filteredMenu,
@@ -47,6 +48,7 @@ export default function GridMenu({
   gridType,
   getMenuRating,
   isCustomer,
+  layout,
 }: GridMenuProps) {
   return (
     <div className={cn(gridMenuVariants({ gridType }), className)}>
@@ -54,6 +56,7 @@ export default function GridMenu({
         const { averageRating, totalReviews } = getMenuRating(item.id);
         return (
           <CardProduk
+            layout={layout}
             onClick={() => onProductClick(item)}
             onFavoriteClick={() => onFavoriteClick?.(item)}
             key={item.id}
@@ -61,12 +64,12 @@ export default function GridMenu({
             isCustomer={isCustomer}
             isFavorite={favoriteIds?.includes(item.id)}
             favoriteClassName="right-1"
-            contentClassName="flex flex-col justify-between px-[clamp(0.5rem,2.3vw,0.75rem)] py-[clamp(0.5rem,2.7vw,0.9rem)] sm:py-[0.8rem] md:py-[1.2rem] lg:py-[0.9rem]"
+            contentClassName={`flex flex-col justify-between px-[clamp(0.5rem,2.3vw,0.75rem)] py-[clamp(0.5rem,2.7vw,0.9rem)] sm:py-[0.8rem] md:py-[1.2rem] ${layout === "kasir" ? "lg:px-[0.5rem] lg:py-[0.5rem] xl:py-[0.7rem] 2xl:py-[0.9rem]":"lg:py-[0.9rem]"} `}
             titleProps={{
               className: "flex-row justify-between items-center",
               title: item.name,
               titleClassName:
-                "text-[clamp(0.6rem,2.6vw,0.9rem)] sm:text-[clamp(0.8rem,1.9vw,0.9rem)] lg:text-[clamp(0.8rem,1.26vw,1rem)] xl:text-[1rem] 2xl:text-[1.3rem] text-wrap",
+                `text-[clamp(0.6rem,2.6vw,0.9rem)] sm:text-[clamp(0.8rem,1.9vw,0.9rem)] ${layout === "kasir" ? "lg:text-[0.7rem] 2xl:text-[clamp(1rem,1.1vw,1.3rem)]" : "lg:text-[clamp(0.8rem,1.26vw,1rem)] 2xl:text-[1.3rem]"}  xl:text-[1rem]text-wrap`,
               titleStroke: false,
               titleSize: "custom",
               titleWidth: "custom",
@@ -101,7 +104,7 @@ export default function GridMenu({
               textColor: "secondary",
               textSize: "body",
               textClassName:
-                "text-[clamp(0.6rem,2.6vw,0.9rem)] sm:text-[clamp(0.8rem,1.9vw,0.9rem)] lg:text-[clamp(0.8rem,1.26vw,1rem)] 2xl:text-[1.3rem]",
+                `text-[clamp(0.6rem,2.6vw,0.9rem)] sm:text-[clamp(0.8rem,1.9vw,0.9rem)] ${layout === "kasir" ? "lg:text-[0.7rem]" : "lg:text-[clamp(0.8rem,1.26vw,1rem)]"}  2xl:text-[1.3rem]`,
             }}
             buttonTextProps={{
               className:

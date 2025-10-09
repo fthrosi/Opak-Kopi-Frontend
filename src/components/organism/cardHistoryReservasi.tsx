@@ -25,7 +25,7 @@ export default function CardHistoryReservasi({
           <Text size="caption" color="secondary">
             Nomor Pesanan : {order?.reservation_code}
           </Text>
-          <Text size="caption" color="secondary">
+          <Text size="caption" className={`${order?.status === "Dikirim" ? "text-primary" : order?.status === "Diterima" ? "text-green-700" : order?.status === "Ditolak" ? "text-red-500" : order?.status === "Dibatalkan" ? "text-orange-500": order?.status === "Tidak Hadir" ? "text-indigo-700" : "text-blue-600"}`}>
             {order?.status}
           </Text>
         </div>

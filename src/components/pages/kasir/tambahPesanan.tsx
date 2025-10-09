@@ -72,6 +72,7 @@ export default function TambahPesanan() {
                 filteredMenu={filteredMenu.length ? filteredMenu : listMenu}
                 addToCart={addToCart}
                 isCustomer={false}
+                layout="kasir"
                 onProductClick={(product) => {
                   setSelectedProduct(product);
                   open("detailProduct");
@@ -88,7 +89,7 @@ export default function TambahPesanan() {
           <CartIcon className="size-5 sm:size-7 text-primary " />
         </div>
       </div>
-      <div className="w-[28.3rem] hidden lg:block h-full">
+      <div className="lg:w-[22rem] 2xl:w-[28.3rem] hidden lg:block h-full">
         <Cart
           cart={cart}
           addToCart={addToCart}
