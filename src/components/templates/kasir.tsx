@@ -54,7 +54,7 @@ export default function KasirTemplate() {
             : "-translate-x-full lg:translate-x-0"
         }  w-full lg:w-[12rem] xl:w-[14rem] 2xl:w-[17rem] h-full z-30`}
       >
-        <Sidebar handleClose={() => closeSidebar()} />
+        <Sidebar handleClose={() => closeSidebar()} onItemClick={handleItemClick} />
       </div>
       <div className="flex-1 flex flex-col lg:min-h-0 w-full lg:w-auto min-w-0 overflow-hidden">
         <div className="flex-shrink-0 w-full">

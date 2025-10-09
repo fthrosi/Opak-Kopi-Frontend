@@ -150,6 +150,20 @@ export const ModalPesananBaru = ({
             ))}
           </div>
         </div>
+        {order?.status === "Ditolak" && (
+          <div className="flex flex-col gap-1 ">
+            <Text size="caption" className="mb-1">
+              Alasan Ditolak
+            </Text>
+            <textarea
+              name="catatan"
+              id="catatan"
+              className="bg-input border-1 border-input text-sm text-secondary w-full min-h-[5rem] p-2 rounded-lg focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary"
+              readOnly={true}
+              value={order?.cancellation_reason || "Tidak ada alasan"}
+            ></textarea>
+          </div>
+        )}
         {order?.status === "Dikirim" && (
           <div className="flex flex-col gap-2">
             <div className="flex-col gap-1">
@@ -233,11 +247,11 @@ export const ModalPesananBaru = ({
               </div>
               <div className="flex justify-between gap-2">
                 <Button
-                className="w-full bg-secondary flex-1"
-                onClick={handlePrintReceipt}
-              >
-                Cetak Struk
-              </Button>
+                  className="w-full bg-secondary flex-1"
+                  onClick={handlePrintReceipt}
+                >
+                  Cetak Struk
+                </Button>
                 <Button
                   className="w-full bg-green-600 flex-1"
                   onClick={onUpdateStatus}

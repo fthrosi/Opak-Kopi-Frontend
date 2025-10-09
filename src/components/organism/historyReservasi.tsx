@@ -74,7 +74,6 @@ export default function HistoryReservasi() {
     const handleNotification = (data: any) => {
       
       if (data.type === 'RESERVATION_STATUS_UPDATE') {
-        // Update specific reservation status in list
         setReservations((prevReservations) => 
           prevReservations.map((reservation) => 
             reservation.id === data.data.reservationId

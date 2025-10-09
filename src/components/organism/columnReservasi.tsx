@@ -131,9 +131,13 @@ const getStatusColor = (status: string) => {
     case "diterima":
       return "#10b981";
     case "selesai":
-      return "#6366f1";
+      return "#155dfc";
     case "ditolak":
       return "#ef4444";
+    case "dibatalkan":
+      return "#f97316";
+    case "tidak hadir":
+      return "#432dd7";
     default:
       return "#6b7280";
   }

@@ -33,6 +33,13 @@ export default function DetailHarga({
     if (promo) {
       try {
         const res = await checkPromoCode(promo, menuId);
+        if(res.data.minimum_purchase && subTotal < res.data.minimum_purchase){
+          setDiscount(0);
+          toast.error(`Minimum pembelian untuk promo ini adalah ${formatRupiah({value:res.data.minimum_purchase})}`);
+          setIdPromo(undefined);
+          setValidPromo(false);
+          return;
+        }
         if (res.data?.promo_type === "percent") {
           setDiscount((subTotal * res.data.percent_value) / 100);
         } else if (res.data?.promo_type === "amount") {

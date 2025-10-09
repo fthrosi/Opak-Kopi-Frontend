@@ -170,14 +170,14 @@ export default function PromoOwnerPage() {
       <div className="flex flex-col gap-5 h-full">
         <div className="flex justify-between items-center">
           <Text size="heading2" weight="semiBold">
-            Riwayat Reservasi
+            Promo
           </Text>
           <div
             className="flex gap-1 p-1 bg-white items-center rounded-sm hover:cursor-pointer hover:bg-gray-50"
             onClick={handleAdd}
           >
             <AddIcon className="cursor-pointer size-3 text-primary" />
-            <Text size="caption">Tambah Menu</Text>
+            <Text size="caption">Tambah Promo</Text>
           </div>
         </div>
 
@@ -192,7 +192,6 @@ export default function PromoOwnerPage() {
           onStartDateChange={(date) => setStartDate(date)}
           onEndDateChange={(date) => setEndDate(date)}
           isdisableFuture={false}
-          //   onClick={fetchReservasi}
         />
         <InformationsCard
           items={[
@@ -231,7 +230,6 @@ export default function PromoOwnerPage() {
           maxHeight="100%"
         />
       </div>
-      {/* {isDetail && <ModalReservasi selectedReservation={selectedReservasi} />} */}
       {isEdit && selectedPromo && (
         <ModalEditPromo
           menus={menuData}

@@ -28,7 +28,7 @@ export const ModalDetailReservasi = ({
           <Text size="caption" color="secondary">
             Nomor Pesanan : {order?.reservation_code}
           </Text>
-          <Text size="caption" color="secondary">
+          <Text size="caption" className={`${order?.status === "Dikirim" ? "text-primary" : order?.status === "Diterima" ? "text-green-700" : order?.status === "Ditolak" ? "text-red-500" : order?.status === "Dibatalkan" ? "text-orange-500": order?.status === "Tidak Hadir" ? "text-indigo-700" : "text-blue-600"}`}>
             {order?.status}
           </Text>
         </div>
@@ -69,12 +69,26 @@ export const ModalDetailReservasi = ({
           reservasimu aman, datang maksimal 10 menit setelah jam yang
           ditentukan, ya~
         </Text>
-        {order?.status === "Diterima" ||
-          (order?.status === "Dikirim" && (
+        {order?.status === "Ditolak" && (
+          <div className="flex flex-col gap-1 ">
+            <Text size="caption" className="mb-1">
+              Alasan Ditolak
+            </Text>
+            <textarea
+              name="catatan"
+              id="catatan"
+              className="bg-input border-1 border-input text-sm text-secondary w-full min-h-[5rem] p-2 rounded-lg focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary"
+              readOnly={true}
+              value={order?.cancellation_reason || "Tidak ada alasan"}
+            ></textarea>
+          </div>
+        )}
+        {(order?.status === "Diterima" ||
+          (order?.status === "Dikirim" )) && (
             <Button className="bg-red-600 hover:bg-red-500 hover:cursor-pointer mt-6 max-w-[10rem] self-end" onClick={onOpen}>
               Batalkan Reservasi
             </Button>
-          ))}
+          )}
       </div>
     </Modal>
   );

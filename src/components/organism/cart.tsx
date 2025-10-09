@@ -173,6 +173,7 @@ export default function Cart({
         navigate("/history-order");
       }
     } catch (error) {
+      console.error(error);
       toast.error("Gagal mengirim pesanan");
     }
   };

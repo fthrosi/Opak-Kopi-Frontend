@@ -67,7 +67,22 @@ export default function ModalHistoryOrder({ order }: Props) {
           <Text size="caption" color="secondary">
             Nomor Pesanan : {order?.order_code}
           </Text>
-          <Text size="caption" color="secondary">
+          <Text
+            size="caption"
+            className={`${
+              order?.status === "Menunggu Pembayaran"
+                ? "text-amber-400"
+                : order?.status === "Diproses"
+                ? "text-green-700"
+                : order?.status === "Ditolak"
+                ? "text-red-500"
+                : order?.status === "Gagal"
+                ? "text-orange-500"
+                : order?.status === "Dikirim"
+                ? "text-blue-600"
+                : "text-cyan-500"
+            }`}
+          >
             {order?.status}
           </Text>
         </div>
@@ -123,6 +138,20 @@ export default function ModalHistoryOrder({ order }: Props) {
               {formatRupiah({ value: order?.total_price || 0 })}
             </Text>
           </div>
+          {order?.status === "Ditolak" && (
+            <div className="flex flex-col gap-1 ">
+              <Text size="caption" className="mb-1">
+                Alasan Ditolak
+              </Text>
+              <textarea
+                name="catatan"
+                id="catatan"
+                className="bg-input border-1 border-input text-sm text-secondary w-full min-h-[5rem] p-2 rounded-lg focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary"
+                readOnly={true}
+                value={order?.cancellation_reason || "Tidak ada alasan"}
+              ></textarea>
+            </div>
+          )}
           {order?.status === "Menunggu Pembayaran" &&
             order?.payment_token &&
             isAvailablePayment && (

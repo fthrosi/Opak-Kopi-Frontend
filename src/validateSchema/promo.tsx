@@ -16,18 +16,9 @@ export const promoSchema = z.object({
   syarat_promo: z.enum(["menu", "purchase"], {
     message: "Syarat promo wajib dipilih",
   }),
-  amount_value: z.number().positive({ message: "Nilai amount wajib diisi" }).min(1, "Nilai amount wajib diisi").optional(),
-  percent_value: z
-    .number()
-    .positive({ message: "Nilai persen wajib diisi" })
-    .min(1, "Nilai persen wajib diisi")
-    .max(100, "Maksimal 100%")
-    .optional(),
-  minimum_purchase: z
-    .number()
-    .positive({ message: "Pembelian minimum wajib diisi" })
-    .min(1, "Pembelian minimum wajib diisi")
-    .optional(),
+  amount_value: z.number().optional(),
+  percent_value: z.number().optional(),
+  minimum_purchase: z.number().optional(),
   promo_menus: z.array(z.any()).optional(),
   image: z
       .any()
@@ -69,6 +60,50 @@ export const promoSchema = z.object({
   {
     message: "Tanggal berakhir tidak boleh kurang dari tanggal mulai",
     path: ["end_date"],
+  }
+).refine(
+  (data) => {
+    if (data.promo_type === "amount") {
+      return data.amount_value && data.amount_value > 0;
+    }
+    return true;
+  },
+  {
+    message: "Nilai nominal wajib diisi dan harus lebih dari 0",
+    path: ["amount_value"],
+  }
+).refine(
+  (data) => {
+    if (data.promo_type === "percent") {
+      return data.percent_value && data.percent_value > 0 && data.percent_value <= 100;
+    }
+    return true;
+  },
+  {
+    message: "Nilai persentase harus antara 1-100",
+    path: ["percent_value"],
+  }
+).refine(
+  (data) => {
+    if (data.syarat_promo === "purchase") {
+      return data.minimum_purchase && data.minimum_purchase > 0;
+    }
+    return true;
+  },
+  {
+    message: "Pembelian minimum wajib diisi dan harus lebih dari 0",
+    path: ["minimum_purchase"],
+  }
+).refine(
+  (data) => {
+    if (data.syarat_promo === "menu") {
+      return data.promo_menus && data.promo_menus.length > 0;
+    }
+    return true;
+  },
+  {
+    message: "Minimal satu menu harus dipilih",
+    path: ["promo_menus"],
   }
 );
 
