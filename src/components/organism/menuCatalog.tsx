@@ -136,7 +136,7 @@ export default function MenuCatalog() {
           }
         />
       )}
-      {isDetailProductOpen && selectedProduct && (
+      {isDetailProductOpen && selectedProduct && selectedProduct.status === "Tersedia" && (
         <Modal
           isModalActive={isDetailProductOpen}
           size="full"

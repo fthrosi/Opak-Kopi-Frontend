@@ -12,10 +12,10 @@ export default function KasirMenuPage() {
 
   const updateStatus = async (menu: MenuProps) => {
     let newStatus = ""
-    if(menu.status === "tersedia"){
-      newStatus = "habis"
+    if(menu.status === "Tersedia"){
+      newStatus = "Habis"
     }else {
-      newStatus = "tersedia"
+      newStatus = "Tersedia"
     }
     try {
       await updateMenuStatus(menu.id, {
@@ -43,7 +43,7 @@ export default function KasirMenuPage() {
               <CardMenu
                 key={item.id}
                 onClick={() => handleChangeStatus(item)}
-                children={item.status === "tersedia" ? "Tersedia" : "Habis"}
+                children={item.status === "Tersedia" ? "Tersedia" : "Habis"}
                 imageSrc={item.image_url}
                 price={item.current_price}
                 status={item.status}
@@ -65,7 +65,7 @@ export default function KasirMenuPage() {
                 }}
                 buttonProps={{
                   size: "custom",
-                  className: `px-3 py-1 2xl:py-2 text-xs 2xl:text-sm w-full ${item.status === "tersedia" ? "bg-primary hover:bg-primary/90" : "bg-secondary hover:bg-secondary/90"} text-white`,
+                  className: `px-3 py-1 2xl:py-2 text-xs 2xl:text-sm w-full ${item.status === "Tersedia" ? "bg-primary hover:bg-primary/90" : "bg-secondary hover:bg-secondary/90"} text-white`,
                 }}
               />
             ))}

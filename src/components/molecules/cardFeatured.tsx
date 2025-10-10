@@ -4,7 +4,7 @@ import ButtonText, { type ButtonTextProps } from "./buttonText";
 import React from "react";
 import Img, { type ImgVariantProps } from "../atoms/img";
 
-const cardFeaturedVariants = cva("flex flex-col", {
+const cardFeaturedVariants = cva("flex flex-col ", {
   variants: {
     variant: {
       default: "",

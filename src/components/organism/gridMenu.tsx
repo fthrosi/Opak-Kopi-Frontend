@@ -62,6 +62,7 @@ export default function GridMenu({
             key={item.id}
             imageSrc={item.image_url}
             isCustomer={isCustomer}
+            isDisabled={item.status === "Habis" ? true : false}
             isFavorite={favoriteIds?.includes(item.id)}
             favoriteClassName="right-1"
             contentClassName={`flex flex-col justify-between px-[clamp(0.5rem,2.3vw,0.75rem)] py-[clamp(0.5rem,2.7vw,0.9rem)] sm:py-[0.8rem] md:py-[1.2rem] ${layout === "kasir" ? "lg:px-[0.5rem] lg:py-[0.5rem] xl:py-[0.7rem] 2xl:py-[0.9rem]":"lg:py-[0.9rem]"} `}
@@ -94,7 +95,7 @@ export default function GridMenu({
             buttonProps={{
               buttonVariant: "default",
               button: true,
-              children: "Masukan Keranjang",
+              children: `${item.status === "Habis" ? "Habis" : "Masukan Keranjang"}`,
               buttonClassName:
                 "py-[clamp(0.25rem,1.5vw,0.5rem)] sm:py-[0.35rem] md:py-[clamp(0.35rem,1.04vw,0.5rem)] lg:py-[0.35rem] text-[clamp(0.6rem,2.37vw,0.8rem)] sm:text-[0.7rem] md:text-[clamp(0.7rem,1.4vw,0.9rem)] lg:text-[clamp(0.7rem,1.1vw,0.9rem)] 2xl:text-sm",
             }}

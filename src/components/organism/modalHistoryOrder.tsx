@@ -138,6 +138,18 @@ export default function ModalHistoryOrder({ order }: Props) {
               {formatRupiah({ value: order?.total_price || 0 })}
             </Text>
           </div>
+          <div className="flex-col gap-1">
+            <Text size="caption" className="mb-1">
+              Catatan :
+            </Text>
+            <textarea
+              name="catatan"
+              id="catatan"
+              className="bg-input border-1 border-input text-sm text-secondary w-full min-h-[5rem] p-2 rounded-lg focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary"
+              readOnly={true}
+              value={order?.note || "Tidak ada catatan"}
+            ></textarea>
+          </div>
           {order?.status === "Ditolak" && (
             <div className="flex flex-col gap-1 ">
               <Text size="caption" className="mb-1">
