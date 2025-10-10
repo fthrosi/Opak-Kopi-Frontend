@@ -2,7 +2,6 @@ import Header from "../organism/homePages/header";
 import TransitionPage from "../atoms/transitionPage";
 import About from "../organism/homePages/about";
 import SectionPage from "../atoms/sectionPage";
-import { dataBestProduct } from "@/const/constBestProduct";
 import { CardFeature } from "../molecules/cardFeatured";
 import { TitleGridSection } from "../organism/titleGridSection";
 import { CardSpecial } from "@/const/constCardSpecial";
