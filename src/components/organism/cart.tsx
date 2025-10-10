@@ -161,6 +161,12 @@ export default function Cart({
               isLoggedIn ? navigate("/history-order") : navigate("/menu");
             }
           },
+          onPending: function () {
+            toast.success("Menunggu pembayaran selanjutnya");
+            {
+              isLoggedIn ? navigate("/history-order") : navigate("/menu");
+            }
+          },
           onError: function () {
             toast.error("Pembayaran gagal. Silakan coba lagi.");
           },

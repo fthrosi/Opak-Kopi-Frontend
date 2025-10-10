@@ -55,3 +55,12 @@ export const deleteMenu = async (id: number) => {
     throw error;
   }
 };
+
+export const topMenus = async () => {
+  try {
+    const response = await api.get("/dashboard/top-menus");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

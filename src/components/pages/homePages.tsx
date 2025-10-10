@@ -2,11 +2,26 @@ import Header from "../organism/homePages/header";
 import TransitionPage from "../atoms/transitionPage";
 import About from "../organism/homePages/about";
 import SectionPage from "../atoms/sectionPage";
-import { dataBestProduct } from "@/const/constBestProduct";
 import { CardFeature } from "../molecules/cardFeatured";
 import { TitleGridSection } from "../organism/titleGridSection";
 import { CardSpecial } from "@/const/constCardSpecial";
+import { topMenus } from "@/api/menu";
+import { useEffect, useState } from "react";
+import type { top3Menus } from "@/types/menu";
 export default function HomePages() {
+  const [bestProduct, setBestProduct] = useState<top3Menus[]>([]);
+  const getTopMenus = async () => {
+    try {
+      const data = await topMenus();
+      console.log("Top Menus:", data);
+      setBestProduct(data.data)
+    } catch (error) {
+      console.error("Error fetching top menus:", error);
+    }
+  };
+  useEffect(() => {
+    getTopMenus();
+  }, []);
   return (
     <div className=" bg-broken min-h-screen">
       <SectionPage
@@ -46,9 +61,9 @@ export default function HomePages() {
             descriptionWeight: "semiBold",
           }}
         >
-          {dataBestProduct.map((item) => (
+          {bestProduct.map((item) => (
             <CardFeature
-              src={item.image}
+              src={item.image_url}
               alt={item.name}
               key={item.id}
               variant="bestProduct"
@@ -67,8 +82,8 @@ export default function HomePages() {
               textFamily="lexend"
               textColor="secondary"
               textPosition="center"
-              textSize="heading3"
-              textWeight="semiBold"
+              textSize="body"
+              textWeight="bold"
             />
           ))}
         </TitleGridSection>

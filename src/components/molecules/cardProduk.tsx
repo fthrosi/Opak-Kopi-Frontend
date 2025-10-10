@@ -107,6 +107,7 @@ export interface CardProdukProps
   onFavoriteClick?: () => void;
   favoriteClassName?: string;
   isCustomer?: boolean;
+  isDisabled?: boolean | undefined;
 }
 export default function CardProduk({
   className,
@@ -124,8 +125,10 @@ export default function CardProduk({
   isFavorite = false,
   favoriteClassName,
   isCustomer = true,
+  isDisabled = false,
 }: CardProdukProps) {
   const detailProduct = useUIStore((state) => state.activeModal);
+  console.log(isDisabled);
   return (
     <div
       className={cn(cardProdukVariants({ layout }), className)}
@@ -166,6 +169,7 @@ export default function CardProduk({
               e.stopPropagation();
               onButtonClick?.();
             },
+            disabled: isDisabled,
             size: "custom",
           }}
         />

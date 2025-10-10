@@ -13,3 +13,9 @@ export type MenuProps = {
   category: categorymenu;
   status: string;
 }
+
+export type top3Menus = {
+  id: number;
+  name: string;
+  image_url: string;
+}

@@ -33,7 +33,6 @@ api.interceptors.response.use(
         }
         return api(originalRequest);
       } catch (refreshError) {
-        // ← Process queue with error
        logout();
        return Promise.reject(refreshError);
       } finally {
