@@ -46,7 +46,7 @@ export default function Feedback() {
       await submitFeedback(data);
       toast.success("Pesan berhasil dikirim");
       fetchFeedback();
-      reset(); // Reset form setelah submit
+      reset();
     } catch (error) {
       toast.error("Gagal mengirim pesan");
     }
@@ -201,8 +201,8 @@ export default function Feedback() {
               <Text size="body" weight="semiBold">
                 {feedback.topic}
               </Text>
-              <Text size="body" color="secondary">
-                Status : {feedback.status}
+              <Text size="body" color="secondary" className={`${feedback.status === "Dikirim" ? "text-primary" : feedback.status === "Selesai" ? "text-green-700" : feedback.status === "Dibaca" ? "text-indigo-700" : "text-blue-600"}`}>
+               <span className="text-primary">Status : </span>  {feedback.status}
               </Text>
               <Text size="custom" color="secondary" className="text-sm">
                 Detail
