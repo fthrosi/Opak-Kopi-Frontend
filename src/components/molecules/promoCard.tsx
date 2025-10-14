@@ -65,7 +65,7 @@ export default function PromoCard({
       className={cn(promoCardVariants({ cardSize, background }), className)}
       onClick={oncardclick}
     >
-      <Img src="/image/Voucher.png" alt="voucher" className="h-1/2" />
+      <Img src={promo.img_url} alt="voucher" className="h-1/2" />
       <div
         className={cn(promoCardContentVariants({ padding }), contentClassName)}
       >

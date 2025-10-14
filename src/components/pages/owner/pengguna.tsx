@@ -20,8 +20,14 @@ import { Button } from "@/components/atoms/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserSchema, type createUserFormData } from "@/validateSchema/register";
+import { useLocation } from "react-router-dom";
 
 export default function PenggunaOwnerPage() {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const initialTab = params.get("tab") === "Kasir" ? "Kasir" : "Pelanggan";
+  console.log("Initial Tab:", initialTab);
+  console.log(params.get("tab"));
 
   const {
     register,
@@ -61,7 +67,7 @@ export default function PenggunaOwnerPage() {
   );
   const [selectedUser, setSelectedUser] = useState<UserOwner | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeUser, setActiveUser] = useState("Kasir");
+  const [activeUser, setActiveUser] = useState(initialTab);
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };

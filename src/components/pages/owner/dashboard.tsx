@@ -77,7 +77,7 @@ export default function Dashboard() {
           Dashboard
         </Text>
         <div className="flex flex-col xs:flex-row flex-shrink-0 gap-4 justify-between items-center">
-          <div className="bg-white flex items-center p-4 gap-4 rounded-lg shadow-md w-full xs:w-40 md:w-65">
+          <a href="/owner/menu" className="bg-white flex items-center p-4 gap-4 rounded-lg shadow-md w-full xs:w-40 md:w-65">
             <MenuDashboard className="size-10 lg:size-8 md:size-15 text-primary" />
             <div className="flex flex-col gap-1">
               <Text size="heading2" weight="bold" className="lg:text-[1rem]">
@@ -87,8 +87,8 @@ export default function Dashboard() {
                 Total Menu
               </Text>
             </div>
-          </div>
-          <div className="bg-white flex items-center p-4 gap-4 rounded-lg shadow-md w-full xs:w-40 md:w-65">
+          </a>
+          <a href="/owner/pengguna?tab=Pelanggan" className="bg-white flex items-center p-4 gap-4 rounded-lg shadow-md w-full xs:w-40 md:w-65">
             <UsersDashboard className="size-10 lg:size-8 md:size-15 text-primary" />
             <div className="flex flex-col gap-1">
               <Text size="heading2" weight="bold" className="lg:text-[1rem]">
@@ -98,8 +98,8 @@ export default function Dashboard() {
                 Total Customers
               </Text>
             </div>
-          </div>
-          <div className="bg-white flex items-center p-4 gap-4 rounded-lg shadow-md w-full xs:w-40 md:w-65">
+          </a>
+          <a href="/owner/pesanan" className="bg-white flex items-center p-4 gap-4 rounded-lg shadow-md w-full xs:w-40 md:w-65">
             <PesananDashboard className="size-10 lg:size-10 md:size-15 text-primary" />
             <div className="flex flex-col gap-1">
               <Text size="heading2" weight="bold" className="lg:text-[1.2rem]">
@@ -109,7 +109,7 @@ export default function Dashboard() {
                 Total Orders
               </Text>
             </div>
-          </div>
+          </a>
         </div>
         <div className="flex-shrink-0 w-full h-60 lg:h-60 xl:h-90 bg-white rounded-2xl shadow px-4 py-4 mt-1">
           <ResponsiveContainer>
