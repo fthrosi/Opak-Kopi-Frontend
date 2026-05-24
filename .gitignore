@@ -8,6 +8,10 @@ pnpm-debug.log*
 lerna-debug.log*
 
 AGENTS.md
+docker-compose.yaml
+Dockerfile
+
+
 node_modules
 dist
 dist-ssr
