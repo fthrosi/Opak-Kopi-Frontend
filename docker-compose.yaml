@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  # Nama service untuk aplikasi production
+  production-app:
+    # Bangun image dari Dockerfile di direktori saat ini
+    build: .
+    # Beri nama yang jelas untuk container
+    container_name: react_app_prod
+    # Mapping port: Hubungkan port 8080 di mesin Anda (host)
+    # ke port 80 di dalam container (Nginx)
+    # Anda bisa ganti 8080 dengan port lain jika mau
+    ports:
+      - "8080:80"
+    # (Opsional) Atur agar container otomatis restart jika terjadi crash
+    restart: unless-stopped
