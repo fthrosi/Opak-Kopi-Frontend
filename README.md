@@ -17,7 +17,7 @@ The app supports customer, cashier, and owner workflows: menu browsing, reservat
 - EmailJS and Midtrans client integration through Vite environment variables
 
 ## Live Demo
-Production: https://sealand.co.id
+Production: https://opak-kopi-project.elyvoren.com/
 
 ## Project Structure
 
